@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="40dp"
+    android:background="@drawable/bg_dialog_no_internet"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="98dp"
+            android:layout_height="98dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/wifi_off" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/no_internet"
+            android:textColor="@color/black_1"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/poppins_medium_500"
+            android:textSize="22sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:paddingHorizontal="40dp"
+            android:text="@string/check_connection_settings_and_try_again"
+            android:textColor="#80000305"
+            android:fontFamily="@font/poppins_medium_500"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/btnRetry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:text="@string/retry_internet"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_semi_bold_600"
+            android:textSize="18sp"
+            android:background="@drawable/bg_btn_retry_internet"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/prgLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/black_1" />
+
+</RelativeLayout>

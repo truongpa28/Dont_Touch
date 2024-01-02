@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Don\'t Touch</string>
+
+    <string name="retry_internet">Retry internet</string>
+    <string name="click_back">Click back again to exit</string>
+    <string name="no_internet">No Internet</string>
+    <string name="check_connection_settings_and_try_again">Check connection settings and try again.</string>
+
+    <string name="select_language">Select language</string>
+    <string name="done">Done</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="intro_title_1">Activate</string>
+    <string name="intro_content_1">Nobody touch your phone</string>
+    <string name="intro_title_2">Detect motion </string>
+    <string name="intro_content_2">Whenever someone touch phone</string>
+    <string name="intro_title_3">Diversity</string>
+    <string name="intro_content_3">Of ring alarm sound effects</string>
+    <string name="start">Start</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+
+</resources>
