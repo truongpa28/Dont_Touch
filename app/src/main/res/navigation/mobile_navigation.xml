@@ -9,6 +9,80 @@
         android:id="@+id/homeFragment"
         android:name="com.fasipan.dont.touch.ui.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addAudioFragment"
+            app:destination="@id/addAudioFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_clapToFindFragment"
+            app:destination="@id/clapToFindFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_unplugBatteryFragment"
+            app:destination="@id/unplugBatteryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_fullBatteryFragment"
+            app:destination="@id/fullBatteryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_editAudioFragment"
+            app:destination="@id/editAudioFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.fasipan.dont.touch.ui.menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.fasipan.dont.touch.ui.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/addAudioFragment"
+        android:name="com.fasipan.dont.touch.ui.custom.AddAudioFragment"
+        android:label="fragment_add_audio"
+        tools:layout="@layout/fragment_add_audio" />
+    <fragment
+        android:id="@+id/clapToFindFragment"
+        android:name="com.fasipan.dont.touch.ui.more.clap.ClapToFindFragment"
+        android:label="fragment_clap_to_find"
+        tools:layout="@layout/fragment_clap_to_find" />
+    <fragment
+        android:id="@+id/fullBatteryFragment"
+        android:name="com.fasipan.dont.touch.ui.more.fullbattery.FullBatteryFragment"
+        android:label="fragment_full_battery"
+        tools:layout="@layout/fragment_full_battery" />
+    <fragment
+        android:id="@+id/unplugBatteryFragment"
+        android:name="com.fasipan.dont.touch.ui.more.unplugbattery.UnplugBatteryFragment"
+        android:label="fragment_unplug_battery"
+        tools:layout="@layout/fragment_unplug_battery" />
+    <fragment
+        android:id="@+id/editAudioFragment"
+        android:name="com.fasipan.dont.touch.ui.edit.EditAudioFragment"
+        android:label="fragment_edit_audio"
+        tools:layout="@layout/fragment_edit_audio" >
+        <action
+            android:id="@+id/action_editAudioFragment_to_flashFragment"
+            app:destination="@id/flashFragment" />
+        <action
+            android:id="@+id/action_editAudioFragment_to_vibrateFragment"
+            app:destination="@id/vibrateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashFragment"
+        android:name="com.fasipan.dont.touch.ui.edit.flash.FlashFragment"
+        android:label="fragment_flash"
+        tools:layout="@layout/fragment_flash" />
+    <fragment
+        android:id="@+id/vibrateFragment"
+        android:name="com.fasipan.dont.touch.ui.edit.vibrate.VibrateFragment"
+        android:label="fragment_vibrate"
+        tools:layout="@layout/fragment_vibrate" />
 
 </navigation>

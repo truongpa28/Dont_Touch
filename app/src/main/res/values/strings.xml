@@ -19,5 +19,21 @@
     <string name="start">Start</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
+    <string name="don_t_touch_my_phone">Don’t touch my phone</string>
+    <string name="collection">Collection</string>
+    <string name="more">More</string>
+    <string name="not_have_email_app_to_send_email">Not have email app to send email!</string>
+    <string name="language">Language</string>
+    <string name="share_app">Share App</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="more_app">More App</string>
+    <string name="sensitivity">Sensitivity</string>
+    <string name="extension">Extension</string>
+    <string name="wallpapers">Wallpapers</string>
+    <string name="light_up_the_screen_when_searching">Light up the screen when searching</string>
+    <string name="set_don_t_touch_my_phone_wallpaper">Set Don’t touch my phone wallpaper</string>
+    <string name="select_flash_type">Select flash type</string>
+    <string name="select_vibrate_type">Select vibrate type</string>
 
 </resources>
