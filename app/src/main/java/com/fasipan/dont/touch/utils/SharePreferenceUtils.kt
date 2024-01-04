@@ -55,6 +55,24 @@ object SharePreferenceUtils {
     fun isFirstRequestNotification(): Boolean = getBoolean("isFirstRequestNotification", true)
     fun setFirstRequestNotification(value: Boolean) = saveKey("isFirstRequestNotification", value)
 
+    /*-----------------------------------------Flash------------------------------------------------*/
+    fun isEnableFlashMode(): Boolean = getBoolean("isEnableFlashMode", true)
+    fun setEnableFlashMode(value: Boolean) = saveKey("isEnableFlashMode", value)
+
+    fun getTypeFlash() = getInt("type_flash", 0)
+    fun setTypeFlash(typeFlash: Int) = saveKey("type_flash", typeFlash)
+
+    fun isEnableSpeedMode() = getBoolean("is_enable_speed_mode", true)
+    fun setIsEnableSpeedMode(isEnable: Boolean) = saveKey("is_enable_speed_mode", isEnable)
+
+
+    /*-----------------------------------------Vibrate----------------------------------------------*/
+    fun getVibrateRingtone() = getInt("get_vibrate_ringtone", 0)
+    fun setVibrateRingtone(value: Int) = saveKey("get_vibrate_ringtone", value)
+
+    fun isEnableVibrate() = getBoolean("is_enable_vibrate", true)
+    fun setEnableVibrate(isEnable: Boolean) = saveKey("is_enable_vibrate", isEnable)
+
 
 
 }

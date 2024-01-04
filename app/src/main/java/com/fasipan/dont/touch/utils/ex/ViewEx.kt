@@ -8,13 +8,22 @@ import android.content.res.Resources
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.BatteryManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.fasipan.dont.touch.utils.Constants
+import com.fasipan.dont.touch.utils.SharePreferenceUtils
+import com.fasipan.dont.touch.utils.data.Amp
+import com.fasipan.dont.touch.utils.data.VibrateRingtoneUtils
 import com.google.android.material.tabs.TabLayout
 
 fun View.disableView() {
@@ -126,6 +135,57 @@ val Int.toDp: Int
 fun Context.getBatteryLevel(): Int {
     val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
     return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+}
+
+
+var vibrator: Vibrator? = null
+
+fun initVibrator(context: Context) {
+    vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        (context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager).defaultVibrator
+    } else {
+        @Suppress("DEPRECATION")
+        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    }
+}
+
+fun turnOffVibration() {
+    if (vibrator != null) {
+        Log.d(Constants.TAG, "turnOffVibration")
+        vibrator?.cancel()
+    }
+}
+
+fun startVibration(repeat: Int) {
+    Log.d(Constants.TAG, "startVibration")
+    val vibrationType = if (SharePreferenceUtils.getVibrateRingtone() == -1) 0 else SharePreferenceUtils.getVibrateRingtone()
+    val index = VibrateRingtoneUtils.getPositionWithIcon(vibrationType)
+    val ampIndex = if (index != -1) {
+        index
+    } else {
+        0
+    }
+    val ampEntity = Amp.getItem(ampIndex)
+    val mTime = ampEntity.timeArr
+    val mAmp = ampEntity.ampArr
+    val listTime =
+        arrayOf(mTime, mTime, mTime).flatMap { it.toList() }.toLongArray()
+    val listAmp = arrayOf(mAmp, mAmp, mAmp).flatMap { it.toList() }.toIntArray()
+    if (isSdk26()) {
+        val effect = when (repeat) {
+            -1 -> {
+                VibrationEffect.createWaveform(listTime, listAmp, repeat)
+            }
+
+            else -> {
+                VibrationEffect.createWaveform(mTime, mAmp, repeat)
+            }
+        }
+        vibrator?.vibrate(effect)
+    } else {
+        @Suppress("DEPRECATION")
+        vibrator?.vibrate(mTime, repeat)
+    }
 }
 
 

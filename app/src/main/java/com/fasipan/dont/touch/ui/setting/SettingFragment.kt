@@ -38,5 +38,17 @@ class SettingFragment : BaseFragment() {
         binding.imgHelp.clickSafe {
             findNavController().navigate(R.id.action_settingFragment_to_howToUseFragment)
         }
+
+        binding.llSelectFlash.clickSafe {
+            findNavController().navigate(R.id.action_settingFragment_to_flashFragment)
+        }
+
+        binding.llSelectVibrate.clickSafe {
+            findNavController().navigate(R.id.action_settingFragment_to_vibrateFragment)
+        }
+
+        binding.llSelectWallpaper.clickSafe {
+            findNavController().navigate(R.id.action_settingFragment_to_wallpaperFragment)
+        }
     }
 }

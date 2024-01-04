@@ -42,5 +42,8 @@
     <string name="title_how_to_use_1">Tap the sound to activate the Don’t touch my phone feature.</string>
     <string name="title_how_to_use_2">If someone arbitrarily moves your phone, the App will detect that action and start ringing.</string>
     <string name="title_how_to_use_3">Before activating, you can set the flashling, volume, duration as you like.</string>
+    <string name="flash_type">Flash type</string>
+    <string name="vibrate_ringtone">Vibrate ringtone</string>
+    <string name="wallpaper">Wallpaper</string>
 
 </resources>

@@ -11,4 +11,7 @@
     <color name="tran1">#80FFFFFF</color>
 
     <color name="black_1">#000305</color>
+
+    <color name="color_type_flash_1">#60A1ED</color>
+    <color name="color_type_flash">#8090D3FF</color>
 </resources>

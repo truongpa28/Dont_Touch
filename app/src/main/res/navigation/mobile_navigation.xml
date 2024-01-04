@@ -45,6 +45,15 @@
         <action
             android:id="@+id/action_settingFragment_to_howToUseFragment"
             app:destination="@id/howToUseFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_flashFragment"
+            app:destination="@id/flashFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_vibrateFragment"
+            app:destination="@id/vibrateFragment" />
+        <action
+            android:id="@+id/action_settingFragment_to_wallpaperFragment"
+            app:destination="@id/wallpaperFragment" />
     </fragment>
     <fragment
         android:id="@+id/addAudioFragment"
@@ -80,12 +89,12 @@
     </fragment>
     <fragment
         android:id="@+id/flashFragment"
-        android:name="com.fasipan.dont.touch.ui.edit.flash.FlashFragment"
+        android:name="com.fasipan.dont.touch.ui.setting.flash.FlashFragment"
         android:label="fragment_flash"
         tools:layout="@layout/fragment_flash" />
     <fragment
         android:id="@+id/vibrateFragment"
-        android:name="com.fasipan.dont.touch.ui.edit.vibrate.VibrateFragment"
+        android:name="com.fasipan.dont.touch.ui.setting.vibrate.VibrateFragment"
         android:label="fragment_vibrate"
         tools:layout="@layout/fragment_vibrate" />
     <fragment
@@ -93,5 +102,10 @@
         android:name="com.fasipan.dont.touch.ui.setting.HowToUseFragment"
         android:label="fragment_how_to_use"
         tools:layout="@layout/fragment_how_to_use" />
+    <fragment
+        android:id="@+id/wallpaperFragment"
+        android:name="com.fasipan.dont.touch.ui.setting.wallpaper.WallpaperFragment"
+        android:label="fragment_wallpaper"
+        tools:layout="@layout/fragment_wallpaper" />
 
 </navigation>
