@@ -29,6 +29,7 @@
             android:layout_marginTop="12dp"
             android:fontFamily="@font/poppins_bold_700"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="@string/app_name"
             android:textColor="#5C8EEC"
             android:textSize="18sp"

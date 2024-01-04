@@ -35,5 +35,12 @@
     <string name="set_don_t_touch_my_phone_wallpaper">Set Don’t touch my phone wallpaper</string>
     <string name="select_flash_type">Select flash type</string>
     <string name="select_vibrate_type">Select vibrate type</string>
+    <string name="setting">Setting</string>
+    <string name="rate_app">Rate App</string>
+    <string name="title_how_to_use">To learn how to use this app, please read the guide below</string>
+    <string name="how_to_use">How to Use</string>
+    <string name="title_how_to_use_1">Tap the sound to activate the Don’t touch my phone feature.</string>
+    <string name="title_how_to_use_2">If someone arbitrarily moves your phone, the App will detect that action and start ringing.</string>
+    <string name="title_how_to_use_3">Before activating, you can set the flashling, volume, duration as you like.</string>
 
 </resources>

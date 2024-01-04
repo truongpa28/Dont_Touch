@@ -28,6 +28,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/poppins_medium_500"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="@string/select_language"
             android:textColor="@color/black_1"
             android:textSize="22sp" />
@@ -56,6 +57,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:fontFamily="@font/poppins_semi_bold_600"
         android:gravity="center"
+        android:includeFontPadding="false"
         android:text="@string/done"
         android:layout_marginBottom="16dp"
         android:layout_gravity="center_horizontal"

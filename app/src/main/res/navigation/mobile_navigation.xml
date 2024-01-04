@@ -41,7 +41,11 @@
         android:id="@+id/settingFragment"
         android:name="com.fasipan.dont.touch.ui.setting.SettingFragment"
         android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting" >
+        <action
+            android:id="@+id/action_settingFragment_to_howToUseFragment"
+            app:destination="@id/howToUseFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addAudioFragment"
         android:name="com.fasipan.dont.touch.ui.custom.AddAudioFragment"
@@ -84,5 +88,10 @@
         android:name="com.fasipan.dont.touch.ui.edit.vibrate.VibrateFragment"
         android:label="fragment_vibrate"
         tools:layout="@layout/fragment_vibrate" />
+    <fragment
+        android:id="@+id/howToUseFragment"
+        android:name="com.fasipan.dont.touch.ui.setting.HowToUseFragment"
+        android:label="fragment_how_to_use"
+        tools:layout="@layout/fragment_how_to_use" />
 
 </navigation>
