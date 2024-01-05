@@ -74,5 +74,16 @@ object SharePreferenceUtils {
     fun setEnableVibrate(isEnable: Boolean) = saveKey("is_enable_vibrate", isEnable)
 
 
+    /*-----------------------------------------Wallpaper--------------------------------------------*/
+    fun getWallpaperApply() = getInt("getWallpaperApply", -1)
+    fun setWallpaperApply(value: Int) = saveKey("getWallpaperApply", value)
+
+
+
+    /*--------------------------------------Full Battery--------------------------------------------*/
+    fun isEnableFullPin(): Boolean = getBoolean("isEnableFullPin", false)
+    fun setEnableFullPin(value: Boolean) = saveKey("isEnableFullPin", value)
+
+
 
 }

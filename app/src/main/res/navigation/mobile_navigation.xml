@@ -106,6 +106,21 @@
         android:id="@+id/wallpaperFragment"
         android:name="com.fasipan.dont.touch.ui.setting.wallpaper.WallpaperFragment"
         android:label="fragment_wallpaper"
-        tools:layout="@layout/fragment_wallpaper" />
+        tools:layout="@layout/fragment_wallpaper" >
+        <action
+            android:id="@+id/action_wallpaperFragment_to_detailWallpaperFragment"
+            app:destination="@id/detailWallpaperFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailWallpaperFragment"
+        android:name="com.fasipan.dont.touch.ui.setting.wallpaper.DetailWallpaperFragment"
+        android:label="fragment_detail_wallpaper"
+        tools:layout="@layout/fragment_detail_wallpaper" >
+
+        <argument android:name="position"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
+    </fragment>
 
 </navigation>

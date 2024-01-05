@@ -3,14 +3,16 @@
     <item android:state_checked="false">
         <shape android:shape="rectangle">
             <corners android:radius="100dp" />
-            <stroke android:width="2dp" android:color="#CCCCCC" />
-            <solid android:color="@color/white" />
+            <solid android:color="#DBDBDB" />
         </shape>
     </item>
     <item android:state_checked="true">
         <shape android:shape="rectangle">
             <corners android:radius="100dp" />
-            <solid android:color="@color/black_1" />
+            <gradient android:startColor="#62ACEE"
+                android:centerColor="#5779E9"
+                android:endColor="#5779E9"
+                android:angle="270"/>
         </shape>
     </item>
 </selector>

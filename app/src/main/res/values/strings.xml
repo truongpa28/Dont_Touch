@@ -45,5 +45,27 @@
     <string name="flash_type">Flash type</string>
     <string name="vibrate_ringtone">Vibrate ringtone</string>
     <string name="wallpaper">Wallpaper</string>
+    <string name="apply">Apply</string>
+    <string name="wallpaper_has_been_set_successfully">Wallpaper has been set successfully!</string>
+    <string name="setting_wallpaper_failed">Setting wallpaper failed!</string>
+    <string name="full_battery_detection">Full Battery Detection</string>
+    <string name="enable_alarm_on_full_battery">Enable alarm on full battery</string>
+    <string name="battery_info">Battery Info</string>
+    <string name="battery">Battery</string>
+    <string name="technology">Technology</string>
+    <string name="health">Health</string>
+    <string name="status">Status</string>
+    <string name="voltage">Voltage</string>
+    <string name="temperature">Temperature</string>
+    <string name="capacity">Capacity</string>
+    <string name="cold">Cold</string>
+    <string name="dead">Dead</string>
+    <string name="good">Good</string>
+    <string name="over_voltage">Over Voltage</string>
+    <string name="over_heat">Over Heat</string>
+    <string name="unspecified">Unspecified</string>
+    <string name="charging">Charging</string>
+    <string name="discharging">Discharging</string>
+    <string name="full">Full</string>
 
 </resources>

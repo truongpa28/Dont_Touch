@@ -97,6 +97,14 @@ fun View.showOrGone(isShow: Boolean) {
     }
 }
 
+fun View.showOrHide(isShow: Boolean) {
+    if (isShow) {
+        show()
+    } else {
+        hide()
+    }
+}
+
 fun View.isUnlock(isShow: Boolean) {
     alpha = if (isShow) {
         1f

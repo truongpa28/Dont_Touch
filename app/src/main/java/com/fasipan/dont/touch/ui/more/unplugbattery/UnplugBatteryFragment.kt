@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentUnplugBatteryBinding
+import com.fasipan.dont.touch.utils.ex.clickSafe
 
 
 class UnplugBatteryFragment : BaseFragment() {
@@ -28,7 +29,7 @@ class UnplugBatteryFragment : BaseFragment() {
     }
 
     private fun initView() {
-
+        binding.imgBack.clickSafe { onBack() }
     }
 
     private fun initListener() {

@@ -107,14 +107,10 @@
                     android:includeFontPadding="false"
                     android:text="@string/light_up_the_screen_when_searching"/>
 
-                <androidx.appcompat.widget.SwitchCompat
+                <com.fasipan.dont.touch.custom.CustomSwitchImageView
                     android:id="@+id/swEnableFlash"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:scaleX="0.8"
-                    android:scaleY="0.8"
-                    android:thumb="@drawable/sw_thumb_home"
-                    app:track="@drawable/sw_track_home" />
+                    android:layout_height="match_parent"/>
 
             </LinearLayout>
 

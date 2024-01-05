@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentClapToFindBinding
+import com.fasipan.dont.touch.utils.ex.clickSafe
 
 class ClapToFindFragment : BaseFragment() {
 
@@ -27,7 +28,7 @@ class ClapToFindFragment : BaseFragment() {
     }
 
     private fun initView() {
-
+        binding.imgBack.clickSafe { onBack() }
     }
 
     private fun initListener() {

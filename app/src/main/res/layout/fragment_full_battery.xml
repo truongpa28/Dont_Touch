@@ -1,14 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.more.fullbattery.FullBatteryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_medium_500"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/full_battery_detection"
+            android:textColor="@color/black_1"
+            android:textSize="22sp" />
+
+        <View
+            android:layout_width="48dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_clock_pin"
+                android:adjustViewBounds="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="4dp"
+                android:layout_marginHorizontal="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/enable_alarm_on_full_battery"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:textColor="@color/black_1"
+                    android:textSize="16sp"
+                    android:includeFontPadding="false" />
+
+                <com.fasipan.dont.touch.custom.CustomSwitchImageView
+                    android:id="@+id/swEnableFullPin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:gravity="center_vertical"
+                android:text="@string/battery_info"
+                android:fontFamily="@font/poppins_semi_bold_600"
+                android:textColor="@color/black_1"
+                android:textSize="16sp"
+                android:layout_marginStart="16sp"
+                android:paddingHorizontal="4dp"
+                android:includeFontPadding="false" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:background="@drawable/bg_item_how_to_use">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/battery"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_regular_400"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txtBattery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:background="@drawable/bg_item_how_to_use">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/technology"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_regular_400"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txtTechnology"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:background="@drawable/bg_item_how_to_use">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/health"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_regular_400"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txtHealth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:background="@drawable/bg_item_how_to_use">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/status"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_regular_400"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:background="@drawable/bg_item_how_to_use">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/voltage"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_regular_400"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txtVoltage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:background="@drawable/bg_item_how_to_use">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/temperature"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_regular_400"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txtTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginHorizontal="38dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_item_how_to_use">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:text="@string/capacity"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_regular_400"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/txtCapacity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

@@ -9,6 +9,7 @@ import com.fasipan.dont.touch.base.BaseAdapterRecyclerView
 import com.fasipan.dont.touch.databinding.ItemFlashBinding
 import com.fasipan.dont.touch.databinding.ItemWallpaperBinding
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
+import com.fasipan.dont.touch.utils.data.WallpaperUtils
 import com.fasipan.dont.touch.utils.ex.showOrGone
 
 class WallpaperAdapter: BaseAdapterRecyclerView<Int, ItemWallpaperBinding>() {
@@ -22,6 +23,6 @@ class WallpaperAdapter: BaseAdapterRecyclerView<Int, ItemWallpaperBinding>() {
     }
 
     override fun bindData(binding: ItemWallpaperBinding, item: Int, position: Int) {
-        binding.imgWallpaper.setImageResource(item)
+        Glide.with(binding.root.context).load(item).into(binding.imgWallpaper)
     }
 }
