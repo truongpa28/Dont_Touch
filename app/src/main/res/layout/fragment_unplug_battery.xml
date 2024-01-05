@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.more.unplugbattery.UnplugBatteryFragment">
 
@@ -25,20 +26,88 @@
             android:src="@drawable/ic_back" />
 
         <TextView
-            android:id="@+id/txtTitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:fontFamily="@font/poppins_medium_500"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="@string/wallpaper"
+            android:text="@string/charger_unplug_detection"
             android:textColor="@color/black_1"
             android:textSize="22sp" />
 
         <View
             android:layout_width="48dp"
             android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_unplug_pin"
+        android:adjustViewBounds="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="4dp"
+        android:layout_marginHorizontal="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/enable_alarm_on_full_battery"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_semi_bold_600"
+            android:textColor="@color/black_1"
+            android:textSize="16sp"
+            android:includeFontPadding="false" />
+
+        <com.fasipan.dont.touch.custom.CustomSwitchImageView
+            android:id="@+id/swEnableUnplugPin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="72dp"
+        android:textColor="#80000305"
+        android:includeFontPadding="false"
+        android:text="@string/txt_content_unplug_pin"
+        android:fontFamily="@font/poppins_regular_400"
+        android:textSize="14sp"/>
+    
+    <LinearLayout
+        android:id="@+id/llWaring"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_warning_unplug"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical"
+        android:layout_margin="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_warning_unplug"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium_500"
+            android:textColor="@color/black_1"
+            android:layout_weight="1"
+            android:includeFontPadding="false"
+            android:textSize="14sp"
+            android:layout_marginStart="16dp"
+            android:text="@string/you_must_connect_charger_first"/>
 
     </LinearLayout>
 

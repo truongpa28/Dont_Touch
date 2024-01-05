@@ -85,5 +85,10 @@ object SharePreferenceUtils {
     fun setEnableFullPin(value: Boolean) = saveKey("isEnableFullPin", value)
 
 
+    /*--------------------------------------Unplug Battery------------------------------------------*/
+    fun isEnableUnplugPin(): Boolean = getBoolean("isEnableUnplugPin", false)
+    fun setEnableUnplugPin(value: Boolean) = saveKey("isEnableUnplugPin", value)
+
+
 
 }

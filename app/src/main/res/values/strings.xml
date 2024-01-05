@@ -67,5 +67,10 @@
     <string name="charging">Charging</string>
     <string name="discharging">Discharging</string>
     <string name="full">Full</string>
+    <string name="charger_unplug_detection">Charger Unplug Detection</string>
+    <string name="txt_content_unplug_pin">By enabling this your phone will start ringing if someone try to unplug the phone.</string>
+    <string name="you_must_connect_charger_first">You must connect charger first</string>
+    <string name="clap_to_find">Clap to find</string>
+    <string name="activate">Activate</string>
 
 </resources>

@@ -28,10 +28,10 @@ class ClapToFindFragment : BaseFragment() {
     }
 
     private fun initView() {
-        binding.imgBack.clickSafe { onBack() }
+
     }
 
     private fun initListener() {
-
+        binding.imgBack.clickSafe { onBack() }
     }
 }
