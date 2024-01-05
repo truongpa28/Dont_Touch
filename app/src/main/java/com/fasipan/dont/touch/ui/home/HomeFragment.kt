@@ -8,10 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentHomeBinding
+import com.fasipan.dont.touch.utils.MediaPlayerUtils
+import com.fasipan.dont.touch.utils.data.DataAudioUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 
 
@@ -19,6 +22,9 @@ class HomeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
+    private val adapter  by lazy {
+        AudioAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +41,8 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initView() {
-
+        adapter.setDataList(DataAudioUtils.listDefault)
+        binding.rcyAudio.adapter = adapter
     }
 
     private fun initListener() {
@@ -54,6 +61,23 @@ class HomeFragment : BaseFragment() {
         binding.llFullCharged.clickSafe {
             findNavController().navigate(R.id.action_homeFragment_to_fullBatteryFragment)
         }
+
+        adapter.setOnClickItem { item, position ->
+            if (position == 0) {
+                findNavController().navigate(R.id.action_homeFragment_to_addAudioFragment)
+            } else {
+                item?.let {
+                    findNavController().navigate(R.id.action_homeFragment_to_editAudioFragment,
+                        bundleOf("pos" to position)
+                    )
+                }
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MediaPlayerUtils.stopMediaPlayer()
     }
 
 

@@ -72,5 +72,20 @@
     <string name="you_must_connect_charger_first">You must connect charger first</string>
     <string name="clap_to_find">Clap to find</string>
     <string name="activate">Activate</string>
+    <string name="police">Police</string>
+    <string name="doorbell">Doorbell</string>
+    <string name="dog">Dog</string>
+    <string name="cat">Cat</string>
+    <string name="o_clock">O’Clock</string>
+    <string name="harp">Harp</string>
+    <string name="laughing">Laughing</string>
+    <string name="hello">Hello</string>
+    <string name="rooster">Rooster</string>
+    <string name="sneeze">Sneeze</string>
+    <string name="whistle">Whistle</string>
+    <string name="train">Train</string>
+    <string name="piano">Piano</string>
+    <string name="wind_chime">Wind Chime</string>
+    <string name="error">Error</string>
 
 </resources>

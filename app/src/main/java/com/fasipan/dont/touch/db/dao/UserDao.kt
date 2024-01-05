@@ -11,7 +11,7 @@ interface UserDao {
     fun getAllAudio(): MutableList<AudioEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addAllAudio(listData: ArrayList<AudioEntity>): List<Long>
+    fun addAllAudio(listData: List<AudioEntity>): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addAudio(data: AudioEntity): Long

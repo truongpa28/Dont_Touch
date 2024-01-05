@@ -44,7 +44,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,8 +64,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/poppins_medium_500"
+                android:includeFontPadding="false"
                 android:paddingHorizontal="8dp"
                 android:text="@string/collection"
                 android:textColor="@color/black_1"
@@ -75,6 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="3" />
 
@@ -82,8 +84,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/poppins_medium_500"
+                android:includeFontPadding="false"
                 android:paddingHorizontal="8dp"
                 android:text="@string/more"
                 android:textColor="@color/black_1"
@@ -111,10 +113,10 @@
                     android:id="@+id/llUnplugCharged"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:orientation="vertical"
-                    app:layout_constraintDimensionRatio="1:1"
                     android:layout_marginHorizontal="16dp"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/llClapToFind"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toStartOf="@+id/llFullCharged"
                     app:layout_constraintStart_toEndOf="@+id/llClapToFind"
                     app:layout_constraintTop_toTopOf="@+id/llClapToFind" />
@@ -123,9 +125,9 @@
                     android:id="@+id/llFullCharged"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintDimensionRatio="1:1"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/llClapToFind"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/llUnplugCharged"
                     app:layout_constraintTop_toTopOf="@+id/llClapToFind" />

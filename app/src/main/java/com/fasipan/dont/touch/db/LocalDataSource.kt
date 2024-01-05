@@ -13,7 +13,7 @@ object LocalDataSource {
     lateinit var userDao: UserDao
 
     fun getAllAudio() = userDao.getAllAudio()
-    fun addAllAudio(listData: ArrayList<AudioEntity>) = userDao.addAllAudio(listData)
+    fun addAllAudio(listData: List<AudioEntity>) = userDao.addAllAudio(listData)
     fun addAudio(listData: AudioEntity) = userDao.addAudio(listData)
     fun deleteAudio(listData: Int) = userDao.deleteAudio(listData)
 

@@ -4,7 +4,9 @@ import android.Manifest
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.FrameLayout
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fasipan.dont.touch.R
@@ -23,11 +25,9 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         navHostFragment =
             supportFragmentManager.findFragmentById(binding.containerFragment.id) as NavHostFragment
         navController = navHostFragment!!.navController
-
         if (SharePreferenceUtils.isFirstRequestNotification()) {
             try {
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2) {
@@ -39,7 +39,6 @@ class MainActivity : BaseActivity() {
                 }
             } catch (_: Exception) { }
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

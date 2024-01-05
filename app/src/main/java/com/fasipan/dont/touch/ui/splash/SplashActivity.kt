@@ -8,10 +8,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.lifecycleScope
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.databinding.ActivitySplashBinding
+import com.fasipan.dont.touch.db.LocalDataSource
 import com.fasipan.dont.touch.ui.language.LanguageActivity
+import com.fasipan.dont.touch.utils.data.DataAudioUtils
 import com.fasipan.dont.touch.utils.ex.openActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen", "SourceLockedOrientationActivity")
 class SplashActivity : AppCompatActivity() {
@@ -33,6 +38,10 @@ class SplashActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {}
         })
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            LocalDataSource.addAllAudio(DataAudioUtils.listDefault)
+        }
 
     }
 }
