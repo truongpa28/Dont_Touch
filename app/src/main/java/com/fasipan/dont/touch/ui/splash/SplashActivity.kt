@@ -13,6 +13,7 @@ import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.databinding.ActivitySplashBinding
 import com.fasipan.dont.touch.db.LocalDataSource
 import com.fasipan.dont.touch.ui.language.LanguageActivity
+import com.fasipan.dont.touch.ui.main.MainActivity
 import com.fasipan.dont.touch.utils.data.DataAudioUtils
 import com.fasipan.dont.touch.utils.ex.openActivity
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            openActivity(LanguageActivity::class.java, true)
+            openActivity(MainActivity::class.java, true)
         }, 1500L)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {

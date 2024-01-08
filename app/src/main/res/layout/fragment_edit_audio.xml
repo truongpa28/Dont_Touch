@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.edit.EditAudioFragment">
 
@@ -149,7 +150,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_flash_alert"/>
+                    android:src="@drawable/ic_vibrate_1"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -180,7 +181,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/ic_flash_alert"/>
+                    android:src="@drawable/ic_sound_1"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -209,14 +210,24 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|left"
-                    android:layout_weight="1"
                     android:fontFamily="@font/poppins_medium_500"
                     android:textSize="14sp"
+                    android:includeFontPadding="false"
                     android:textColor="@color/black_1"
-                    android:text="@string/sound"/>
+                    android:text="@string/volume"/>
+                
+                <SeekBar
+                    android:id="@+id/sbVolume"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:progressDrawable="@drawable/custom_seekbar"
+                    android:thumb="@drawable/custom_thumb"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="8dp"/>
 
             </LinearLayout>
 
@@ -225,7 +236,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="16dp"
-                android:paddingHorizontal="4dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="12dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -235,8 +247,46 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_medium_500"
                     android:textSize="14sp"
+                    android:includeFontPadding="false"
                     android:textColor="@color/black_1"
-                    android:text="@string/sound"/>
+                    android:text="@string/duration"/>
+                
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="36dp"
+                    android:text="5s"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_duration_edit"
+                    android:textColor="@color/black_1"
+                    android:fontFamily="@font/roboto_medium_400"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="36dp"
+                    android:text="15s"
+                    android:gravity="center"
+                    android:textColor="@color/black_1_o50"
+                    android:fontFamily="@font/roboto_medium_400"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="36dp"
+                    android:text="30s"
+                    android:gravity="center"
+                    android:textColor="@color/black_1_o50"
+                    android:fontFamily="@font/roboto_medium_400"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="36dp"
+                    android:gravity="center"
+                    android:textColor="@color/black_1_o50"
+                    android:fontFamily="@font/roboto_medium_400"
+                    android:text="1m"/>
 
             </LinearLayout>
 
@@ -249,6 +299,7 @@
                 android:layout_marginBottom="28dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="1"
+                android:overScrollMode="never"
                 android:orientation="horizontal"/>
 
         </LinearLayout>

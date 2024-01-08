@@ -9,12 +9,19 @@ import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentEditAudioBinding
 import com.fasipan.dont.touch.databinding.FragmentSettingBinding
+import com.fasipan.dont.touch.db.LocalDataSource
+import com.fasipan.dont.touch.db.entity.AudioEntity
+import com.fasipan.dont.touch.ui.home.AudioAdapter
 import com.fasipan.dont.touch.utils.ex.clickSafe
 
 
 class EditAudioFragment : BaseFragment() {
 
     private lateinit var binding: FragmentEditAudioBinding
+
+    private val adapter  by lazy {
+        AudioV2Adapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +38,10 @@ class EditAudioFragment : BaseFragment() {
     }
 
     private fun initView() {
-
+        binding.rcyAudio.adapter = adapter
+        LocalDataSource.getAllAudio().observe(viewLifecycleOwner) {
+            adapter.setDataList(it.drop(1))
+        }
     }
 
     private fun initListener() {

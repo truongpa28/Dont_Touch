@@ -8,7 +8,7 @@ import com.fasipan.dont.touch.db.entity.AudioEntity
 interface UserDao {
 
     @Query("SELECT * FROM audio")
-    fun getAllAudio(): MutableList<AudioEntity>
+    fun getAllAudio(): LiveData<MutableList<AudioEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addAllAudio(listData: List<AudioEntity>): List<Long>

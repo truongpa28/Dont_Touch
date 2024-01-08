@@ -47,6 +47,14 @@ object SharePreferenceUtils {
     }
 
 
+    /*----------------------------------------App Service------------------------------------------*/
+    fun isAppServiceEnable(): Boolean = getBoolean("isAppServiceEnable", false)
+    fun setAppServiceEnable(value: Boolean) = saveKey("isAppServiceEnable", value)
+
+    fun getPositionAudioChoose() = getInt("getPositionAudioChoose", 1)
+    fun setPositionAudioChoose(value: Int) = saveKey("getPositionAudioChoose", value)
+
+
     /*-----------------------------------------Language---------------------------------------------*/
     fun getCodeLanguageChoose(): String = getString("getCodeLanguageChoose", "en")
     fun setCodeLanguageChoose(value: String) = saveKey("getCodeLanguageChoose", value)
@@ -78,6 +86,11 @@ object SharePreferenceUtils {
     fun getWallpaperApply() = getInt("getWallpaperApply", -1)
     fun setWallpaperApply(value: Int) = saveKey("getWallpaperApply", value)
 
+
+
+    /*--------------------------------------Clap To Find--------------------------------------------*/
+    fun isEnableClapToFind(): Boolean = getBoolean("isEnableClapToFind", false)
+    fun setEnableClapToFind(value: Boolean) = saveKey("isEnableClapToFind", value)
 
 
     /*--------------------------------------Full Battery--------------------------------------------*/

@@ -1,7 +1,9 @@
 package com.fasipan.dont.touch.ui.home
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.fasipan.dont.touch.R
@@ -27,6 +29,8 @@ class AudioAdapter: BaseAdapterRecyclerView<AudioEntity, ItemAudioBinding>() {
 
         Glide.with(context).load(item.icon).into(binding.imgAvatar)
 
+        binding.viewChoose.showOrGone(position == SharePreferenceUtils.getPositionAudioChoose())
+
         binding.txtName.text = if (item.isDefault) {
             try {
                 context.getString(item.nameInt)
@@ -35,6 +39,31 @@ class AudioAdapter: BaseAdapterRecyclerView<AudioEntity, ItemAudioBinding>() {
             }
         } else {
             item.nameString
+        }
+
+        binding.txtName.isSelected = true
+
+        showNen(binding.viewBackground, position)
+    }
+
+    private fun showNen(view: ImageView, position: Int) {
+        if (position == 0) {
+            view.setImageResource(0)
+        } else {
+            when(position%4) {
+                1-> {
+                    view.setImageResource(R.drawable.bg_color_item_audio_1)
+                }
+                2 -> {
+                    view.setImageResource(R.drawable.bg_color_item_audio_2)
+                }
+                3 -> {
+                    view.setImageResource(R.drawable.bg_color_item_audio_3)
+                }
+                else -> {
+                    view.setImageResource(R.drawable.bg_color_item_audio_4)
+                }
+            }
         }
     }
 }

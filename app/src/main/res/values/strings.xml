@@ -70,6 +70,7 @@
     <string name="charger_unplug_detection">Charger Unplug Detection</string>
     <string name="txt_content_unplug_pin">By enabling this your phone will start ringing if someone try to unplug the phone.</string>
     <string name="you_must_connect_charger_first">You must connect charger first</string>
+    <string name="clap_to_find_home">Clap\nto find</string>
     <string name="clap_to_find">Clap to find</string>
     <string name="activate">Activate</string>
     <string name="police">Police</string>
@@ -90,5 +91,11 @@
     <string name="enable_flash_alert">Enable Flash Alert</string>
     <string name="enable_vibrate">Enable Vibrate</string>
     <string name="sound">Sound</string>
+    <string name="volume">Volume</string>
+    <string name="duration">Duration</string>
+    <string name="unplug_charged_home">Unplug\nCharged</string>
+    <string name="full_charged_home">Full\nCharged</string>
+    <string name="tap_to_active">Tap to active</string>
+    <string name="tap_to_deactive">Tap to deactive</string>
 
 </resources>

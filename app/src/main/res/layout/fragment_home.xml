@@ -53,12 +53,95 @@
             android:orientation="vertical"
             android:paddingHorizontal="16dp">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
 
-            </LinearLayout>
+                <ImageView
+                    android:id="@+id/bgBottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/bg_choose_home_1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/bgTop"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/img_bg_choose_home_fillter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent="0.8"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imgAvatar" />
+
+
+                <ImageView
+                    android:id="@+id/imgAvatar"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/llBottom"
+                    app:layout_constraintDimensionRatio="155:224"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="6dp"
+                    app:layout_constraintWidth_percent="0.47" />
+
+
+                <LinearLayout
+                    android:id="@+id/llBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_ll_bottom_home"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_semi_bold_600"
+                        android:textSize="16sp"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:paddingHorizontal="4dp"
+                        android:textColor="@color/black_1"
+                        android:includeFontPadding="false"
+                        android:gravity="center_vertical|start"/>
+
+                    <TextView
+                        android:id="@+id/txtTapToActive"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.2"
+                        android:fontFamily="@font/poppins_semi_bold_600"
+                        android:textSize="16sp"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:paddingHorizontal="6dp"
+                        android:ellipsize="marquee"
+                        android:background="@drawable/bg_btn_tap_to_active"
+                        android:layout_margin="4dp"
+                        android:textColor="@color/white"
+                        android:includeFontPadding="false"
+                        android:text="@string/tap_to_active"
+                        android:gravity="center"/>
+
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,12 +183,28 @@
                     android:id="@+id/llClapToFind"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:gravity="center"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toStartOf="@+id/llUnplugCharged"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_clap_to_find_1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold_600"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/clap_to_find_home"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -114,23 +213,59 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="16dp"
+                    android:gravity="center"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/llClapToFind"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toStartOf="@+id/llFullCharged"
                     app:layout_constraintStart_toEndOf="@+id/llClapToFind"
-                    app:layout_constraintTop_toTopOf="@+id/llClapToFind" />
+                    app:layout_constraintTop_toTopOf="@+id/llClapToFind">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_unplug_charged" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold_600"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/unplug_charged_home"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llFullCharged"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:gravity="center"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="@+id/llClapToFind"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/llUnplugCharged"
-                    app:layout_constraintTop_toTopOf="@+id/llClapToFind" />
+                    app:layout_constraintTop_toTopOf="@+id/llClapToFind">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_full_charged" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semi_bold_600"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/full_charged_home"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
