@@ -9,6 +9,7 @@ import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentEditAudioBinding
 import com.fasipan.dont.touch.databinding.FragmentSettingBinding
+import com.fasipan.dont.touch.utils.ex.clickSafe
 
 
 class EditAudioFragment : BaseFragment() {
@@ -34,6 +35,12 @@ class EditAudioFragment : BaseFragment() {
     }
 
     private fun initListener() {
+        binding.imgBack.clickSafe { onBack() }
+
+        binding.llApply.clickSafe {
+
+        }
+
 
     }
 }

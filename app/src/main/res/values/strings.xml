@@ -87,5 +87,8 @@
     <string name="piano">Piano</string>
     <string name="wind_chime">Wind Chime</string>
     <string name="error">Error</string>
+    <string name="enable_flash_alert">Enable Flash Alert</string>
+    <string name="enable_vibrate">Enable Vibrate</string>
+    <string name="sound">Sound</string>
 
 </resources>
