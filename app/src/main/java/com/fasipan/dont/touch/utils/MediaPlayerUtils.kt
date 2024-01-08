@@ -105,4 +105,28 @@ object MediaPlayerUtils {
     fun setVolume(volume: Float = 1f) {
         mp?.setVolume(volume, volume)
     }
+
+
+    fun playAudioSoundRecord(context: Context, data: String, actionDone: () -> Unit) {
+        try {
+            releaseMediaPlayer()
+            mp = MediaPlayer()
+            mp?.setDataSource(
+                context,
+                Uri.parse(data)
+            )
+            mp?.setVolume(1f, 1f)
+            mp!!.prepare()
+            mp!!.start()
+            mp!!.setOnCompletionListener {
+                actionDone()
+            }
+            val handler: Handler? = handler
+            runnable?.let { handler?.removeCallbacks(it) }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
 }

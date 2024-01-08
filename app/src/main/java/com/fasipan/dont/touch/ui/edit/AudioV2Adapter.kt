@@ -25,7 +25,7 @@ class AudioV2Adapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioV2Binding>(
 
         Glide.with(context).load(item.icon).into(binding.imgAvatar)
 
-        binding.viewChoose.showOrGone(position == SharePreferenceUtils.getPositionAudioChoose())
+        binding.viewChoose.showOrGone(position == SharePreferenceUtils.getPositionAudioChoose() - 1)
 
         binding.txtName.text = if (item.isDefault) {
             try {

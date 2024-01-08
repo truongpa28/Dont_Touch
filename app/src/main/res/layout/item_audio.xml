@@ -46,6 +46,15 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <ImageView
+        android:id="@+id/imgDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:src="@drawable/ic_delete_item_audio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/viewChoose"
         android:layout_width="0dp"
         android:layout_height="0dp"
