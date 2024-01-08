@@ -104,4 +104,14 @@ object SharePreferenceUtils {
 
 
 
+    //Service
+    fun getBatteryChanged() = getInt("getBatteryChanged", 1)
+    fun setBatteryChanged(value: Int) = saveKey("getBatteryChanged", value)
+
+
+    fun getPlayDuration() = getInt("getPlayDuration", 0)
+    fun setPlayDuration(value: Int) = saveKey("getPlayDuration", value)
+
+
+
 }

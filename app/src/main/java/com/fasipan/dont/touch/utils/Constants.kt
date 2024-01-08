@@ -15,5 +15,8 @@ object Constants {
 
     const val TAG = "truongpa"
 
+    const val NOTIFICATION_CHANNEL_ID = "com.fasipan.dont.TOUCH"
+    const val NOTIFICATION_CHANNEL_NAME = "Don't Touch"
+    const val NOTIFICATION_DETAILS = "Don't Touch"
 
 }
