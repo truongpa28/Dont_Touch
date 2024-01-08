@@ -9,6 +9,7 @@ import com.fasipan.dont.touch.base.BaseAdapterRecyclerView
 import com.fasipan.dont.touch.databinding.ItemAudioV2Binding
 import com.fasipan.dont.touch.db.entity.AudioEntity
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
+import com.fasipan.dont.touch.utils.ex.loadGlide
 import com.fasipan.dont.touch.utils.ex.showOrGone
 
 class AudioV2Adapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioV2Binding>() {
@@ -23,7 +24,7 @@ class AudioV2Adapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioV2Binding>(
     override fun bindData(binding: ItemAudioV2Binding, item: AudioEntity, position: Int) {
         val context = binding.root.context
 
-        Glide.with(context).load(item.icon).into(binding.imgAvatar)
+        binding.imgAvatar.loadGlide(item.icon)
 
         binding.viewChoose.showOrGone(position == SharePreferenceUtils.getPositionAudioChoose() - 1)
 

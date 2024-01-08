@@ -101,5 +101,15 @@
     <string name="tap_to_record">Tap to record</string>
     <string name="save">Save</string>
     <string name="retry">Retry</string>
+    <string name="quit_title">Quit?</string>
+    <string name="quit_txt">Quit</string>
+    <string name="txt_content_quit_editing">You are editing. Do you want to close and cancel all editing?</string>
+    <string name="enter_file_name">Enter file name</string>
+    <string name="cancel">Cancel</string>
+    <string name="name_must_not_null">Name must not null.</string>
+    <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="txt_content_delete_audio">Do you confirm that you want to delete</string>
 
 </resources>

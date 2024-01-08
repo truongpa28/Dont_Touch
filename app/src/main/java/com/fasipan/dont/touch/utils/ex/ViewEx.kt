@@ -20,6 +20,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.fasipan.dont.touch.utils.Constants
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.data.Amp
@@ -237,4 +238,10 @@ fun View.setOnTouchScale(action: () -> Unit, scale: Float, disView: Boolean = tr
         }
         true
     }
+}
+
+fun ImageView.loadGlide(src: Any) {
+    Glide.with(this.context)
+        .load(src)
+        .into(this)
 }

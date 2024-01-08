@@ -4,21 +4,26 @@ import android.annotation.SuppressLint
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentAddAudioBinding
+import com.fasipan.dont.touch.db.LocalDataSource
+import com.fasipan.dont.touch.db.entity.AudioEntity
+import com.fasipan.dont.touch.ui.dialog.DialogQuitEditing
+import com.fasipan.dont.touch.ui.dialog.DialogSaveRecord
 import com.fasipan.dont.touch.utils.DataUtils
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.gone
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 import com.fasipan.dont.touch.utils.ex.show
+import com.fasipan.dont.touch.utils.ex.showToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -33,6 +38,14 @@ class AddAudioFragment : BaseFragment() {
         const val STATUS_PAUSE = 2
         const val STATUS_PLAY = 3
         const val STATUS_PLAY_PAUSE = 4
+    }
+
+    private val dialogQuitEditing by lazy {
+        DialogQuitEditing(requireContext())
+    }
+
+    private val dialogSaveRecord by lazy {
+        DialogSaveRecord(requireContext())
     }
 
 
@@ -77,7 +90,31 @@ class AddAudioFragment : BaseFragment() {
         }, 0.9f)
 
         binding.txtSave.setOnTouchScale({
+            dialogSaveRecord.show {
+                if (it.trim().isEmpty()) {
+                    requireContext().showToast(getString(R.string.name_must_not_null))
+                } else {
+                    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                        LocalDataSource.addAudio(
+                            AudioEntity(
+                                0,
+                                outputFile,
+                                R.drawable.avt_audio,
+                                R.string.app_name,
+                                it,
+                                false
+                            )
+                        )
+                        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                            requireContext().showToast("Add successfully")
+                            dialogSaveRecord.hide()
+                            findNavController().popBackStack()
+                        }
 
+                    }
+
+                }
+            }
         }, 0.9f)
 
         binding.txtRetry.setOnTouchScale({
@@ -112,12 +149,12 @@ class AddAudioFragment : BaseFragment() {
 
     private var outputFile = ""
 
-    var myAudioRecorder : MediaRecorder?= null
+    var myAudioRecorder: MediaRecorder? = null
 
     private fun statusNon() {
         timeRecord = 0
 
-        binding.imgIcon.setImageResource(0)
+        binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
 
         binding.txtTapToRecord.setBackgroundResource(R.drawable.bg_btn_tap_to_active)
         binding.txtTapToRecord.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -133,7 +170,7 @@ class AddAudioFragment : BaseFragment() {
     private fun startRecord() {
         status = STATUS_RECORDING
 
-        binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+        binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
 
         binding.txtTapToRecord.setBackgroundResource(0)
         binding.txtTapToRecord.setTextColor(ContextCompat.getColor(requireContext(), R.color.xam_1))
@@ -141,7 +178,12 @@ class AddAudioFragment : BaseFragment() {
 
         binding.txtTimeRecord.text = "00:00"
 
-        binding.txtTimeRecord.setTextColor(ContextCompat.getColor(requireContext(), R.color.black_1))
+        binding.txtTimeRecord.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.black_1
+            )
+        )
         binding.llBtnRecording.show()
         binding.imgPauseRecord.setImageResource(R.drawable.ic_pause_record)
 
@@ -161,10 +203,10 @@ class AddAudioFragment : BaseFragment() {
                 it.prepare()
                 it.start()
                 countTime()
-            }?: {
+            } ?: {
 
             }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -172,11 +214,15 @@ class AddAudioFragment : BaseFragment() {
 
     private fun pauseRecord() {
         status = STATUS_PAUSE
+
+        binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
         binding.imgPauseRecord.setImageResource(R.drawable.ic_resume_record)
     }
 
     private fun resumeRecord() {
         status = STATUS_RECORDING
+
+        binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
         binding.imgPauseRecord.setImageResource(R.drawable.ic_pause_record)
     }
 

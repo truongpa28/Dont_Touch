@@ -16,6 +16,6 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addAudio(data: AudioEntity): Long
 
-    @Query("delete from audio where id = :listData")
-    fun deleteAudio(listData: Int)
+    @Delete
+    fun deleteAudio(listData: AudioEntity)
 }

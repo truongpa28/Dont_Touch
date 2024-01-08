@@ -8,16 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentHomeBinding
 import com.fasipan.dont.touch.db.LocalDataSource
+import com.fasipan.dont.touch.ui.dialog.DialogDeleteAudio
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
+import com.fasipan.dont.touch.utils.ex.showToast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : BaseFragment() {
@@ -26,6 +31,10 @@ class HomeFragment : BaseFragment() {
 
     private val adapter by lazy {
         AudioAdapter()
+    }
+
+    private val dialogDeleteAudio by lazy {
+        DialogDeleteAudio(requireContext())
     }
 
     override fun onCreateView(
@@ -81,7 +90,7 @@ class HomeFragment : BaseFragment() {
             findNavController().navigate(R.id.action_homeFragment_to_fullBatteryFragment)
         }
 
-        adapter.setOnClickItem { item, position ->
+        adapter.setOnClickAudio { item, position ->
             if (position == 0) {
                 findNavController().navigate(R.id.action_homeFragment_to_addAudioFragment)
             } else {
@@ -92,6 +101,22 @@ class HomeFragment : BaseFragment() {
                     )
                 }
             }
+        }
+
+        adapter.setOnClickDeleteAudio { item, position ->
+            dialogDeleteAudio.show({
+                item?.let { value ->
+                    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                        LocalDataSource.deleteAudio(
+                            value
+                        )
+                        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                            requireContext().showToast("Add successfully")
+                            dialogDeleteAudio.hide()
+                        }
+                    }
+                }
+            }, requireContext(), item?.nameString ?: "")
         }
 
         binding.txtTapToActive.setOnTouchScale({

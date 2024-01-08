@@ -3,12 +3,15 @@ package com.fasipan.dont.touch.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.RecyclerView
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseAdapterRecyclerView
 import com.fasipan.dont.touch.databinding.ItemAudioBinding
 import com.fasipan.dont.touch.db.entity.AudioEntity
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
+import com.fasipan.dont.touch.utils.ex.clickSafe
+import com.fasipan.dont.touch.utils.ex.loadGlide
+import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 import com.fasipan.dont.touch.utils.ex.showOrGone
 
 class AudioAdapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioBinding>() {
@@ -23,7 +26,7 @@ class AudioAdapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioBinding>() {
     override fun bindData(binding: ItemAudioBinding, item: AudioEntity, position: Int) {
         val context = binding.root.context
 
-        Glide.with(context).load(item.icon).into(binding.imgAvatar)
+        binding.imgAvatar.loadGlide(item.icon)
 
         binding.viewChoose.showOrGone(position == SharePreferenceUtils.getPositionAudioChoose())
 
@@ -42,6 +45,30 @@ class AudioAdapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioBinding>() {
         binding.imgDelete.showOrGone(!item.isDefault)
 
         showNen(binding.viewBackground, position)
+
+        binding.viewAll.setOnTouchScale({
+            if (position == RecyclerView.NO_POSITION) {
+                return@setOnTouchScale
+            }
+            setOnClickAudio?.invoke(dataList.getOrNull(position), position)
+        }, 0.9f)
+
+        binding.imgDelete.clickSafe {
+            if (position == RecyclerView.NO_POSITION) {
+                return@clickSafe
+            }
+            setOnClickDeleteAudio?.invoke(dataList.getOrNull(position), position)
+        }
+    }
+
+    private var setOnClickAudio: ((item: AudioEntity?, position: Int) -> Unit)? = null
+    fun setOnClickAudio(listener: ((item: AudioEntity?, position: Int) -> Unit)? = null) {
+        setOnClickAudio = listener
+    }
+
+    private var setOnClickDeleteAudio: ((item: AudioEntity?, position: Int) -> Unit)? = null
+    fun setOnClickDeleteAudio(listener: ((item: AudioEntity?, position: Int) -> Unit)? = null) {
+        setOnClickDeleteAudio = listener
     }
 
     private fun showNen(view: ImageView, position: Int) {
