@@ -70,6 +70,9 @@ object SharePreferenceUtils {
     fun getVolumeAudioSound() = getInt("getVolumeAudioSound", 100)
     fun setVolumeAudioSound(data: Int) = saveKey("getVolumeAudioSound", data)
 
+    fun getSensitivity() = getInt("getSensitivityWaring", 50)
+    fun setSensitivity(data: Int) = saveKey("getSensitivityWaring", data)
+
 
     /*-----------------------------------------Language---------------------------------------------*/
     fun getCodeLanguageChoose(): String = getString("getCodeLanguageChoose", "en")
@@ -78,6 +81,10 @@ object SharePreferenceUtils {
     /*----------------------------------------Notification------------------------------------------*/
     fun isFirstRequestNotification(): Boolean = getBoolean("isFirstRequestNotification", true)
     fun setFirstRequestNotification(value: Boolean) = saveKey("isFirstRequestNotification", value)
+
+    /*---------------------------------------Light up-----------------------------------------------*/
+    fun isEnableLightUpMode(): Boolean = getBoolean("isEnableLightUpMode", true)
+    fun setEnableLightUpMode(value: Boolean) = saveKey("isEnableLightUpMode", value)
 
     /*-----------------------------------------Flash------------------------------------------------*/
     fun isEnableFlashMode(): Boolean = getBoolean("isEnableFlashMode", true)

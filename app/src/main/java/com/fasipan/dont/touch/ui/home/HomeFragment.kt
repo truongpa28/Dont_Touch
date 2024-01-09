@@ -108,7 +108,7 @@ class HomeFragment : BaseFragment() {
                 item?.let {
                     findNavController().navigate(
                         R.id.action_homeFragment_to_editAudioFragment,
-                        bundleOf("pos" to position)
+                        bundleOf("pos" to position-1)
                     )
                 }
             }

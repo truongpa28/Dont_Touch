@@ -7,8 +7,6 @@ import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
 import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -17,15 +15,11 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.databinding.ActivityCustomLockScreenBinding
-import com.fasipan.dont.touch.db.LocalDataSource
-import com.fasipan.dont.touch.utils.DataUtils
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.initVibrator
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
-import com.fasipan.dont.touch.utils.ex.show
 import com.fasipan.dont.touch.utils.ex.showAndHide
-import com.fasipan.dont.touch.utils.ex.showToast
 import com.fasipan.dont.touch.utils.ex.startVibration
 import com.fasipan.dont.touch.utils.ex.turnOffVibration
 import kotlinx.coroutines.Dispatchers
@@ -78,10 +72,6 @@ class LockActivity : AppCompatActivity() {
         val timeClose = SharePreferenceUtils.getPlayDuration()
 
         when (timeClose) {
-            0 -> {
-                playDuration(5000)
-            }
-
             1 -> {
                 playDuration(15000)
             }
@@ -92,6 +82,10 @@ class LockActivity : AppCompatActivity() {
 
             3 -> {
                 playDuration(60000)
+            }
+
+            else -> {
+                playDuration(5000)
             }
         }
 
@@ -150,6 +144,7 @@ class LockActivity : AppCompatActivity() {
                     binding.viewChop.showAndHide()
                 }
             }
+
             override fun onFinish() {}
         }
         funCount?.start()
@@ -158,7 +153,7 @@ class LockActivity : AppCompatActivity() {
     private fun playDuration(time: Long) {
         lifecycleScope.launch(Dispatchers.IO) {
             delay(time)
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
                 finishView()
             }
         }

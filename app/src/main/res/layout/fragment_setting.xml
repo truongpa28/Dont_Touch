@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.setting.SettingFragment">
 
@@ -25,9 +24,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:includeFontPadding="false"
             android:fontFamily="@font/poppins_medium_500"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="@string/setting"
             android:textColor="@color/black_1"
             android:textSize="22sp" />
@@ -58,18 +57,22 @@
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/poppins_semi_bold_600"
                 android:gravity="center_vertical"
+                android:includeFontPadding="false"
                 android:text="@string/sensitivity"
                 android:textColor="@color/black_1"
                 android:textSize="16sp" />
 
 
             <SeekBar
+                android:id="@+id/sbSensitivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp" />
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginEnd="8dp"
+                android:progressDrawable="@drawable/custom_seekbar"
+                android:thumb="@drawable/custom_thumb" />
 
             <View
                 android:layout_width="match_parent"
@@ -83,9 +86,9 @@
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="12dp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/poppins_semi_bold_600"
                 android:gravity="center_vertical"
+                android:includeFontPadding="false"
                 android:text="@string/extension"
                 android:textColor="@color/black_1"
                 android:textSize="16sp" />
@@ -100,17 +103,17 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black_1"
                     android:fontFamily="@font/poppins_medium_500"
-                    android:textSize="14sp"
+                    android:gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:text="@string/light_up_the_screen_when_searching"/>
+                    android:text="@string/light_up_the_screen_when_searching"
+                    android:textColor="@color/black_1"
+                    android:textSize="14sp" />
 
                 <com.fasipan.dont.touch.custom.CustomSwitchImageView
-                    android:id="@+id/swEnableFlash"
+                    android:id="@+id/swEnableLightUp"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -127,10 +130,32 @@
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/poppins_semi_bold_600"
+                android:gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:fontFamily="@font/poppins_semi_bold_600">
+                android:paddingHorizontal="4dp">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_flash_alert" />
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:text="@string/enable_flash_alert"
+                    android:textColor="@color/black_1"
+                    android:textSize="16sp" />
+
+                <com.fasipan.dont.touch.custom.CustomSwitchImageView
+                    android:id="@+id/swEnableFlash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -138,27 +163,28 @@
                 android:id="@+id/llSelectFlash"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:includeFontPadding="false"
                 android:layout_marginHorizontal="16dp"
-                android:fontFamily="@font/poppins_semi_bold_600">
+                android:fontFamily="@font/poppins_semi_bold_600"
+                android:includeFontPadding="false">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black_1"
                     android:fontFamily="@font/poppins_medium_500"
-                    android:textSize="14sp"
+                    android:gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:text="@string/select_flash_type"/>
+                    android:text="@string/select_flash_type"
+                    android:textColor="@color/black_1"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back"
                     android:layout_marginEnd="4dp"
-                    android:scaleX="-1"/>
+                    android:scaleX="-1"
+                    android:src="@drawable/ic_back" />
 
             </LinearLayout>
 
@@ -175,10 +201,32 @@
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/poppins_semi_bold_600"
                 android:includeFontPadding="false"
-                android:fontFamily="@font/poppins_semi_bold_600">
+                android:paddingHorizontal="4dp">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_vibrate_1" />
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semi_bold_600"
+                    android:gravity="center_vertical|left"
+                    android:includeFontPadding="false"
+                    android:text="@string/enable_vibrate"
+                    android:textColor="@color/black_1"
+                    android:textSize="16sp" />
+
+                <com.fasipan.dont.touch.custom.CustomSwitchImageView
+                    android:id="@+id/swEnableVibrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -186,27 +234,28 @@
                 android:id="@+id/llSelectVibrate"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:includeFontPadding="false"
                 android:layout_marginHorizontal="16dp"
-                android:fontFamily="@font/poppins_semi_bold_600">
+                android:fontFamily="@font/poppins_semi_bold_600"
+                android:includeFontPadding="false">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black_1"
                     android:fontFamily="@font/poppins_medium_500"
-                    android:textSize="14sp"
+                    android:gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:text="@string/select_vibrate_type"/>
+                    android:text="@string/select_vibrate_type"
+                    android:textColor="@color/black_1"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back"
                     android:layout_marginEnd="4dp"
-                    android:scaleX="-1"/>
+                    android:scaleX="-1"
+                    android:src="@drawable/ic_back" />
 
             </LinearLayout>
 
@@ -222,9 +271,9 @@
                 android:layout_height="56dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="12dp"
-                android:includeFontPadding="false"
                 android:fontFamily="@font/poppins_semi_bold_600"
                 android:gravity="center_vertical"
+                android:includeFontPadding="false"
                 android:text="@string/wallpapers"
                 android:textColor="@color/black_1"
                 android:textSize="16sp" />
@@ -235,27 +284,27 @@
                 android:layout_height="48dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="-12dp"
-                android:includeFontPadding="false"
-                android:fontFamily="@font/poppins_semi_bold_600">
+                android:fontFamily="@font/poppins_semi_bold_600"
+                android:includeFontPadding="false">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/black_1"
                     android:fontFamily="@font/poppins_medium_500"
-                    android:textSize="14sp"
+                    android:gravity="center_vertical"
                     android:includeFontPadding="false"
-                    android:text="@string/set_don_t_touch_my_phone_wallpaper"/>
+                    android:text="@string/set_don_t_touch_my_phone_wallpaper"
+                    android:textColor="@color/black_1"
+                    android:textSize="14sp" />
 
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_back"
                     android:layout_marginEnd="4dp"
-                    android:scaleX="-1"/>
+                    android:scaleX="-1"
+                    android:src="@drawable/ic_back" />
 
             </LinearLayout>
 

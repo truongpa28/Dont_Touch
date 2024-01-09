@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="tran">#00000000</color>
     <color name="tran1">#80FFFFFF</color>
 
     <color name="xam_1">#DBDBDB</color>
@@ -17,6 +18,11 @@
 
     <color name="xanh_app_1">#5D93EC</color>
     <color name="hong_app_1">#FD7D7D</color>
+
+    <color name="color_item_1_v2">#BDB2F4</color>
+    <color name="color_item_2_v2">#FDC2AB</color>
+    <color name="color_item_3_v2">#90D3FF</color>
+    <color name="color_item_4_v2">#EAB0F0</color>
 
     <color name="color_type_flash_1">#60A1ED</color>
     <color name="color_type_flash">#8090D3FF</color>

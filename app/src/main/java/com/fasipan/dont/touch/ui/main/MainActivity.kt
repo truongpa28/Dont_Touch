@@ -1,6 +1,7 @@
 package com.fasipan.dont.touch.ui.main
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseActivity
 import com.fasipan.dont.touch.databinding.ActivityMainBinding
+import com.fasipan.dont.touch.service.ChargingService
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 
 class MainActivity : BaseActivity() {
@@ -38,6 +40,15 @@ class MainActivity : BaseActivity() {
                     SharePreferenceUtils.setFirstRequestNotification(false)
                 }
             } catch (_: Exception) { }
+        }
+
+        if (SharePreferenceUtils.isAppServiceEnable()) {
+            startService(
+                Intent(
+                    applicationContext,
+                    ChargingService::class.java
+                )
+            )
         }
     }
 

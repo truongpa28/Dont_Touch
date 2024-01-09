@@ -8,6 +8,7 @@ import androidx.annotation.IntRange
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.fasipan.dont.touch.utils.ex.clickSafe
+import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 
 abstract class BaseAdapterRecyclerView<T, VB : ViewBinding>
 @JvmOverloads constructor(dataList: MutableList<T>? = null) :
@@ -33,13 +34,13 @@ abstract class BaseAdapterRecyclerView<T, VB : ViewBinding>
     private var setOnClickItem: ((item: T?, position: Int) -> Unit)? = null
     private var setOnLongClickItem: ((view: View, item: T?, position: Int) -> Unit)? = null
     open fun bindViewClick(viewHolder: BaseViewHolder<VB>, viewType: Int) {
-        viewHolder.itemView.clickSafe {
+        viewHolder.itemView.setOnTouchScale( {
             val position = viewHolder.bindingAdapterPosition
             if (position == RecyclerView.NO_POSITION) {
-                return@clickSafe
+                return@setOnTouchScale
             }
             setOnClickItem?.invoke(dataList.getOrNull(position), position)
-        }
+        }, 0.9f)
 
         viewHolder.itemView.setOnLongClickListener {
             val position = viewHolder.bindingAdapterPosition
