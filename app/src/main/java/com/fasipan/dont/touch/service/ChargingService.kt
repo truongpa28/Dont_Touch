@@ -1,5 +1,6 @@
 package com.fasipan.dont.touch.service
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -7,17 +8,76 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.IntentFilter
+import android.media.AudioFormat
+import android.media.AudioRecord
+import android.media.MediaRecorder
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.ui.splash.SplashActivity
 import com.fasipan.dont.touch.utils.Constants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class ChargingService : Service() {
+
+    private val SAMPLE_RATE = 44100
+    private val MIN_BUFFER_SIZE = AudioRecord.getMinBufferSize(
+        SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT
+    )
+    private val CLAP_THRESHOLD = 20000
+
+    private var audioRecord: AudioRecord? = null
+    private var shouldListen = false
+
     override fun onBind(p0: Intent?): IBinder? {
         return null
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        startListening()
+        return START_STICKY
+    }
+
+
+
+    @SuppressLint("MissingPermission")
+    private fun startListening() {
+        audioRecord = AudioRecord(
+            MediaRecorder.AudioSource.MIC,
+            SAMPLE_RATE,
+            AudioFormat.CHANNEL_IN_MONO,
+            AudioFormat.ENCODING_PCM_16BIT,
+            MIN_BUFFER_SIZE
+        )
+
+        shouldListen = true
+
+        GlobalScope.launch(Dispatchers.IO) {
+            audioRecord?.startRecording()
+
+            val buffer = ShortArray(MIN_BUFFER_SIZE)
+            var lastPeak = 0
+
+            while (shouldListen) {
+                audioRecord?.read(buffer, 0, MIN_BUFFER_SIZE)
+
+                val maxAmplitude = buffer.maxOrNull() ?: 0
+
+                if (maxAmplitude > CLAP_THRESHOLD && maxAmplitude - lastPeak > CLAP_THRESHOLD) {
+                    // Sự kiện vỗ tay được phát hiện
+                    // Gửi broadcast hoặc thông báo người dùng
+                    // Ví dụ: Hiển thị thông báo thông qua NotificationManager
+                    Log.e("truongpa", "startListening: lock")
+                }
+
+                lastPeak = maxAmplitude.toInt()
+            }
+        }
     }
 
     override fun onCreate() {
@@ -36,6 +96,9 @@ class ChargingService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterNetworkChanges()
+        shouldListen = false
+        audioRecord?.stop()
+        audioRecord?.release()
     }
 
     private fun unregisterNetworkChanges() {
