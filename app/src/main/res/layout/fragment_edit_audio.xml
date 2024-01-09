@@ -194,7 +194,7 @@
                     android:text="@string/sound"/>
 
                 <com.fasipan.dont.touch.custom.CustomSwitchImageView
-                    android:id="@+id/swSound"
+                    android:id="@+id/swEnableSound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"/>

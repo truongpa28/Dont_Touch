@@ -106,6 +106,14 @@ fun View.showOrHide(isShow: Boolean) {
     }
 }
 
+fun View.showAndHide() {
+    if (visibility == View.GONE) {
+        show()
+    } else {
+        gone()
+    }
+}
+
 fun View.isUnlock(isShow: Boolean) {
     alpha = if (isShow) {
         1f

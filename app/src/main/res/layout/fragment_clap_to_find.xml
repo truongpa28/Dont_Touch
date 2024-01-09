@@ -41,30 +41,39 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imgStatus"
+    <RelativeLayout
+        android:id="@+id/llStatus"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:src="@drawable/frame_active"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintWidth_percent="0.5"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintWidth_percent="0.68"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/txtStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semi_bold_600"
-        android:textSize="27sp"
-        android:includeFontPadding="false"
-        android:text="@string/activate"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toBottomOf="@+id/imgStatus"
-        app:layout_constraintEnd_toEndOf="@+id/imgStatus"
-        app:layout_constraintStart_toStartOf="@+id/imgStatus"
-        app:layout_constraintTop_toTopOf="@+id/imgStatus"/>
+        <ImageView
+            android:id="@+id/imgStatus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/frame_active"/>
+
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semi_bold_600"
+            android:textSize="27sp"
+            android:layout_centerInParent="true"
+            android:includeFontPadding="false"
+            android:text="@string/activate"
+            android:textColor="@color/xanh_app_1"
+            android:textAllCaps="true"/>
+
+    </RelativeLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

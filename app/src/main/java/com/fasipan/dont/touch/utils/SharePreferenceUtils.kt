@@ -1,5 +1,6 @@
 package com.fasipan.dont.touch.utils
 
+import android.content.ClipData
 import android.content.Context
 import android.content.SharedPreferences
 
@@ -54,6 +55,21 @@ object SharePreferenceUtils {
     fun getPositionAudioChoose() = getInt("getPositionAudioChoose", 1)
     fun setPositionAudioChoose(value: Int) = saveKey("getPositionAudioChoose", value)
 
+    fun getBatteryChanged() = getInt("getBatteryChanged", 1)
+    fun setBatteryChanged(value: Int) = saveKey("getBatteryChanged", value)
+
+    fun getPlayDuration() = getInt("getPlayDuration", 0)
+    fun setPlayDuration(value: Int) = saveKey("getPlayDuration", value)
+
+    fun getAudioWaring() = getString("getAudioWaring", "")
+    fun setAudioWaring(value: String) = saveKey("getAudioWaring", value)
+
+    fun isEnableAudioSound() = getBoolean("isEnableAudioSound", true)
+    fun setEnableAudioSound(isEnable: Boolean) = saveKey("isEnableAudioSound", isEnable)
+
+    fun getVolumeAudioSound() = getInt("getVolumeAudioSound", 100)
+    fun setVolumeAudioSound(data: Int) = saveKey("getVolumeAudioSound", data)
+
 
     /*-----------------------------------------Language---------------------------------------------*/
     fun getCodeLanguageChoose(): String = getString("getCodeLanguageChoose", "en")
@@ -101,17 +117,6 @@ object SharePreferenceUtils {
     /*--------------------------------------Unplug Battery------------------------------------------*/
     fun isEnableUnplugPin(): Boolean = getBoolean("isEnableUnplugPin", false)
     fun setEnableUnplugPin(value: Boolean) = saveKey("isEnableUnplugPin", value)
-
-
-
-    //Service
-    fun getBatteryChanged() = getInt("getBatteryChanged", 1)
-    fun setBatteryChanged(value: Int) = saveKey("getBatteryChanged", value)
-
-
-    fun getPlayDuration() = getInt("getPlayDuration", 0)
-    fun setPlayDuration(value: Int) = saveKey("getPlayDuration", value)
-
 
 
 }

@@ -15,6 +15,9 @@
     <color name="black_1_o50">#80000305</color>
     <color name="tim_app_1">#BDB2F4</color>
 
+    <color name="xanh_app_1">#5D93EC</color>
+    <color name="hong_app_1">#FD7D7D</color>
+
     <color name="color_type_flash_1">#60A1ED</color>
     <color name="color_type_flash">#8090D3FF</color>
 </resources>

@@ -45,26 +45,24 @@ object MediaPlayerUtils {
         }
     }
 
-    fun playGhostSound(context: Context, data: Int, actionDone: () -> Unit) {
+    fun playAudioWarning(context: Context) {
         try {
             releaseMediaPlayer()
             mp = MediaPlayer()
             mp?.setDataSource(
                 context,
-                Uri.parse("android.resource://${context.packageName}/$data")
+                Uri.parse(SharePreferenceUtils.getAudioWaring())
             )
             mp?.setVolume(1f, 1f)
             mp!!.prepare()
             mp!!.start()
             mp!!.setOnCompletionListener {
-                actionDone()
+                it.start()
             }
             val handler: Handler? = handler
             runnable?.let { handler?.removeCallbacks(it) }
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(context, context.getString(R.string.error), Toast.LENGTH_SHORT)
-                .show()
         }
     }
 

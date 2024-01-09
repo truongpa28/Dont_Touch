@@ -28,6 +28,7 @@ class MyApplication : Application(), Application.ActivityLifecycleCallbacks {
 
     override fun onCreate() {
         super.onCreate()
+        registerActivityLifecycleCallbacks(this)
         SharePreferenceUtils.init(this)
         LocalDataSource.init(this)
         DataAudioUtils.init(this)

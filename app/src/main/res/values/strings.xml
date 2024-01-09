@@ -114,6 +114,8 @@
     <string name="overlay_permission_enable">Overlay permission enable</string>
     <string name="title_dialog_overlay_permission">Charging animation needs permission to draw over other apps. This application is not gathering any information related to your phone.</string>
     <string name="go_to_setting">Go to setting</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="stop">Stop</string>
 
 
 </resources>

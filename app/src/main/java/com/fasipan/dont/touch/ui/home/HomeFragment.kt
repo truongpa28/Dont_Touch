@@ -1,12 +1,19 @@
 package com.fasipan.dont.touch.ui.home
 
+import android.Manifest
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,9 +23,13 @@ import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentHomeBinding
 import com.fasipan.dont.touch.db.LocalDataSource
 import com.fasipan.dont.touch.ui.dialog.DialogDeleteAudio
+import com.fasipan.dont.touch.ui.dialog.DialogOverlayPermission
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
+import com.fasipan.dont.touch.utils.ex.hasPermission
+import com.fasipan.dont.touch.utils.ex.isSdk33
+import com.fasipan.dont.touch.utils.ex.isSdkS
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 import com.fasipan.dont.touch.utils.ex.showToast
 import kotlinx.coroutines.Dispatchers
@@ -120,13 +131,67 @@ class HomeFragment : BaseFragment() {
         }
 
         binding.txtTapToActive.setOnTouchScale({
-            if (SharePreferenceUtils.isAppServiceEnable()) {
-                SharePreferenceUtils.setAppServiceEnable(false)
+            if (!Settings.canDrawOverlays(requireContext())) {
+                dialogOverlayPermission.show {
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:${requireContext().packageName}"),
+                    )
+                    startActivity(intent)
+                    isGotoSetting = true
+                }
+                actionGotoSetting = { checkNotification() }
             } else {
-                SharePreferenceUtils.setAppServiceEnable(true)
+                checkNotification()
             }
-            showChoose()
         }, 0.9f)
+    }
+
+    private var isGotoSetting = false
+
+    private var actionGotoSetting: (() -> Unit?)? = null
+
+    private val dialogOverlayPermission by lazy {
+        DialogOverlayPermission(requireContext())
+    }
+
+    private fun checkNotification() {
+        if (isSdk33() && !requireContext().hasPermission(Manifest.permission.POST_NOTIFICATIONS)) {
+            //requireContext().showToast(getString(R.string.you_must_grant_permission_to_post_notifications))
+            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            actionService()
+        }
+    }
+
+    private fun actionService() {
+        if (SharePreferenceUtils.isAppServiceEnable()) {
+            SharePreferenceUtils.setAppServiceEnable(false)
+            endServiceApp()
+        } else {
+            startServiceApp()
+            SharePreferenceUtils.setAppServiceEnable(true)
+        }
+        showChoose()
+    }
+
+    private val requestNotificationPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {
+        if (it) {
+            val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (isSdkS()) {
+                if (!alarmManager.canScheduleExactAlarms()) {
+                    actionService()
+                } else {
+                    actionService()
+                    requireContext().showToast(getString(R.string.permission_denied))
+                }
+            }
+        } else {
+            actionService()
+            requireContext().showToast(getString(R.string.permission_denied))
+        }
     }
 
     private fun showChoose() {
@@ -158,6 +223,14 @@ class HomeFragment : BaseFragment() {
             binding.llClapToFind.setBackgroundResource(R.drawable.bg_item_more_home)
         } else {
             binding.llClapToFind.background = null
+        }
+
+        if (Settings.canDrawOverlays(requireContext()) && isGotoSetting) {
+            dialogOverlayPermission.hide()
+            isGotoSetting = false
+            actionGotoSetting?.invoke()
+        } else {
+            isGotoSetting = false
         }
     }
 
