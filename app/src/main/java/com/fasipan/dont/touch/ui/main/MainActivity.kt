@@ -30,6 +30,7 @@ class MainActivity : BaseActivity() {
         navHostFragment =
             supportFragmentManager.findFragmentById(binding.containerFragment.id) as NavHostFragment
         navController = navHostFragment!!.navController
+
         if (SharePreferenceUtils.isFirstRequestNotification()) {
             try {
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2) {

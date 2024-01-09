@@ -19,4 +19,8 @@ object DataUtils {
         return String.format("%02d:%02d", count/60, count%60)
     }
 
+    fun getTimeShowFormMillisecond(count : Int) : String {
+        return String.format("%02d:%02d", 0, count/1000)
+    }
+
 }

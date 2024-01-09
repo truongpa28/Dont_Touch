@@ -126,4 +126,10 @@ object SharePreferenceUtils {
     fun setEnableUnplugPin(value: Boolean) = saveKey("isEnableUnplugPin", value)
 
 
+
+    fun isShowFramePermission(): Boolean = getBoolean("isShowFramePermission", true)
+    fun setShowFramePermission(value: Boolean) = saveKey("isShowFramePermission", value)
+
+
+
 }

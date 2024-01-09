@@ -12,7 +12,8 @@
         android:id="@+id/viewIntro"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:visibility="gone">
 
         <View
             android:id="@+id/viewTab"
@@ -98,13 +99,88 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/permissionFrame"
         android:layout_width="match_parent"
-        android:layout_weight="1"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
-        android:visibility="gone"/>
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_mic_v1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium_500"
+            android:includeFontPadding="false"
+            android:text="@string/permission"
+            android:textColor="@color/black_1"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="60dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/poppins_regular_400"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/txt_content_frame_audio_permission"
+            android:textColor="@color/black_1"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="22dp"
+            android:fontFamily="@font/poppins_semi_bold_600"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/poppins_semi_bold_600"
+                android:gravity="center_vertical|left"
+                android:includeFontPadding="false"
+                android:text="@string/record_audio_permission"
+                android:textColor="@color/black_1"
+                android:textSize="14sp" />
+
+            <com.fasipan.dont.touch.custom.CustomSwitchImageView
+                android:id="@+id/swAudioPermission"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtContinue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_btn_retry_internet"
+            android:fontFamily="@font/poppins_semi_bold_600"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            android:text="@string/continue_txt"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

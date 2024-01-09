@@ -3,16 +3,14 @@ package com.fasipan.dont.touch.ui.splash
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.databinding.ActivitySplashBinding
 import com.fasipan.dont.touch.db.LocalDataSource
-import com.fasipan.dont.touch.ui.language.LanguageActivity
 import com.fasipan.dont.touch.ui.main.MainActivity
 import com.fasipan.dont.touch.utils.data.DataAudioUtils
 import com.fasipan.dont.touch.utils.ex.openActivity

@@ -1,12 +1,17 @@
 package com.fasipan.dont.touch.ui.custom
 
 import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -21,11 +26,14 @@ import com.fasipan.dont.touch.utils.DataUtils
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.gone
+import com.fasipan.dont.touch.utils.ex.hide
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 import com.fasipan.dont.touch.utils.ex.show
 import com.fasipan.dont.touch.utils.ex.showToast
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @SuppressLint("SetTextI18n")
 class AddAudioFragment : BaseFragment() {
@@ -59,19 +67,23 @@ class AddAudioFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initView()
         initListener()
     }
 
     private fun initView() {
-        binding.imgBack.clickSafe {
-            onBack()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            binding.imgPauseRecord.hide()
         }
-
         statusNon()
     }
 
     private fun initListener() {
+
+        binding.imgBack.clickSafe {
+            onBack()
+        }
 
         binding.imgCloseRecord.setOnTouchScale({
             statusNon()
@@ -84,8 +96,27 @@ class AddAudioFragment : BaseFragment() {
         }, 0.9f)
 
         binding.imgPausePlay.setOnTouchScale({
-            MediaPlayerUtils.playAudioSoundRecord(requireContext(), outputFile) {
-
+            if (status == STATUS_PLAY_PAUSE) {
+                binding.imgPausePlay.setImageResource(R.drawable.ic_pause)
+                mediaPlayer?.let {
+                    it.start()
+                    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                        while (it.isPlaying) {
+                            withContext(Dispatchers.IO) {
+                                delay(1000)
+                            }
+                            val currentPosition = it.currentPosition
+                            binding.sbProgress.progress = currentPosition *100 / maxProgress
+                            binding.txtTimePlay.text = DataUtils.getTimeShowFormMillisecond(currentPosition)
+                        }
+                    }
+                }
+            }
+            if (status == STATUS_PLAY) {
+                binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+                mediaPlayer?.let {
+                    it.pause()
+                }
             }
         }, 0.9f)
 
@@ -129,9 +160,23 @@ class AddAudioFragment : BaseFragment() {
 
         binding.imgPauseRecord.setOnTouchScale({
             if (status == STATUS_RECORDING) {
-                pauseRecord()
+                //pauseRecord
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    myAudioRecorder?.pause()
+                }
+                status = STATUS_PAUSE
+                binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+                binding.imgPauseRecord.setImageResource(R.drawable.ic_resume_record)
+                funCount?.cancel()
             } else if (status == STATUS_PAUSE) {
-                resumeRecord()
+                //resumeRecord
+                status = STATUS_RECORDING
+                binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
+                binding.imgPauseRecord.setImageResource(R.drawable.ic_pause_record)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    myAudioRecorder?.resume()
+                }
+                countTimeRecord()
             }
         }, 0.9f)
 
@@ -153,31 +198,26 @@ class AddAudioFragment : BaseFragment() {
 
     private fun statusNon() {
         timeRecord = 0
-
         binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
-
+        binding.txtTapToRecord.show()
         binding.txtTapToRecord.setBackgroundResource(R.drawable.bg_btn_tap_to_active)
         binding.txtTapToRecord.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         binding.txtTapToRecord.isEnabled = true
         binding.txtTimeRecord.text = "00:00"
+        binding.txtTimeRecord.show()
         binding.txtTimeRecord.setTextColor(ContextCompat.getColor(requireContext(), R.color.xam_1))
         binding.llBtnRecording.gone()
-
         binding.llBtnPlayRecord.gone()
         binding.llSave.gone()
     }
 
     private fun startRecord() {
         status = STATUS_RECORDING
-
         binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
-
         binding.txtTapToRecord.setBackgroundResource(0)
         binding.txtTapToRecord.setTextColor(ContextCompat.getColor(requireContext(), R.color.xam_1))
         binding.txtTapToRecord.isEnabled = false
-
         binding.txtTimeRecord.text = "00:00"
-
         binding.txtTimeRecord.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
@@ -186,12 +226,9 @@ class AddAudioFragment : BaseFragment() {
         )
         binding.llBtnRecording.show()
         binding.imgPauseRecord.setImageResource(R.drawable.ic_pause_record)
-
         binding.llBtnPlayRecord.gone()
         binding.llSave.gone()
-
         outputFile = DataUtils.getNewPathFile(requireContext())
-
         try {
             myAudioRecorder = MediaRecorder()
             myAudioRecorder?.let {
@@ -202,48 +239,34 @@ class AddAudioFragment : BaseFragment() {
                 it.setOutputFile(outputFile)
                 it.prepare()
                 it.start()
-                countTime()
+                countTimeRecord()
             } ?: {
-
+                statusNon()
+                requireContext().showToast(getString(R.string.error))
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            statusNon()
+            requireContext().showToast(getString(R.string.error))
         }
-
-    }
-
-    private fun pauseRecord() {
-        status = STATUS_PAUSE
-
-        binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
-        binding.imgPauseRecord.setImageResource(R.drawable.ic_resume_record)
-    }
-
-    private fun resumeRecord() {
-        status = STATUS_RECORDING
-
-        binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
-        binding.imgPauseRecord.setImageResource(R.drawable.ic_pause_record)
     }
 
     private fun finishRecord() {
-        status = STATUS_PLAY
-
+        status = STATUS_PLAY_PAUSE
         funCount?.cancel()
-
         myAudioRecorder?.stop()
-
-        binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
-
+        binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+        binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
         binding.txtTapToRecord.gone()
         binding.txtTimeRecord.gone()
         binding.llBtnRecording.gone()
-
         binding.llBtnPlayRecord.show()
         binding.llSave.show()
+
+        setupPlayAudio()
     }
 
-    private fun countTime() {
+    private fun countTimeRecord() {
         funCount = object : CountDownTimer(20000L, 1000L) {
             override fun onTick(millisUntilFinished: Long) {
                 lifecycleScope.launch(Dispatchers.Main) {
@@ -257,10 +280,41 @@ class AddAudioFragment : BaseFragment() {
                 }
             }
 
-            override fun onFinish() {
-
-            }
+            override fun onFinish() {}
         }
         funCount?.start()
     }
+
+
+
+    //============================================Play==============================================
+
+    var mediaPlayer : MediaPlayer? = null
+    var maxProgress = 100
+    private fun setupPlayAudio() {
+        mediaPlayer = MediaPlayer()
+
+        binding.txtTimePlay.text = "00:00"
+
+        mediaPlayer?.let {med ->
+            med.setDataSource(requireContext(), Uri.parse(outputFile))
+            med.prepare()
+            maxProgress = med.duration
+            Log.e("truong", "setupPlayAudio: maxProgress= $maxProgress" )
+        }
+
+        binding.sbProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    mediaPlayer?.seekTo(progress * maxProgress / 100)
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+
+    }
+
 }
