@@ -99,6 +99,11 @@ class AddAudioFragment : BaseFragment() {
             if (status == STATUS_PLAY_PAUSE) {
                 binding.imgPausePlay.setImageResource(R.drawable.ic_pause)
                 mediaPlayer?.let {
+                    it.setOnCompletionListener {
+                        binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+                        binding.sbProgress.progress = 0
+                        binding.txtTimePlay.text = "00:00"
+                    }
                     it.start()
                     viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                         while (it.isPlaying) {

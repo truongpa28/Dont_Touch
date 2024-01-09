@@ -6,8 +6,13 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
@@ -23,7 +28,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
-class ChargingService : Service() {
+class ChargingService : Service(), SensorEventListener {
 
     private val SAMPLE_RATE = 44100
     private val MIN_BUFFER_SIZE = AudioRecord.getMinBufferSize(
@@ -34,16 +39,21 @@ class ChargingService : Service() {
     private var audioRecord: AudioRecord? = null
     private var shouldListen = false
 
+
+    private var mSensorManager: SensorManager? = null
+    private var mAccelerometer: Sensor? = null
+
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startListening()
+        mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        mAccelerometer = mSensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        mSensorManager?.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI)
         return START_STICKY
     }
-
-
 
     @SuppressLint("MissingPermission")
     private fun startListening() {
@@ -69,10 +79,7 @@ class ChargingService : Service() {
                 val maxAmplitude = buffer.maxOrNull() ?: 0
 
                 if (maxAmplitude > CLAP_THRESHOLD && maxAmplitude - lastPeak > CLAP_THRESHOLD) {
-                    // Sự kiện vỗ tay được phát hiện
-                    // Gửi broadcast hoặc thông báo người dùng
-                    // Ví dụ: Hiển thị thông báo thông qua NotificationManager
-                    Log.e("truongpa", "startListening: lock")
+                    sendBroadcast(Intent("action_clap"))
                 }
 
                 lastPeak = maxAmplitude.toInt()
@@ -80,6 +87,7 @@ class ChargingService : Service() {
         }
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startWithNotification() else startForeground(
@@ -90,10 +98,13 @@ class ChargingService : Service() {
             addAction(Intent.ACTION_POWER_CONNECTED)
             addAction(Intent.ACTION_POWER_DISCONNECTED)
             addAction(Intent.ACTION_BATTERY_CHANGED)
+            addAction("action_touch")
+            addAction("action_clap")
         })
     }
 
     override fun onDestroy() {
+        mSensorManager?.unregisterListener(this)
         super.onDestroy()
         unregisterNetworkChanges()
         shouldListen = false
@@ -111,6 +122,17 @@ class ChargingService : Service() {
 
     private val chargingListener by lazy {
         ChargingListener()
+    }
+
+    override fun onSensorChanged(sensorEvent: SensorEvent?) {
+        if (sensorEvent?.sensor?.type != 1 || (sensorEvent.values[0] * sensorEvent.values[0] + sensorEvent.values[1] * sensorEvent.values[1] + sensorEvent.values[1] * sensorEvent.values[1]) / 96.17039f < 1.0f) {
+            return
+        }
+        sendBroadcast(Intent("action_touch"))
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+
     }
 
 }

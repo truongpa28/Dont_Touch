@@ -28,7 +28,6 @@ class ChargingListener : BroadcastReceiver() {
             wakeLock.release()
         }
 
-
         val intent = Intent(context, LockActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
@@ -63,6 +62,14 @@ class ChargingListener : BroadcastReceiver() {
                 } else {
                     SharePreferenceUtils.setBatteryChanged(battery)
                 }
+            }
+
+            "action_touch" -> {
+                context?.let { lock(it) }
+            }
+
+            "action_clap" -> {
+                context?.let { lock(it) }
             }
         }
 

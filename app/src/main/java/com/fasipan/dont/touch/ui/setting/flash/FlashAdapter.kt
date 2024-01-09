@@ -1,5 +1,6 @@
 package com.fasipan.dont.touch.ui.setting.flash
 
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -27,9 +28,14 @@ class FlashAdapter: BaseAdapterRecyclerView<SpeedFlashModel, ItemFlashBinding>()
         binding.viewBorder.showOrGone(choose)
 
         if (choose) {
-            binding.imgRingTone.setColorFilter(ContextCompat.getColor(context, R.color.color_type_flash_1))
+            binding.imgRingTone.setColorFilter(
+                ContextCompat.getColor(
+                    context,
+                    R.color.color_type_flash_1
+                ), PorterDuff.Mode.MULTIPLY
+            )
         } else {
-            binding.imgRingTone.setColorFilter(ContextCompat.getColor(context, R.color.color_type_flash))
+            binding.imgRingTone.colorFilter = null
         }
 
         binding.imgRingTone.setImageResource(item.icon)

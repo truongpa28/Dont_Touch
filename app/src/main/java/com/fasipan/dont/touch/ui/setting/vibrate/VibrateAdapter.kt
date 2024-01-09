@@ -32,7 +32,7 @@ class VibrateAdapter : BaseAdapterRecyclerView<Int, ItemVibrateBinding>() {
                 ContextCompat.getColor(
                     context,
                     R.color.color_type_flash_1
-                ), PorterDuff.Mode.SRC_IN
+                ), PorterDuff.Mode.MULTIPLY
             )
         } else {
             binding.imgRingTone.colorFilter = null
