@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentClapToFindBinding
+import com.fasipan.dont.touch.ui.dialog.DialogClapToFind
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
@@ -16,6 +17,9 @@ class ClapToFindFragment : BaseFragment() {
 
     private lateinit var binding: FragmentClapToFindBinding
 
+    private val dialogClapToFind by lazy {
+        DialogClapToFind(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,10 +67,13 @@ class ClapToFindFragment : BaseFragment() {
         binding.llStatus.setOnTouchScale({
             if (SharePreferenceUtils.isEnableClapToFind()) {
                 SharePreferenceUtils.setEnableClapToFind(false)
+                showViewUi()
             } else {
-                SharePreferenceUtils.setEnableClapToFind(true)
+                dialogClapToFind.show {
+                    SharePreferenceUtils.setEnableClapToFind(true)
+                    showViewUi()
+                }
             }
-            showViewUi()
         }, 0.9f)
     }
 }

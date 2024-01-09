@@ -116,6 +116,8 @@
     <string name="go_to_setting">Go to setting</string>
     <string name="permission_denied">Permission denied</string>
     <string name="stop">Stop</string>
+    <string name="detects_when_user_claps">Detects when user claps</string>
+    <string name="defaut">Defaut</string>
 
 
 </resources>

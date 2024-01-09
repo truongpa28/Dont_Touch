@@ -18,15 +18,17 @@ class ChargingListener : BroadcastReceiver() {
 
     @SuppressLint("InvalidWakeLockTag")
     private fun lock(context: Context) {
-        val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        val wakeLock = powerManager.newWakeLock(
-            PowerManager.SCREEN_BRIGHT_WAKE_LOCK or
-                    PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG"
-        )
-        wakeLock.acquire()
-        wakeLock.release()
+        if (SharePreferenceUtils.isEnableLightUpMode()) {
+            val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+            val wakeLock = powerManager.newWakeLock(
+                PowerManager.SCREEN_BRIGHT_WAKE_LOCK or
+                        PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG"
+            )
+            wakeLock.acquire()
+            wakeLock.release()
+        }
 
-        MediaPlayerUtils.stopMediaPlayer()
+
         val intent = Intent(context, LockActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)

@@ -8,9 +8,9 @@ object LanguageUtils {
 
     val listLanguage = listOf<LanguageModel>(
         LanguageModel(R.drawable.ic_flag_gb, "English", "en"),
-        LanguageModel(R.drawable.ic_flag_ww, "Arabic", "ar"),
-        LanguageModel(R.drawable.ic_flag_ww, "Bangla", "bn"),
-        LanguageModel(R.drawable.ic_flag_ww, "Persian", "fa"),
+        LanguageModel(R.drawable.ic_flag_ar, "Arabic", "ar"),
+        LanguageModel(R.drawable.ic_flag_bn, "Bengali", "bn"),
+        LanguageModel(R.drawable.ic_flag_fa, "Persian", "fa"),
         LanguageModel(R.drawable.ic_flag_fr, "French", "fr"),
         LanguageModel(R.drawable.ic_flag_de, "German", "de"),
         LanguageModel(R.drawable.ic_flag_in, "Hindi", "hi"),

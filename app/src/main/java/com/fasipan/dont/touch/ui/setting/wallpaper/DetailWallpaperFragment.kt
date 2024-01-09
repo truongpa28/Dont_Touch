@@ -16,7 +16,10 @@ import com.fasipan.dont.touch.databinding.FragmentWallpaperBinding
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.data.WallpaperUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
+import com.fasipan.dont.touch.utils.ex.gone
+import com.fasipan.dont.touch.utils.ex.loadGlide
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
+import com.fasipan.dont.touch.utils.ex.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,13 +47,15 @@ class DetailWallpaperFragment : BaseFragment() {
 
     private fun initView() {
         position = arguments?.getInt("position")?:0
-        Glide.with(requireContext()).load(WallpaperUtils.listWallpaper[position]).into(binding.imgWallpaper)
+        binding.imgWallpaper.loadGlide(WallpaperUtils.listWallpaper[position])
     }
 
     private var isSetting = false
 
     private fun initListener() {
-        binding.imgBack.clickSafe { onBack() }
+        binding.imgBack.clickSafe {
+            onBack()
+        }
         binding.txtDone.setOnTouchScale({
             if (!isSetting) {
                 isSetting = true
@@ -60,6 +65,7 @@ class DetailWallpaperFragment : BaseFragment() {
     }
 
     private fun setDeviceWallpaper(data : Int) {
+        binding.prgLoading.show()
         val wallpaperManager = WallpaperManager.getInstance(requireContext())
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -72,6 +78,7 @@ class DetailWallpaperFragment : BaseFragment() {
                         getString(R.string.wallpaper_has_been_set_successfully),
                         Toast.LENGTH_SHORT
                     ).show()
+                    binding.prgLoading.gone()
                     onBack()
                 }
             } catch (e: IOException) {
@@ -83,6 +90,7 @@ class DetailWallpaperFragment : BaseFragment() {
                         getString(R.string.setting_wallpaper_failed),
                         Toast.LENGTH_SHORT
                     ).show()
+                    binding.prgLoading.gone()
                 }
             }
         }
