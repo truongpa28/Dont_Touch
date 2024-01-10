@@ -270,6 +270,7 @@ class EditAudioFragment : BaseFragment() {
 
         adapter.setOnClickItem { item, position ->
             MediaPlayerUtils.stopMediaPlayer()
+            binding.imgPlay.setImageResource(R.drawable.ic_play_edit_1)
             audioEntity = item
             positionChoose = position
             showUiAudioChoose()

@@ -2,6 +2,7 @@ package com.fasipan.dont.touch.service
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.KeyguardManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -10,6 +11,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -20,12 +22,18 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.IBinder
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.ui.splash.SplashActivity
 import com.fasipan.dont.touch.utils.Constants
+import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,16 +54,44 @@ class ChargingService : Service(), SensorEventListener {
     private var mSensorManager: SensorManager? = null
     private var mAccelerometer: Sensor? = null
 
+
+    private var isOnScreen = MutableLiveData(true)
+    private lateinit var someObserver: LifecycleObserver
+
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        startListening()
+        initListener()
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mAccelerometer = mSensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         mSensorManager?.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_UI)
         return START_STICKY
+    }
+
+    private fun initListener() {
+        isOnScreen.value = (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isKeyguardLocked
+        val sharedPreferences = getSharedPreferences("data_app_ghost_radar", Context.MODE_PRIVATE)
+
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == "isScreenOn") {
+                Log.e("truongpa", "initListener: isScreenOn Change" )
+                if (isLockShow()) {
+                    startListening()
+                } else {
+                    shouldListen = false
+                    audioRecord?.stop()
+                    audioRecord?.release()
+                }
+            }
+        }
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    private fun isLockShow() : Boolean {
+        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        return keyguardManager.isKeyguardLocked
     }
 
 
@@ -67,6 +103,13 @@ class ChargingService : Service(), SensorEventListener {
         ) {
             return
         }
+
+        if (!isLockShow()) return
+
+        if (shouldListen) return
+
+        Log.e("truongpa", "startListening: running" )
+
         audioRecord = AudioRecord(
             MediaRecorder.AudioSource.MIC,
             SAMPLE_RATE,
@@ -74,25 +117,23 @@ class ChargingService : Service(), SensorEventListener {
             AudioFormat.ENCODING_PCM_16BIT,
             MIN_BUFFER_SIZE
         )
-
         shouldListen = true
 
         GlobalScope.launch(Dispatchers.IO) {
             audioRecord?.startRecording()
-
             val buffer = ShortArray(MIN_BUFFER_SIZE)
             var lastPeak = 0
-
             while (shouldListen) {
-                audioRecord?.read(buffer, 0, MIN_BUFFER_SIZE)
-
-                val maxAmplitude = buffer.maxOrNull() ?: 0
-
-                if (maxAmplitude > CLAP_THRESHOLD && maxAmplitude - lastPeak > CLAP_THRESHOLD) {
-                    sendBroadcast(Intent("action_clap"))
+                try {
+                    audioRecord?.read(buffer, 0, MIN_BUFFER_SIZE)
+                    val maxAmplitude = buffer.maxOrNull() ?: 0
+                    if (maxAmplitude > CLAP_THRESHOLD && maxAmplitude - lastPeak > CLAP_THRESHOLD) {
+                        sendBroadcast(Intent("action_clap"))
+                    }
+                    lastPeak = maxAmplitude.toInt()
+                } catch (e : Exception) {
+                    e.printStackTrace()
                 }
-
-                lastPeak = maxAmplitude.toInt()
             }
         }
     }
@@ -110,6 +151,8 @@ class ChargingService : Service(), SensorEventListener {
             addAction(Intent.ACTION_BATTERY_CHANGED)
             addAction("action_touch")
             addAction("action_clap")
+            addAction(Intent.ACTION_SCREEN_ON)
+            addAction(Intent.ACTION_SCREEN_OFF)
         })
     }
 

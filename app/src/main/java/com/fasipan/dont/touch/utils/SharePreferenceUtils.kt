@@ -49,6 +49,10 @@ object SharePreferenceUtils {
 
 
     /*----------------------------------------App Service------------------------------------------*/
+    fun isScreenOn(): Boolean = getBoolean("isScreenOn", true)
+    fun setScreenOn(value: Boolean) = saveKey("isScreenOn", value)
+
+
     fun isAppServiceEnable(): Boolean = getBoolean("isAppServiceEnable", false)
     fun setAppServiceEnable(value: Boolean) = saveKey("isAppServiceEnable", value)
 

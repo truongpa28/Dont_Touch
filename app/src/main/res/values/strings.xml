@@ -135,6 +135,7 @@
     <string name="title_more_help">Installation Guide</string>
     <string name="title_setting_more_help">If the warning screen can’t pop up on the lock screen, you can try to set “lock screen display”.</string>
     <string name="add_successfully">Add successfully</string>
+    <string name="vibrate">Vibrate</string>
 
 
 </resources>

@@ -349,6 +349,7 @@
                         android:id="@+id/btnHelpInformation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:src="@drawable/ic_tip_battery"
                         android:layout_marginEnd="4dp"/>
 

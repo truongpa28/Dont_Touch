@@ -16,6 +16,7 @@ import com.fasipan.dont.touch.databinding.FragmentSettingBinding
 import com.fasipan.dont.touch.ui.dialog.DialogMoreHelp
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
+import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 
 class SettingFragment : BaseFragment() {
 
@@ -109,9 +110,9 @@ class SettingFragment : BaseFragment() {
             dialogInformationMoreHelp.show()
         }
 
-        binding.btnSetNow.clickSafe {
+        binding.btnSetNow.setOnTouchScale({
             dialogMoreHelp.show()
-        }
+        }, 0.92f)
 
     }
 
