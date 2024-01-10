@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import com.fasipan.dont.touch.ui.dialog.DialogQuitEditing
 import com.fasipan.dont.touch.ui.dialog.DialogQuitRecording
 import com.fasipan.dont.touch.ui.dialog.DialogSaveRecord
 import com.fasipan.dont.touch.utils.DataUtils
-import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.gone
 import com.fasipan.dont.touch.utils.ex.hide
@@ -86,6 +84,16 @@ class AddAudioFragment : BaseFragment() {
     }
 
     override fun onBack() {
+
+        if (mediaPlayer?.isPlaying == true) {
+            status = STATUS_PLAY_PAUSE
+            binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+            binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+            mediaPlayer?.let {
+                it.pause()
+            }
+        }
+
         if (status == STATUS_PLAY || status == STATUS_PLAY_PAUSE) {
             dialogQuitEditing.show(actionQuit = {
                 findNavController().popBackStack()
@@ -163,7 +171,10 @@ class AddAudioFragment : BaseFragment() {
                 binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
                 mediaPlayer?.let {
                     it.setOnCompletionListener {
-
+                        /*it.start()
+                        status = STATUS_PLAY
+                        binding.imgPausePlay.setImageResource(R.drawable.ic_pause)
+                        binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)*/
                     }
                     it.start()
                     viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
@@ -172,14 +183,12 @@ class AddAudioFragment : BaseFragment() {
                                 delay(200)
                             }
                             val currentPosition = it.currentPosition
-                            binding.sbProgress.progress = currentPosition *100 / maxProgress
-                            binding.txtTimePlay.text = DataUtils.getTimeShowFormMillisecond(currentPosition)
+                            binding.sbProgress.progress = currentPosition * 100 / maxProgress
                             if (!it.isPlaying) {
                                 if (status != STATUS_PLAY_PAUSE) {
                                     binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
                                     binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
                                     binding.sbProgress.progress = 0
-                                    binding.txtTimePlay.text = "00:00"
                                 }
                                 status = STATUS_PLAY_PAUSE
                             }
@@ -197,6 +206,14 @@ class AddAudioFragment : BaseFragment() {
         }, 0.9f)
 
         binding.txtSave.setOnTouchScale({
+            if (mediaPlayer?.isPlaying == true) {
+                status = STATUS_PLAY_PAUSE
+                binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+                binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+                mediaPlayer?.let {
+                    it.pause()
+                }
+            }
             dialogSaveRecord.show {
                 if (it.trim().isEmpty()) {
                     requireContext().showToast(getString(R.string.name_must_not_null))
@@ -226,7 +243,11 @@ class AddAudioFragment : BaseFragment() {
 
         binding.txtRetry.setOnTouchScale({
             statusNon()
-            MediaPlayerUtils.stopMediaPlayer()
+            try {
+                mediaPlayer?.stop()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }, 0.9f)
 
 
@@ -260,7 +281,11 @@ class AddAudioFragment : BaseFragment() {
 
     override fun onPause() {
         super.onPause()
-        MediaPlayerUtils.stopMediaPlayer()
+        try {
+            mediaPlayer?.stop()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private var funCount: CountDownTimer? = null
@@ -365,32 +390,26 @@ class AddAudioFragment : BaseFragment() {
     }
 
 
-
     //============================================Play==============================================
 
-    var mediaPlayer : MediaPlayer? = null
+    var mediaPlayer: MediaPlayer? = null
     var maxProgress = 100
     private fun setupPlayAudio() {
         mediaPlayer = MediaPlayer()
 
         binding.txtTimePlay.text = "00:00"
 
-        mediaPlayer?.let {med ->
+        mediaPlayer?.let { med ->
             med.setDataSource(requireContext(), Uri.parse(outputFile))
             med.prepare()
             maxProgress = med.duration
-            Log.e("truong", "setupPlayAudio: maxProgress= $maxProgress" )
+            binding.txtTimePlay.text = DataUtils.getTimeShowFormMillisecond(maxProgress)
         }
 
         binding.sbProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     mediaPlayer?.seekTo(progress * maxProgress / 100)
-                    binding.txtTimePlay.text = mediaPlayer?.currentPosition?.let {
-                        DataUtils.getTimeShowFormMillisecond(
-                            it
-                        )
-                    }?: "00:00"
                 }
             }
 
@@ -399,6 +418,36 @@ class AddAudioFragment : BaseFragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
+
+        status = STATUS_PLAY
+        binding.imgPausePlay.setImageResource(R.drawable.ic_pause)
+        binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
+        mediaPlayer?.let {
+            it.setOnCompletionListener {
+                /*it.start()
+                status = STATUS_PLAY
+                binding.imgPausePlay.setImageResource(R.drawable.ic_pause)
+                binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)*/
+            }
+            it.start()
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                while (it.isPlaying) {
+                    withContext(Dispatchers.IO) {
+                        delay(200)
+                    }
+                    val currentPosition = it.currentPosition
+                    binding.sbProgress.progress = currentPosition * 100 / maxProgress
+                    if (!it.isPlaying) {
+                        if (status != STATUS_PLAY_PAUSE) {
+                            binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+                            binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+                            binding.sbProgress.progress = 0
+                        }
+                        status = STATUS_PLAY_PAUSE
+                    }
+                }
+            }
+        }
     }
 
 }

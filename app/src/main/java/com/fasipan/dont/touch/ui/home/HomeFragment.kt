@@ -25,6 +25,7 @@ import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentHomeBinding
 import com.fasipan.dont.touch.db.LocalDataSource
+import com.fasipan.dont.touch.ui.dialog.DialogActiveSuccessfully
 import com.fasipan.dont.touch.ui.dialog.DialogDeleteAudio
 import com.fasipan.dont.touch.ui.dialog.DialogOverlayPermission
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
@@ -49,6 +50,10 @@ class HomeFragment : BaseFragment() {
 
     private val dialogDeleteAudio by lazy {
         DialogDeleteAudio(requireContext())
+    }
+
+    private val dialogActiveSuccessfully by lazy {
+        DialogActiveSuccessfully(requireContext())
     }
 
     override fun onCreateView(
@@ -183,6 +188,7 @@ class HomeFragment : BaseFragment() {
         } else {
             startServiceApp()
             SharePreferenceUtils.setAppServiceEnable(true)
+            dialogActiveSuccessfully.show()
         }
         showChoose()
     }

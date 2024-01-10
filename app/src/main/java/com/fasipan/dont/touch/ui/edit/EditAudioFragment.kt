@@ -268,6 +268,7 @@ class EditAudioFragment : BaseFragment() {
         }
 
         adapter.setOnClickItem { item, position ->
+            MediaPlayerUtils.stopMediaPlayer()
             audioEntity = item
             positionChoose = position
             showUiAudioChoose()

@@ -125,6 +125,8 @@
     <string name="continue_txt">Continue</string>
     <string name="delete_successfully">Delete successfully</string>
     <string name="recording">Recording</string>
+    <string name="ok_txt">OK</string>
+    <string name="active_successfully">Active Successfully</string>
 
 
 </resources>
