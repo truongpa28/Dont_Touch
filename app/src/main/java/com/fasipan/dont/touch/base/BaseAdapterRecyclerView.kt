@@ -116,6 +116,14 @@ abstract class BaseAdapterRecyclerView<T, VB : ViewBinding>
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    open fun setDataListWithAction(data: Collection<T>, action:()->Unit) {
+        dataList.clear()
+        dataList.addAll(data)
+        notifyDataSetChanged()
+        action()
+    }
+
     /**
      * add more data in last base and notify, using for load more
      * @author doanvv

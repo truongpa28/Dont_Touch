@@ -43,7 +43,7 @@ class SplashActivity : AppCompatActivity() {
         ))
 
         Handler(Looper.getMainLooper()).postDelayed({
-            openActivity(MainActivity::class.java, true)
+            openActivity(LanguageActivity::class.java, true)
         }, 1500L)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {

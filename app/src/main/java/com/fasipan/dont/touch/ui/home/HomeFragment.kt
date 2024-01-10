@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,8 @@ class HomeFragment : BaseFragment() {
         return binding.root
     }
 
+    private var isFirstOpen = true
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -75,7 +78,12 @@ class HomeFragment : BaseFragment() {
         binding.txtName.isSelected = true
         binding.rcyAudio.adapter = adapter
         LocalDataSource.getAllAudio().observe(viewLifecycleOwner) {
-            adapter.setDataList(it)
+            adapter.setDataListWithAction(it) {
+                if (isFirstOpen) {
+                    isFirstOpen = false
+                    binding.nestView.scrollTo(0,0)
+                }
+            }
 
             val itemChoose = it[SharePreferenceUtils.getPositionAudioChoose()]
             binding.txtName.text = if (itemChoose.isDefault) {
@@ -91,6 +99,7 @@ class HomeFragment : BaseFragment() {
             SharePreferenceUtils.setAudioWaring(itemChoose.sound)
 
             Glide.with(requireContext()).load(itemChoose.icon).into(binding.imgAvatar)
+
         }
     }
 

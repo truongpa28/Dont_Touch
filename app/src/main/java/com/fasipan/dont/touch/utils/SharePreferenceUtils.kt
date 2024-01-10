@@ -58,7 +58,7 @@ object SharePreferenceUtils {
     fun getBatteryChanged() = getInt("getBatteryChanged", 1)
     fun setBatteryChanged(value: Int) = saveKey("getBatteryChanged", value)
 
-    fun getPlayDuration() = getInt("getPlayDuration", 0)
+    fun getPlayDuration() = getInt("getPlayDuration", 1)
     fun setPlayDuration(value: Int) = saveKey("getPlayDuration", value)
 
     fun getAudioWaring() = getString("getAudioWaring", "")

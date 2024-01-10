@@ -132,7 +132,7 @@ class AddAudioFragment : BaseFragment() {
                                 )
                             )
                             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                                requireContext().showToast("Add successfully")
+                                requireContext().showToast(getString(R.string.add_successfully))
                                 dialogSaveRecord.hide()
                                 findNavController().popBackStack()
                             }

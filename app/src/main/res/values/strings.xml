@@ -127,6 +127,14 @@
     <string name="recording">Recording</string>
     <string name="ok_txt">OK</string>
     <string name="active_successfully">Active Successfully</string>
+    <string name="more_help">More Help</string>
+    <string name="lock_screen_display">Lock screen display</string>
+    <string name="set_now">Set now</string>
+    <string name="content_information_more_help">Xiami, Oppo, Vivo, OnePlus and other mobile phones need to enable \"Lock screen\" permission to display warning screen on lock screen page normally.</string>
+    <string name="content_more_help"><![CDATA[In App Info> Other permissions> Allow Show on Lock screen/ Open new windows while running in the background (If your device does not have this permission, you can ignore it)]]></string>
+    <string name="title_more_help">Installation Guide</string>
+    <string name="title_setting_more_help">If the warning screen can’t pop up on the lock screen, you can try to set “lock screen display”.</string>
+    <string name="add_successfully">Add successfully</string>
 
 
 </resources>

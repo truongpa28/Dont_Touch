@@ -154,10 +154,12 @@ class IntroActivity : BaseActivity() {
                 when (position) {
                     (TAB_COUNT - 1) -> {
                         binding.txtNext.text = getString(R.string.start)
+                        binding.txtNext.setTextColor(ContextCompat.getColor(this@IntroActivity, R.color.color_type_flash_1))
                     }
 
                     else -> {
                         binding.txtNext.text = getString(R.string.next)
+                        binding.txtNext.setTextColor(ContextCompat.getColor(this@IntroActivity, R.color.black_1))
                     }
                 }
             }

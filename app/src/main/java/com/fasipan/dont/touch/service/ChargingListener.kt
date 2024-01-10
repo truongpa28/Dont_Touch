@@ -47,7 +47,14 @@ class ChargingListener : BroadcastReceiver() {
         when (intent?.action) {
             ACTION_POWER_CONNECTED -> {
                 try {
-                    SharePreferenceUtils.setBatteryChanged(context?.getBatteryLevel() ?: 0)
+                    val battery = context?.getBatteryLevel() ?: 0
+                    SharePreferenceUtils.setBatteryChanged(battery)
+                    if (battery == 100) {
+                        SharePreferenceUtils.setBatteryChanged(battery)
+                        if (SharePreferenceUtils.isEnableFullPin()) {
+                            context?.let { lock(it, true) }
+                        }
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

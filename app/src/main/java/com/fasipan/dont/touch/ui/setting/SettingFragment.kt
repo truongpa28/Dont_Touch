@@ -1,6 +1,9 @@
 package com.fasipan.dont.touch.ui.setting
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +13,7 @@ import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.custom.OnSwitchStateChangeListener
 import com.fasipan.dont.touch.databinding.FragmentSettingBinding
+import com.fasipan.dont.touch.ui.dialog.DialogMoreHelp
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 
@@ -100,5 +104,39 @@ class SettingFragment : BaseFragment() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+
+        binding.btnHelpInformation.clickSafe {
+            dialogInformationMoreHelp.show()
+        }
+
+        binding.btnSetNow.clickSafe {
+            dialogMoreHelp.show()
+        }
+
+    }
+
+    private val dialogInformationMoreHelp by lazy {
+        DialogMoreHelp(
+            requireContext(),
+            R.string.app_name,
+            R.string.content_information_more_help,
+            R.string.ok_txt
+        ) {
+
+        }
+    }
+
+    private val dialogMoreHelp by lazy {
+        DialogMoreHelp(
+            requireContext(),
+            R.string.title_more_help,
+            R.string.content_more_help,
+            R.string.go_to_setting
+        ) {
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            val uri = Uri.fromParts("package", requireContext().packageName, null)
+            intent.data = uri
+            startActivity(intent)
+        }
     }
 }

@@ -310,6 +310,76 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more_help"
+                android:fontFamily="@font/poppins_regular_400"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="36dp"/>
+
+            <LinearLayout
+                android:id="@+id/llMoreHelp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_setting_more_help"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="4dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_semi_bold_600"
+                        android:text="@string/lock_screen_display"
+                        android:textColor="@color/black_1"
+                        android:includeFontPadding="false"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/btnHelpInformation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_tip_battery"
+                        android:layout_marginEnd="4dp"/>
+
+                    <TextView
+                        android:id="@+id/btnSetNow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_btn_retry_internet"
+                        android:fontFamily="@font/poppins_semi_bold_600"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="10dp"
+                        android:text="@string/set_now"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/poppins_regular_400"
+                    android:text="@string/title_setting_more_help"
+                    android:textColor="#80000305"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
