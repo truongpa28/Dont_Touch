@@ -12,6 +12,7 @@ import com.fasipan.dont.touch.utils.ex.openActivity
 import com.fasipan.dont.touch.utils.ex.setLanguageApp
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 import com.fasipan.dont.touch.utils.ex.showOrGone
+import com.fasipan.dont.touch.utils.ex.showOrHide
 
 class LanguageActivity : BaseActivity(), ClickLanguageListener {
 
@@ -68,7 +69,7 @@ class LanguageActivity : BaseActivity(), ClickLanguageListener {
     private fun initView() {
         adapter.setChoose(LanguageUtils.getPositionChoose(this))
         binding.rcyLanguage.adapter = adapter
-        binding.imgBack.showOrGone(isSetting)
+        binding.imgBack.showOrHide(isSetting)
     }
 
     override fun clickLanguage(position: Int, languageModel: LanguageModel) {

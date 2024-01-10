@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -80,6 +83,8 @@ class HomeFragment : BaseFragment() {
                 itemChoose.nameString
             }
 
+            SharePreferenceUtils.setAudioWaring(itemChoose.sound)
+
             Glide.with(requireContext()).load(itemChoose.icon).into(binding.imgAvatar)
         }
     }
@@ -103,7 +108,11 @@ class HomeFragment : BaseFragment() {
 
         adapter.setOnClickAudio { item, position ->
             if (position == 0) {
-                findNavController().navigate(R.id.action_homeFragment_to_addAudioFragment)
+                if (isHasAudio()) {
+                    findNavController().navigate(R.id.action_homeFragment_to_addAudioFragment)
+                } else {
+                    requestAudioPermissions()
+                }
             } else {
                 item?.let {
                     findNavController().navigate(
@@ -122,7 +131,10 @@ class HomeFragment : BaseFragment() {
                             value
                         )
                         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                            requireContext().showToast("Add successfully")
+                            requireContext().showToast(getString(R.string.delete_successfully))
+                            if (position == SharePreferenceUtils.getPositionAudioChoose()) {
+                                SharePreferenceUtils.setPositionAudioChoose(1)
+                            }
                             dialogDeleteAudio.hide()
                         }
                     }
@@ -255,5 +267,46 @@ class HomeFragment : BaseFragment() {
                 isClickBack = false
             }, 1000L)
         }
+    }
+
+    private fun requestAudioPermissions() {
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                requireActivity(),
+                Manifest.permission.RECORD_AUDIO
+            )
+        ) {
+            requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+        } else {
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            intent.data = Uri.fromParts("package", requireContext().packageName, null)
+            requestOpenSettingLauncher.launch(intent)
+        }
+    }
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                findNavController().navigate(R.id.action_homeFragment_to_addAudioFragment)
+            } else {
+                requireContext().showToast(getString(R.string.permission_denied))
+            }
+        }
+
+    private val requestOpenSettingLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            findNavController().navigate(R.id.action_homeFragment_to_addAudioFragment)
+        } else {
+            requireContext().showToast(getString(R.string.permission_denied))
+        }
+    }
+
+    private fun isHasAudio(): Boolean {
+        return requireContext().hasPermission(Manifest.permission.RECORD_AUDIO)
     }
 }

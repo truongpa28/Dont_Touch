@@ -99,7 +99,6 @@ class IntroActivity : BaseActivity() {
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-
             binding.swAudioPermission.setSwitchState(isGranted)
             binding.swAudioPermission.isEnabled = !isGranted
         }
@@ -109,7 +108,7 @@ class IntroActivity : BaseActivity() {
     ) {
         if (ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.CAMERA
+                Manifest.permission.RECORD_AUDIO
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             binding.swAudioPermission.setSwitchState(true)

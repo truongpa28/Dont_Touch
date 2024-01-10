@@ -104,6 +104,7 @@
     <string name="quit_title">Quit?</string>
     <string name="quit_txt">Quit</string>
     <string name="txt_content_quit_editing">You are editing. Do you want to close and cancel all editing?</string>
+    <string name="txt_content_quit_recording">You are recording. Are you sure you want to quit?</string>
     <string name="enter_file_name">Enter file name</string>
     <string name="cancel">Cancel</string>
     <string name="name_must_not_null">Name must not null.</string>
@@ -122,6 +123,7 @@
     <string name="txt_content_frame_audio_permission">The app need to use Permission to provide the ability to record</string>
     <string name="record_audio_permission">Record audio permission</string>
     <string name="continue_txt">Continue</string>
+    <string name="delete_successfully">Delete successfully</string>
 
 
 </resources>

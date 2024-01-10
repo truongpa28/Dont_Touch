@@ -21,6 +21,7 @@ import com.fasipan.dont.touch.databinding.FragmentAddAudioBinding
 import com.fasipan.dont.touch.db.LocalDataSource
 import com.fasipan.dont.touch.db.entity.AudioEntity
 import com.fasipan.dont.touch.ui.dialog.DialogQuitEditing
+import com.fasipan.dont.touch.ui.dialog.DialogQuitRecording
 import com.fasipan.dont.touch.ui.dialog.DialogSaveRecord
 import com.fasipan.dont.touch.utils.DataUtils
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
@@ -57,6 +58,11 @@ class AddAudioFragment : BaseFragment() {
     }
 
 
+    private val dialogQuitRecording by lazy {
+        DialogQuitRecording(requireContext())
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,6 +85,61 @@ class AddAudioFragment : BaseFragment() {
         statusNon()
     }
 
+    override fun onBack() {
+        if (status == STATUS_PLAY || status == STATUS_PLAY_PAUSE) {
+            dialogQuitEditing.show(actionQuit = {
+                findNavController().popBackStack()
+            }, actionSave = {
+                dialogSaveRecord.show {
+                    if (it.trim().isEmpty()) {
+                        requireContext().showToast(getString(R.string.name_must_not_null))
+                    } else {
+                        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                            LocalDataSource.addAudio(
+                                AudioEntity(
+                                    0,
+                                    outputFile,
+                                    R.drawable.avt_audio,
+                                    R.string.app_name,
+                                    it,
+                                    false
+                                )
+                            )
+                            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                                requireContext().showToast("Add successfully")
+                                dialogSaveRecord.hide()
+                                findNavController().popBackStack()
+                            }
+                        }
+                    }
+                }
+            })
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                if (status == STATUS_RECORDING || status == STATUS_PAUSE) {
+                    if (status == STATUS_RECORDING) {
+                        //pauseRecord
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            myAudioRecorder?.pause()
+                        }
+                        status = STATUS_PAUSE
+                        binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+                        binding.imgPauseRecord.setImageResource(R.drawable.ic_resume_record)
+                        funCount?.cancel()
+                    }
+                    dialogQuitRecording.show {
+                        findNavController().popBackStack()
+                    }
+                } else {
+                    findNavController().popBackStack()
+                }
+            } else {
+                findNavController().popBackStack()
+            }
+        }
+
+    }
+
     private fun initListener() {
 
         binding.imgBack.clickSafe {
@@ -96,29 +157,39 @@ class AddAudioFragment : BaseFragment() {
         }, 0.9f)
 
         binding.imgPausePlay.setOnTouchScale({
-            if (status == STATUS_PLAY_PAUSE) {
+            if (mediaPlayer?.isPlaying == false) {
+                status = STATUS_PLAY
                 binding.imgPausePlay.setImageResource(R.drawable.ic_pause)
+                binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
                 mediaPlayer?.let {
                     it.setOnCompletionListener {
-                        binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
-                        binding.sbProgress.progress = 0
-                        binding.txtTimePlay.text = "00:00"
+
                     }
                     it.start()
                     viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                         while (it.isPlaying) {
                             withContext(Dispatchers.IO) {
-                                delay(1000)
+                                delay(200)
                             }
                             val currentPosition = it.currentPosition
                             binding.sbProgress.progress = currentPosition *100 / maxProgress
                             binding.txtTimePlay.text = DataUtils.getTimeShowFormMillisecond(currentPosition)
+                            if (!it.isPlaying) {
+                                if (status != STATUS_PLAY_PAUSE) {
+                                    binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+                                    binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+                                    binding.sbProgress.progress = 0
+                                    binding.txtTimePlay.text = "00:00"
+                                }
+                                status = STATUS_PLAY_PAUSE
+                            }
                         }
                     }
                 }
-            }
-            if (status == STATUS_PLAY) {
+            } else {
+                status = STATUS_PLAY_PAUSE
                 binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+                binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
                 mediaPlayer?.let {
                     it.pause()
                 }
@@ -202,6 +273,7 @@ class AddAudioFragment : BaseFragment() {
     var myAudioRecorder: MediaRecorder? = null
 
     private fun statusNon() {
+        status = STATUS_NON
         timeRecord = 0
         binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
         binding.txtTapToRecord.show()
@@ -312,6 +384,11 @@ class AddAudioFragment : BaseFragment() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     mediaPlayer?.seekTo(progress * maxProgress / 100)
+                    binding.txtTimePlay.text = mediaPlayer?.currentPosition?.let {
+                        DataUtils.getTimeShowFormMillisecond(
+                            it
+                        )
+                    }?: "00:00"
                 }
             }
 
