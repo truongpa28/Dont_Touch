@@ -24,6 +24,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/llApplyV1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="12dp"
+            android:gravity="center_vertical"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_tich_v2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semi_bold_600"
+                android:text="@string/apply"
+                android:textColor="#5E95EC"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/txtTitle"
             android:layout_width="0dp"
@@ -31,12 +57,16 @@
             android:layout_weight="1"
             android:fontFamily="@font/poppins_medium_500"
             android:gravity="center"
+            android:paddingHorizontal="4dp"
             android:includeFontPadding="false"
             android:text="@string/flash_type"
             android:textColor="@color/black_1"
             android:textSize="22sp"
-            app:layout_constraintEnd_toStartOf="@+id/imgView"
-            app:layout_constraintStart_toEndOf="@+id/imgBack"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            app:layout_constraintEnd_toStartOf="@+id/llApply"
+            app:layout_constraintStart_toEndOf="@+id/llApplyV1"
             tools:layout_editor_absoluteY="4dp" />
 
         <ImageView

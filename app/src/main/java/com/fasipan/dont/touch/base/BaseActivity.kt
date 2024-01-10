@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.ui.dialog.DialogNoInternet
+import com.fasipan.dont.touch.utils.DataUtils
 import com.fasipan.dont.touch.utils.ex.isInternetAvailable
 
 @SuppressLint("SourceLockedOrientationActivity")
@@ -60,8 +61,10 @@ abstract class BaseActivity() : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == ACTION_NETWORK_CHANGE) {
                 if (isInternetAvailable()) {
+                    DataUtils.isInternet.value = true
                     dialogNoInternet.hide()
                 } else {
+                    DataUtils.isInternet.value = false
                     dialogNoInternet.show()
                 }
             }

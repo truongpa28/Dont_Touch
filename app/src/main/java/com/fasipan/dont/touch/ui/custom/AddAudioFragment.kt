@@ -74,6 +74,24 @@ class AddAudioFragment : BaseFragment() {
 
         initView()
         initListener()
+
+        DataUtils.isInternet.observe(viewLifecycleOwner) {
+            if (!it) {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    myAudioRecorder?.stop()
+                }
+                if (status == STATUS_RECORDING) {
+                    binding.txtTapToRecord.text = getString(R.string.tap_to_record)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        myAudioRecorder?.pause()
+                    }
+                    status = STATUS_PAUSE
+                    binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+                    binding.imgPauseRecord.setImageResource(R.drawable.ic_resume_record)
+                    funCount?.cancel()
+                }
+            }
+        }
     }
 
     private fun initView() {
@@ -281,10 +299,13 @@ class AddAudioFragment : BaseFragment() {
 
     override fun onPause() {
         super.onPause()
-        try {
-            mediaPlayer?.stop()
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (mediaPlayer?.isPlaying == true) {
+            status = STATUS_PLAY_PAUSE
+            binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+            binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+            mediaPlayer?.let {
+                it.pause()
+            }
         }
     }
 
@@ -394,6 +415,7 @@ class AddAudioFragment : BaseFragment() {
 
     var mediaPlayer: MediaPlayer? = null
     var maxProgress = 100
+    var statusOnTrack = 0
     private fun setupPlayAudio() {
         mediaPlayer = MediaPlayer()
 
@@ -413,9 +435,37 @@ class AddAudioFragment : BaseFragment() {
                 }
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                statusOnTrack = status
+            }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                if (statusOnTrack == STATUS_PLAY) {
+                    status = STATUS_PLAY
+                    binding.imgPausePlay.setImageResource(R.drawable.ic_pause)
+                    binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
+                    mediaPlayer?.let {
+                        it.start()
+                        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                            while (it.isPlaying) {
+                                withContext(Dispatchers.IO) {
+                                    delay(200)
+                                }
+                                val currentPosition = it.currentPosition
+                                binding.sbProgress.progress = currentPosition * 100 / maxProgress
+                                if (!it.isPlaying) {
+                                    if (status != STATUS_PLAY_PAUSE) {
+                                        binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
+                                        binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
+                                        binding.sbProgress.progress = 0
+                                    }
+                                    status = STATUS_PLAY_PAUSE
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         })
 
 

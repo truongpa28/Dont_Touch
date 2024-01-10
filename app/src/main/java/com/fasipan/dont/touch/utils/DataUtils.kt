@@ -2,11 +2,14 @@ package com.fasipan.dont.touch.utils
 
 import android.content.Context
 import android.os.Environment
+import androidx.lifecycle.MutableLiveData
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 object DataUtils {
+
+    var isInternet = MutableLiveData(true)
 
     fun getNewPathFile(mContext: Context) : String {
         val sdf = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())

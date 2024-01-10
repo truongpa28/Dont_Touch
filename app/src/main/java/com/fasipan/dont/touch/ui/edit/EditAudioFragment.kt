@@ -155,6 +155,7 @@ class EditAudioFragment : BaseFragment() {
 
 
     private fun initView() {
+        binding.txtTitle.isSelected = true
         binding.rcyAudio.adapter = adapter
         LocalDataSource.getAllAudio().observe(viewLifecycleOwner) {
             audioEntity = it[positionChoose+1]
