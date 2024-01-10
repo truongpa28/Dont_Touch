@@ -64,6 +64,7 @@ class UnplugBatteryFragment : BaseFragment() {
 
 
     private fun initView() {
+        binding.txtTitle.isSelected = true
         binding.swEnableUnplugPin.setSwitchState(SharePreferenceUtils.isEnableUnplugPin())
     }
 

@@ -2,6 +2,7 @@ package com.fasipan.dont.touch.ui.splash
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -9,6 +10,7 @@ import android.os.Looper
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.databinding.ActivitySplashBinding
 import com.fasipan.dont.touch.db.LocalDataSource
 import com.fasipan.dont.touch.ui.language.LanguageActivity
@@ -31,8 +33,17 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.txtTitle.setColor(
+            listOf<Int>(
+            Color.parseColor("#62ACEE"),
+            Color.parseColor("#62ACEE"),
+            Color.parseColor("#5779E9"),
+            Color.parseColor("#5779E9"),
+            Color.parseColor("#5779E9"),
+        ))
+
         Handler(Looper.getMainLooper()).postDelayed({
-            openActivity(LanguageActivity::class.java, true)
+            openActivity(MainActivity::class.java, true)
         }, 1500L)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {

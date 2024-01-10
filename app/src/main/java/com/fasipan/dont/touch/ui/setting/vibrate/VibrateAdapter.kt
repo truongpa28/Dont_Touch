@@ -41,7 +41,7 @@ class VibrateAdapter : BaseAdapterRecyclerView<Int, ItemVibrateBinding>() {
         binding.txtName.text = if (position == 0) {
             context.getString(R.string.defaut)
         } else {
-            String.format("%s %02d", context.getString(R.string.defaut), position)
+            String.format("%s %02d", context.getString(R.string.defaut), position + 1)
         }
 
         binding.imgRingTone.setImageResource(item)

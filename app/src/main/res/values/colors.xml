@@ -26,4 +26,8 @@
 
     <color name="color_type_flash_1">#3EA4FF</color>
     <color name="color_type_flash">#8090D3FF</color>
+
+
+    <color name="color_m_gr_11">#62ACEE</color>
+    <color name="color_m_gr_12">#5779E9</color>
 </resources>

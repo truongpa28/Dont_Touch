@@ -27,18 +27,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <TextView
+    <com.fasipan.dont.touch.custom.TextViewOutline
         android:id="@+id/txtName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_semi_bold_600"
-        android:textSize="16sp"
+        android:fontFamily="@font/poppins_extra_bold_800"
+        android:textSize="18sp"
         android:gravity="center"
         android:includeFontPadding="false"
         android:textColor="@color/black_1"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
         android:ellipsize="marquee"
+        app:outlineColor="@color/white"
+        app:outlineWidth="1"
         android:background="@drawable/bg_txt_item_audio"
         android:paddingHorizontal="6dp"
         app:layout_constraintBottom_toBottomOf="parent"

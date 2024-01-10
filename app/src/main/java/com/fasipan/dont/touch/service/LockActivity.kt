@@ -176,7 +176,7 @@ class LockActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (!MediaPlayerUtils.isPlaying()) {
+        if (!MediaPlayerUtils.isPlaying() && SharePreferenceUtils.isEnableAudioSound()) {
             MediaPlayerUtils.playAudioWarning(this)
         }
     }

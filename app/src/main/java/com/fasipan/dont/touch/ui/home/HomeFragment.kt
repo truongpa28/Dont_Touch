@@ -96,15 +96,15 @@ class HomeFragment : BaseFragment() {
         binding.imgSetting.clickSafe {
             findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
         }
-        binding.llClapToFind.clickSafe {
+        binding.llClapToFind.setOnTouchScale({
             findNavController().navigate(R.id.action_homeFragment_to_clapToFindFragment)
-        }
-        binding.llUnplugCharged.clickSafe {
+        }, 0.9f)
+        binding.llUnplugCharged.setOnTouchScale({
             findNavController().navigate(R.id.action_homeFragment_to_unplugBatteryFragment)
-        }
-        binding.llFullCharged.clickSafe {
+        }, 0.9f)
+        binding.llFullCharged.setOnTouchScale({
             findNavController().navigate(R.id.action_homeFragment_to_fullBatteryFragment)
-        }
+        }, 0.9f)
 
         adapter.setOnClickAudio { item, position ->
             if (position == 0) {

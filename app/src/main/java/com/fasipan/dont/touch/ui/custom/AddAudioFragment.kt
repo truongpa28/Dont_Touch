@@ -236,7 +236,7 @@ class AddAudioFragment : BaseFragment() {
 
         binding.imgPauseRecord.setOnTouchScale({
             if (status == STATUS_RECORDING) {
-                //pauseRecord
+                binding.txtTapToRecord.text = getString(R.string.tap_to_record)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     myAudioRecorder?.pause()
                 }
@@ -245,7 +245,7 @@ class AddAudioFragment : BaseFragment() {
                 binding.imgPauseRecord.setImageResource(R.drawable.ic_resume_record)
                 funCount?.cancel()
             } else if (status == STATUS_PAUSE) {
-                //resumeRecord
+                binding.txtTapToRecord.text = getString(R.string.recording)
                 status = STATUS_RECORDING
                 binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
                 binding.imgPauseRecord.setImageResource(R.drawable.ic_pause_record)
@@ -278,6 +278,7 @@ class AddAudioFragment : BaseFragment() {
         binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
         binding.txtTapToRecord.show()
         binding.txtTapToRecord.setBackgroundResource(R.drawable.bg_btn_tap_to_active)
+        binding.txtTapToRecord.text = getString(R.string.tap_to_record)
         binding.txtTapToRecord.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         binding.txtTapToRecord.isEnabled = true
         binding.txtTimeRecord.text = "00:00"
@@ -291,6 +292,7 @@ class AddAudioFragment : BaseFragment() {
     private fun startRecord() {
         status = STATUS_RECORDING
         binding.imgIcon.setImageResource(R.drawable.mic_auto_v2)
+        binding.txtTapToRecord.text = getString(R.string.recording)
         binding.txtTapToRecord.setBackgroundResource(0)
         binding.txtTapToRecord.setTextColor(ContextCompat.getColor(requireContext(), R.color.xam_1))
         binding.txtTapToRecord.isEnabled = false
