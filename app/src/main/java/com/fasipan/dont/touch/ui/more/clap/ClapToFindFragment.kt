@@ -1,17 +1,29 @@
 package com.fasipan.dont.touch.ui.more.clap
 
+import android.Manifest
+import android.app.AlarmManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentClapToFindBinding
 import com.fasipan.dont.touch.ui.dialog.DialogClapToFind
+import com.fasipan.dont.touch.ui.dialog.DialogOverlayPermission
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
+import com.fasipan.dont.touch.utils.ex.hasPermission
+import com.fasipan.dont.touch.utils.ex.isSdk33
+import com.fasipan.dont.touch.utils.ex.isSdkS
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
+import com.fasipan.dont.touch.utils.ex.showToast
 
 class ClapToFindFragment : BaseFragment() {
 
@@ -69,11 +81,75 @@ class ClapToFindFragment : BaseFragment() {
                 SharePreferenceUtils.setEnableClapToFind(false)
                 showViewUi()
             } else {
-                dialogClapToFind.show {
-                    SharePreferenceUtils.setEnableClapToFind(true)
-                    showViewUi()
+                if (!Settings.canDrawOverlays(requireContext())) {
+                    dialogOverlayPermission.show {
+                        val intent = Intent(
+                            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                            Uri.parse("package:${requireContext().packageName}"),
+                        )
+                        startActivity(intent)
+                        isGotoSetting = true
+                    }
+                    actionGotoSetting = { checkNotification() }
+                } else {
+                    checkNotification()
                 }
             }
         }, 0.9f)
+    }
+
+    private var isGotoSetting = false
+
+    private var actionGotoSetting: (() -> Unit?)? = null
+
+    private val dialogOverlayPermission by lazy {
+        DialogOverlayPermission(requireContext())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Settings.canDrawOverlays(requireContext()) && isGotoSetting) {
+            dialogOverlayPermission.hide()
+            isGotoSetting = false
+            actionGotoSetting?.invoke()
+        } else {
+            isGotoSetting = false
+        }
+    }
+
+    private fun checkNotification() {
+        if (isSdk33() && !requireContext().hasPermission(Manifest.permission.POST_NOTIFICATIONS)) {
+            //requireContext().showToast(getString(R.string.you_must_grant_permission_to_post_notifications))
+            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            actionService()
+        }
+    }
+
+    private val requestNotificationPermission = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {
+        if (it) {
+            val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (isSdkS()) {
+                if (!alarmManager.canScheduleExactAlarms()) {
+                    actionService()
+                } else {
+                    actionService()
+                    requireContext().showToast(getString(R.string.permission_denied))
+                }
+            }
+        } else {
+            actionService()
+            requireContext().showToast(getString(R.string.permission_denied))
+        }
+    }
+
+    private fun actionService() {
+        dialogClapToFind.show {
+            startServiceApp()
+            SharePreferenceUtils.setEnableClapToFind(true)
+            showViewUi()
+        }
     }
 }

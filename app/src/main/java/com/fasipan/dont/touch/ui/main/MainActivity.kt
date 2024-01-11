@@ -43,7 +43,11 @@ class MainActivity : BaseActivity() {
             } catch (_: Exception) { }
         }
 
-        if (SharePreferenceUtils.isAppServiceEnable()) {
+        if (SharePreferenceUtils.isAppServiceEnable()
+            || SharePreferenceUtils.isEnableClapToFind()
+            || SharePreferenceUtils.isEnableUnplugPin()
+            || SharePreferenceUtils.isEnableFullPin()
+            ) {
             startService(
                 Intent(
                     applicationContext,
