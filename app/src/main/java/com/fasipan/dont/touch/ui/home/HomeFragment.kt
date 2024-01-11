@@ -27,6 +27,7 @@ import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentHomeBinding
 import com.fasipan.dont.touch.db.LocalDataSource
 import com.fasipan.dont.touch.ui.dialog.DialogActiveSuccessfully
+import com.fasipan.dont.touch.ui.dialog.DialogAudioPermission
 import com.fasipan.dont.touch.ui.dialog.DialogDeleteAudio
 import com.fasipan.dont.touch.ui.dialog.DialogOverlayPermission
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
@@ -55,6 +56,10 @@ class HomeFragment : BaseFragment() {
 
     private val dialogActiveSuccessfully by lazy {
         DialogActiveSuccessfully(requireContext())
+    }
+
+    private val dialogAudioPermission by lazy {
+        DialogAudioPermission(requireContext())
     }
 
     override fun onCreateView(
@@ -292,9 +297,11 @@ class HomeFragment : BaseFragment() {
         ) {
             requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
         } else {
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            intent.data = Uri.fromParts("package", requireContext().packageName, null)
-            requestOpenSettingLauncher.launch(intent)
+            dialogAudioPermission.show {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", requireContext().packageName, null)
+                requestOpenSettingLauncher.launch(intent)
+            }
         }
     }
 

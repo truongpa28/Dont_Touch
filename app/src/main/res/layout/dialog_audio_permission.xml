@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="40dp"
+    android:background="@drawable/bg_dialog_no_internet"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="24dp"
+    android:paddingBottom="36dp">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:fontFamily="@font/poppins_medium_500"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/record_audio_permission"
+        android:textColor="@color/black_1"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/txtContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/poppins_medium_500"
+        android:gravity="center"
+        android:text="@string/txt_content_dialog_audio_permission"
+        android:textColor="#80000305"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/btnAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn_retry_internet"
+        android:fontFamily="@font/poppins_semi_bold_600"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="26dp"
+        android:paddingVertical="10dp"
+        android:text="@string/go_to_setting"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+
+</LinearLayout>
