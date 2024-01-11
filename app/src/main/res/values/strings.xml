@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Don\'t Touch</string>
+    <string name="app_name" translatable="false">Don\'t Touch</string>
 
     <string name="retry_internet">Retry internet</string>
     <string name="click_back">Click back again to exit</string>
@@ -8,7 +8,6 @@
 
     <string name="select_language">Select language</string>
     <string name="done">Done</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="intro_title_1">Activate</string>
     <string name="intro_content_1">Nobody touch your phone</string>
