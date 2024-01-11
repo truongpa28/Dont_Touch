@@ -437,6 +437,7 @@ class AddAudioFragment : BaseFragment() {
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 statusOnTrack = status
+                binding.imgPausePlay.setImageResource(R.drawable.ic_resume)
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
