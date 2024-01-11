@@ -20,6 +20,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ScrollView
+import androidx.core.widget.NestedScrollView
 import com.bumptech.glide.Glide
 import com.fasipan.dont.touch.utils.Constants
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
@@ -252,4 +254,13 @@ fun ImageView.loadGlide(src: Any) {
     Glide.with(this.context)
         .load(src)
         .into(this)
+}
+
+fun ScrollView.scrollToTop() {
+    this.fullScroll(ScrollView.FOCUS_UP)
+}
+
+fun NestedScrollView.scrollToTop() {
+    fullScroll(ScrollView.FOCUS_UP)
+    smoothScrollTo(0, 0)
 }

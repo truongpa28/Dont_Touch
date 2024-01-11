@@ -36,6 +36,7 @@ import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.hasPermission
 import com.fasipan.dont.touch.utils.ex.isSdk33
 import com.fasipan.dont.touch.utils.ex.isSdkS
+import com.fasipan.dont.touch.utils.ex.scrollToTop
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 import com.fasipan.dont.touch.utils.ex.showToast
 import kotlinx.coroutines.Dispatchers
@@ -87,7 +88,11 @@ class HomeFragment : BaseFragment() {
             adapter.setDataListWithAction(it) {
                 if (isFirstOpen) {
                     isFirstOpen = false
-                    binding.nestView.scrollTo(0,0)
+                    Handler(Looper.myLooper()!!).postDelayed({
+                        binding.nestView.post {
+                            binding.nestView.scrollToTop()
+                        }
+                    }, 200L)
                 }
             }
 
