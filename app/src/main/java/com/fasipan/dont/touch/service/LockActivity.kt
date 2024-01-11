@@ -1,7 +1,6 @@
 package com.fasipan.dont.touch.service
 
 import android.annotation.SuppressLint
-import android.app.KeyguardManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -51,16 +50,22 @@ class LockActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
         super.onCreate(savedInstanceState)
-        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        /*val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
         val keyguardLock = keyguardManager.newKeyguardLock(Context.KEYGUARD_SERVICE)
-        keyguardLock.disableKeyguard()
+        keyguardLock.disableKeyguard()*/
         val mLayoutParams = if (Build.VERSION.SDK_INT >= 26) {
+            val flag = if (SharePreferenceUtils.isEnableLightUpMode()) {
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+            } else {
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+            }
             WindowManager.LayoutParams(
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 /*WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                        or */WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                        or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-                        or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                        or *///WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                //or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                flag,
                 PixelFormat.TRANSLUCENT
             )
         } else {

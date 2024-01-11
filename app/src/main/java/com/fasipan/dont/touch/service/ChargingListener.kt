@@ -10,8 +10,10 @@ import android.content.Intent.ACTION_POWER_CONNECTED
 import android.content.Intent.ACTION_POWER_DISCONNECTED
 import android.content.Intent.ACTION_SCREEN_OFF
 import android.content.Intent.ACTION_SCREEN_ON
+import android.os.Build
 import android.os.PowerManager
 import android.util.Log
+import android.view.WindowManager
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.getBatteryLevel
 
@@ -22,22 +24,33 @@ class ChargingListener : BroadcastReceiver() {
     private fun lock(context: Context, boqua: Boolean = false) {
         val keyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
         Log.e("isKeyguardLocked", "${keyguardManager.isKeyguardLocked}")
-        if (keyguardManager.isKeyguardLocked || boqua) {
-            if (SharePreferenceUtils.isEnableLightUpMode()) {
-                val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-                val wakeLock = powerManager.newWakeLock(
-                    PowerManager.SCREEN_BRIGHT_WAKE_LOCK or
-                            PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG"
-                )
-                wakeLock.acquire()
-                wakeLock.release()
-            }
 
-            val intent = Intent(context, LockActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            Log.e("truongpa", "Call_startActivity")
-            context.startActivity(intent)
+        if (!boqua) {
+            if (!keyguardManager.isKeyguardLocked) {
+                return
+            }
+        }
+
+        val intent = Intent(context, LockActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        Log.e("truongpa", "Call_startActivity")
+        context.startActivity(intent)
+    }
+
+    fun turnOnScreen(context: Context) {
+        val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager?
+
+        if (powerManager != null) {
+            // Kiểm tra xem màn hình đã tắt chưa
+            if (!powerManager.isScreenOn) {
+                val wakeLock = powerManager.newWakeLock(
+                    PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.PARTIAL_WAKE_LOCK,
+                    "MyApp:ScreenLock"
+                )
+
+                wakeLock.acquire(60 * 1000L)
+            }
         }
     }
 

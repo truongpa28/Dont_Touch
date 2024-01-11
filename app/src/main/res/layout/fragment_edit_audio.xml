@@ -31,6 +31,7 @@
             android:layout_marginEnd="12dp"
             android:gravity="center_vertical"
             android:visibility="invisible"
+            android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -164,6 +165,7 @@
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_play_edit_1"
                                 android:padding="35dp"
+                                android:foreground="?android:attr/selectableItemBackground"
                                 android:layout_marginStart="-10dp"
                                 android:layout_marginTop="-10dp"
                                 android:background="@drawable/bg_oval_white" />
