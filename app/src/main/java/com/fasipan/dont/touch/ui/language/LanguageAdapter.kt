@@ -14,6 +14,7 @@ import com.fasipan.dont.touch.model.LanguageModel
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.gone
 import com.fasipan.dont.touch.utils.ex.show
+import com.google.android.material.card.MaterialCardView
 
 class LanguageAdapter(
     var context: Context,
@@ -24,7 +25,7 @@ class LanguageAdapter(
     private var position = 0
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var viewAll: RelativeLayout = view.findViewById(R.id.viewAll)
+        var viewAll: MaterialCardView = view.findViewById(R.id.viewAll)
         var imgSelected: ImageView = view.findViewById(R.id.imgSelected)
         var imgNoSelect: ImageView = view.findViewById(R.id.imgNoSelect)
         var txtName: TextView = view.findViewById(R.id.txtName)
