@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Don\'t Touch</string>
+    <string name="app_name" translatable="false">Don’t touch my phone</string>
 
     <string name="retry_internet">Retry internet</string>
     <string name="click_back">Click back again to exit</string>

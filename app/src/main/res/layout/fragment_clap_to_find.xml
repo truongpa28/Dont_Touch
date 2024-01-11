@@ -63,13 +63,13 @@
             android:id="@+id/txtStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semi_bold_600"
-            android:textSize="27sp"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_semi_bold_600"
             android:includeFontPadding="false"
-            android:text="@string/activate"
+            android:text="Activate"
+            android:textAllCaps="true"
             android:textColor="@color/xanh_app_1"
-            android:textAllCaps="true"/>
+            android:textSize="27sp" />
 
     </RelativeLayout>
 

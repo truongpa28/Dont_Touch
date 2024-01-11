@@ -1,6 +1,7 @@
 package com.fasipan.dont.touch.ui.more.clap
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
@@ -51,10 +52,11 @@ class ClapToFindFragment : BaseFragment() {
         showViewUi()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showViewUi() {
         if (SharePreferenceUtils.isEnableClapToFind()) {
             binding.imgStatus.setImageResource(R.drawable.frame_stop)
-            binding.txtStatus.text = getString(R.string.stop)
+            binding.txtStatus.text = "Stop"
             binding.txtStatus.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -63,7 +65,7 @@ class ClapToFindFragment : BaseFragment() {
             )
         } else {
             binding.imgStatus.setImageResource(R.drawable.frame_active)
-            binding.txtStatus.text = getString(R.string.activate)
+            binding.txtStatus.text = "Activate"
             binding.txtStatus.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -79,6 +81,7 @@ class ClapToFindFragment : BaseFragment() {
         binding.llStatus.setOnTouchScale({
             if (SharePreferenceUtils.isEnableClapToFind()) {
                 SharePreferenceUtils.setEnableClapToFind(false)
+                endServiceApp()
                 showViewUi()
             } else {
                 if (!Settings.canDrawOverlays(requireContext())) {

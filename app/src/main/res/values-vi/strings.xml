@@ -19,7 +19,7 @@
     <string name="stop">Dừng lại</string>
     <string name="intro_content_2">Bất cứ khi nào ai đó chạm vào điện thoại</string>
     <string name="intro_content_3">Hiệu ứng âm thanh báo động chuông</string>
-    <string name="sensitivity">Nhạy cảm</string>
+    <string name="sensitivity">Độ nhạy</string>
     <string name="over_heat">Làm nóng</string>
     <string name="hello">Xin chào</string>
     <string name="setting_wallpaper_failed">Đặt hình nền không thành công!</string>
@@ -33,10 +33,10 @@
     <string name="title_how_to_use_1">Nhấn vào âm thanh để kích hoạt tính năng Không chạm vào điện thoại của tôi.</string>
     <string name="add_successfully">Thêm thành công</string>
     <string name="save">Cứu</string>
-    <string name="skip">Nhảy</string>
+    <string name="skip">Bỏ qua</string>
     <string name="dead">Chết</string>
     <string name="how_to_use">Cách sử dụng</string>
-    <string name="battery">Ắc quy</string>
+    <string name="battery">Pin</string>
     <string name="capacity">Dung tích</string>
     <string name="temperature">Nhiệt độ</string>
     <string name="select_language">Chọn ngôn ngữ</string>
@@ -82,7 +82,7 @@
     <string name="send_feedback">Gửi phản hồi</string>
     <string name="full">Đầy</string>
     <string name="clap_to_find">Vỗ tay để tìm</string>
-    <string name="full_charged_home">Đầy\nĐã sạc</string>
+    <string name="full_charged_home">Đầy\npin</string>
     <string name="next">Kế tiếp</string>
     <string name="no">KHÔNG</string>
     <string name="continue_txt">Tiếp tục</string>
@@ -95,7 +95,7 @@
     <string name="active_successfully">Kích hoạt thành công</string>
     <string name="more_app">Nhiều ứng dụng hơn</string>
     <string name="duration">Khoảng thời gian</string>
-    <string name="unplug_charged_home">Rút phích cắm\nĐã sạc</string>
+    <string name="unplug_charged_home">Rút \ndây sạc</string>
     <string name="txt_content_dialog_audio_permission">Bạn phải cho phép quyền ghi âm để sử dụng tính năng này.</string>
     <string name="over_voltage">Quá điện áp</string>
     <string name="cat">Con mèo</string>

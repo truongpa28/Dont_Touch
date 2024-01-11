@@ -82,6 +82,9 @@ object SharePreferenceUtils {
     fun getCodeLanguageChoose(): String = getString("getCodeLanguageChoose", "en")
     fun setCodeLanguageChoose(value: String) = saveKey("getCodeLanguageChoose", value)
 
+    fun isFirstChooseLanguage(): Boolean = getBoolean("isFirstChooseLanguage", true)
+    fun setFirstChooseLanguage(value: Boolean) = saveKey("isFirstChooseLanguage", value)
+
     /*----------------------------------------Notification------------------------------------------*/
     fun isFirstRequestNotification(): Boolean = getBoolean("isFirstRequestNotification", true)
     fun setFirstRequestNotification(value: Boolean) = saveKey("isFirstRequestNotification", value)

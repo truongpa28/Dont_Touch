@@ -49,7 +49,8 @@ class SettingFragment : BaseFragment() {
     }
 
     private fun initView() {
-
+        binding.txtTitleMoreHelp.isSelected = true
+        binding.btnSetNow.isSelected = true
     }
 
     private fun initListener() {

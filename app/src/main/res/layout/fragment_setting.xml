@@ -106,6 +106,7 @@
                     android:fontFamily="@font/poppins_medium_500"
                     android:gravity="center_vertical"
                     android:includeFontPadding="false"
+                    android:paddingEnd="8dp"
                     android:text="@string/light_up_the_screen_when_searching"
                     android:textColor="@color/black_1"
                     android:textSize="14sp" />
@@ -336,12 +337,16 @@
                     android:paddingVertical="4dp">
 
                     <TextView
+                        android:id="@+id/txtTitleMoreHelp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/poppins_semi_bold_600"
                         android:text="@string/lock_screen_display"
                         android:textColor="@color/black_1"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
                         android:includeFontPadding="false"
                         android:textSize="16sp" />
 
@@ -360,6 +365,10 @@
                         android:background="@drawable/bg_btn_retry_internet"
                         android:fontFamily="@font/poppins_semi_bold_600"
                         android:gravity="center"
+                        android:maxWidth="150dp"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
                         android:includeFontPadding="false"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="10dp"

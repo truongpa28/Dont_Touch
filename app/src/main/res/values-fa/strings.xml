@@ -30,7 +30,7 @@
     <string name="title_how_to_use_3">قبل از فعال کردن، می توانید چشمک زن، حجم، مدت زمان را به دلخواه تنظیم کنید.</string>
     <string name="extension">افزونه</string>
     <string name="custom_sound">صدای سفارشی</string>
-    <string name="title_how_to_use_1">روی صدا ضربه بزنید تا قابلیت Don\'t touch my phone را فعال کنید.</string>
+    <string name="title_how_to_use_1">برای فعال کردن روی صدا ضربه بزنید ویژگی گوشی من را لمس نکنید.</string>
     <string name="add_successfully">با موفقیت اضافه شود</string>
     <string name="save">صرفه جویی</string>
     <string name="skip">پرش کنید</string>
@@ -90,7 +90,7 @@
     <string name="recording">در حال ضبط</string>
     <string name="cold">سرد</string>
     <string name="error">خطا</string>
-    <string name="enable_flash_alert">Flash Alert را فعال کنید</string>
+    <string name="enable_flash_alert">هشدار فلش را فعال کنید</string>
     <string name="delete">حذف</string>
     <string name="active_successfully">فعال با موفقیت</string>
     <string name="more_app">برنامه بیشتر</string>

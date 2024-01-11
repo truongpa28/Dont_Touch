@@ -65,6 +65,7 @@
             android:gravity="center_vertical"
             android:text="@string/enable_alarm_on_full_battery"
             android:layout_weight="1"
+            android:paddingEnd="8dp"
             android:fontFamily="@font/poppins_semi_bold_600"
             android:textColor="@color/black_1"
             android:textSize="16sp"

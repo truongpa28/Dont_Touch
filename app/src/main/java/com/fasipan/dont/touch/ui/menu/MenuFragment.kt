@@ -35,7 +35,7 @@ class MenuFragment : BaseFragment() {
     }
 
     private fun initView() {
-
+        binding.txtTitle.isSelected = true
     }
 
     private fun initListener() {

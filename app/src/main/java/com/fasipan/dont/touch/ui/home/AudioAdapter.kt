@@ -53,12 +53,12 @@ class AudioAdapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioBinding>() {
             setOnClickAudio?.invoke(dataList.getOrNull(position), position)
         }, 0.9f)
 
-        binding.imgDelete.clickSafe {
+        binding.imgDelete.setOnTouchScale({
             if (position == RecyclerView.NO_POSITION) {
-                return@clickSafe
+                return@setOnTouchScale
             }
             setOnClickDeleteAudio?.invoke(dataList.getOrNull(position), position)
-        }
+        }, 0.9f)
     }
 
     private var setOnClickAudio: ((item: AudioEntity?, position: Int) -> Unit)? = null

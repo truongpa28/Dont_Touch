@@ -142,11 +142,13 @@ class UnplugBatteryFragment : BaseFragment() {
                     SharePreferenceUtils.setEnableUnplugPin(true)
                 } else {
                     SharePreferenceUtils.setEnableUnplugPin(false)
+                    endServiceApp()
                     requireContext().showToast(getString(R.string.permission_denied))
                 }
             }
         } else {
             SharePreferenceUtils.setEnableUnplugPin(false)
+            endServiceApp()
             requireContext().showToast(getString(R.string.permission_denied))
         }
     }

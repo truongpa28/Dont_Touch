@@ -81,6 +81,7 @@ class HomeFragment : BaseFragment() {
     private fun initView() {
         binding.txtTapToActive.isSelected = true
         binding.txtName.isSelected = true
+        binding.txtTitle.isSelected = true
         binding.rcyAudio.adapter = adapter
         LocalDataSource.getAllAudio().observe(viewLifecycleOwner) {
             adapter.setDataListWithAction(it) {

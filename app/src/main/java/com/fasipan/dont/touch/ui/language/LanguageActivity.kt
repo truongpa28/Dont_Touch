@@ -1,5 +1,6 @@
 package com.fasipan.dont.touch.ui.language
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import com.fasipan.dont.touch.base.BaseActivity
@@ -66,10 +67,16 @@ class LanguageActivity : BaseActivity(), ClickLanguageListener {
         finish()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView() {
         adapter.setChoose(LanguageUtils.getPositionChoose(this))
         binding.rcyLanguage.adapter = adapter
         binding.imgBack.showOrHide(isSetting)
+
+        if (SharePreferenceUtils.isFirstChooseLanguage()) {
+            binding.txtTitle.text = "Select Language"
+            binding.txtDone.text = "Done"
+        }
     }
 
     override fun clickLanguage(position: Int, languageModel: LanguageModel) {

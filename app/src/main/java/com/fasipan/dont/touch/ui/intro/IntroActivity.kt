@@ -37,6 +37,7 @@ class IntroActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        SharePreferenceUtils.setFirstChooseLanguage(false)
 
         binding.viewIntro.show()
         binding.permissionFrame.gone()

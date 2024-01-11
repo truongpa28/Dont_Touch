@@ -35,10 +35,10 @@ abstract class BaseFragment() : Fragment() {
     }
 
     fun endServiceApp() {
-        if (SharePreferenceUtils.isAppServiceEnable()
-            && SharePreferenceUtils.isEnableClapToFind()
-            && SharePreferenceUtils.isEnableUnplugPin()
-            && SharePreferenceUtils.isEnableFullPin()
+        if (!SharePreferenceUtils.isAppServiceEnable()
+            && !SharePreferenceUtils.isEnableClapToFind()
+            && !SharePreferenceUtils.isEnableUnplugPin()
+            && !SharePreferenceUtils.isEnableFullPin()
         ) {
             requireContext().stopService(
                 Intent(
