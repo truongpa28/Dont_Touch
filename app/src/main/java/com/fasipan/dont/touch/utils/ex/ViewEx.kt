@@ -261,6 +261,6 @@ fun ScrollView.scrollToTop() {
 }
 
 fun NestedScrollView.scrollToTop() {
-    fullScroll(ScrollView.FOCUS_UP)
+    //fullScroll(ScrollView.FOCUS_UP)
     smoothScrollTo(0, 0)
 }

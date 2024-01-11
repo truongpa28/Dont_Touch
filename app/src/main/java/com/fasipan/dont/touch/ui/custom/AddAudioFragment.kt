@@ -97,6 +97,7 @@ class AddAudioFragment : BaseFragment() {
     private fun initView() {
         binding.txtRetry.isSelected = true
         binding.txtSave.isSelected = true
+        binding.txtTitleToolbar.isSelected = true
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             binding.imgPauseRecord.hide()
         }
@@ -322,7 +323,7 @@ class AddAudioFragment : BaseFragment() {
 
     private fun statusNon() {
         status = STATUS_NON
-        timeRecord = 0
+        timeRecord = -1
         binding.imgIcon.setImageResource(R.drawable.mic_auto_v1)
         binding.txtTapToRecord.show()
         binding.txtTapToRecord.setBackgroundResource(R.drawable.bg_btn_tap_to_active)
@@ -359,7 +360,7 @@ class AddAudioFragment : BaseFragment() {
         try {
             myAudioRecorder = MediaRecorder()
             myAudioRecorder?.let {
-                timeRecord = 0
+                timeRecord = -1
                 it.setAudioSource(MediaRecorder.AudioSource.MIC)
                 it.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
                 it.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)

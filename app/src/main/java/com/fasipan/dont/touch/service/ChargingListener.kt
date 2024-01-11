@@ -21,7 +21,7 @@ class ChargingListener : BroadcastReceiver() {
     @SuppressLint("InvalidWakeLockTag")
     private fun lock(context: Context, boqua: Boolean = false) {
         val keyguardManager = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-
+        Log.e("isKeyguardLocked", "${keyguardManager.isKeyguardLocked}")
         if (keyguardManager.isKeyguardLocked || boqua) {
             if (SharePreferenceUtils.isEnableLightUpMode()) {
                 val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
@@ -39,7 +39,6 @@ class ChargingListener : BroadcastReceiver() {
             Log.e("truongpa", "Call_startActivity")
             context.startActivity(intent)
         }
-
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {

@@ -12,7 +12,7 @@
     <string name="enable_alarm_on_full_battery">Bật báo thức khi pin đầy</string>
     <string name="whistle">Còi</string>
     <string name="set_now">Đặt ngay bây giờ</string>
-    <string name="discharging">Xả</string>
+    <string name="discharging">Không sạc</string>
     <string name="intro_content_1">Không ai chạm vào điện thoại của bạn</string>
     <string name="enter_file_name">Nhập tên tập tin</string>
     <string name="txt_content_delete_audio">Bạn có xác nhận rằng bạn muốn xóa</string>
@@ -32,7 +32,7 @@
     <string name="custom_sound">Âm thanh tùy chỉnh</string>
     <string name="title_how_to_use_1">Nhấn vào âm thanh để kích hoạt tính năng Không chạm vào điện thoại của tôi.</string>
     <string name="add_successfully">Thêm thành công</string>
-    <string name="save">Cứu</string>
+    <string name="save">Lưu</string>
     <string name="skip">Bỏ qua</string>
     <string name="dead">Chết</string>
     <string name="how_to_use">Cách sử dụng</string>
@@ -86,8 +86,8 @@
     <string name="next">Kế tiếp</string>
     <string name="no">KHÔNG</string>
     <string name="continue_txt">Tiếp tục</string>
-    <string name="harp">đàn hạc</string>
-    <string name="recording">ghi âm</string>
+    <string name="harp">Đàn hạc</string>
+    <string name="recording">Ghi âm</string>
     <string name="cold">Lạnh lẽo</string>
     <string name="error">Lỗi</string>
     <string name="enable_flash_alert">Bật Cảnh báo Flash</string>
@@ -108,7 +108,7 @@
     <string name="flash_type">Loại đèn nháy</string>
     <string name="wind_chime">Chuông gió</string>
     <string name="full_battery_detection">Phát hiện pin đầy</string>
-    <string name="rooster">gà trống</string>
+    <string name="rooster">Gà trống</string>
     <string name="tap_to_deactive">Nhấn để hủy kích hoạt</string>
     <string name="set_don_t_touch_my_phone_wallpaper">Đặt hình nền Đừng chạm vào điện thoại của tôi</string>
     <string name="overlay_permission_enable">Cho phép lớp phủ cho phép</string>
