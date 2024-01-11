@@ -1,6 +1,8 @@
 package com.fasipan.dont.touch.ui.edit
 
+import android.content.Context
 import android.graphics.PorterDuff
+import android.media.AudioManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -220,6 +222,14 @@ class EditAudioFragment : BaseFragment() {
                 if (fromUser) {
                     volumeAudio = progress
                     showUi()
+                    val audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager?
+                    val maxVolume = audioManager!!.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                    val volume = maxVolume * (volumeAudio) / 100
+                    audioManager.setStreamVolume(
+                        AudioManager.STREAM_MUSIC,
+                        volume,
+                        0
+                    )
                 }
             }
 
@@ -285,6 +295,14 @@ class EditAudioFragment : BaseFragment() {
                 isPlayingAudio = true
                 binding.imgPlay.setImageResource(R.drawable.ic_play_edit_2)
                 audioEntity?.let { audio ->
+                    val audioManager = requireContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager?
+                    val maxVolume = audioManager!!.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                    val volume = maxVolume * (volumeAudio) / 100
+                    audioManager.setStreamVolume(
+                        AudioManager.STREAM_MUSIC,
+                        volume,
+                        0
+                    )
                     MediaPlayerUtils.playAudioSoundRecord(requireContext(), audio.sound) {
                         isPlayingAudio = false
                         binding.imgPlay.setImageResource(R.drawable.ic_play_edit_1)

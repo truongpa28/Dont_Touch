@@ -12,10 +12,7 @@ import android.content.Intent.ACTION_SCREEN_OFF
 import android.content.Intent.ACTION_SCREEN_ON
 import android.os.PowerManager
 import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
-import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
-import com.fasipan.dont.touch.utils.ex.connectService
 import com.fasipan.dont.touch.utils.ex.getBatteryLevel
 
 
@@ -75,6 +72,9 @@ class ChargingListener : BroadcastReceiver() {
             ACTION_POWER_DISCONNECTED -> {
                 if (SharePreferenceUtils.isEnableUnplugPin()) {
                     context?.let { lock(it, true) }
+                } else {
+                    if (SharePreferenceUtils.isEnableFullPin() && (SharePreferenceUtils.getBatteryChanged() == 100))
+                        context?.sendBroadcast(Intent("action_finish"))
                 }
             }
 

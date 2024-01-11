@@ -22,14 +22,11 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.IBinder
-import android.preference.PreferenceManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.OnLifecycleEvent
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.ui.splash.SplashActivity
 import com.fasipan.dont.touch.utils.Constants
@@ -45,7 +42,7 @@ class ChargingService : Service(), SensorEventListener {
     private val MIN_BUFFER_SIZE = AudioRecord.getMinBufferSize(
         SAMPLE_RATE, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT
     )
-    private val CLAP_THRESHOLD = 20000
+    //private val CLAP_THRESHOLD = 20000
 
     private var audioRecord: AudioRecord? = null
     private var shouldListen = false
@@ -71,25 +68,27 @@ class ChargingService : Service(), SensorEventListener {
     }
 
     private fun initListener() {
-        isOnScreen.value = (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isKeyguardLocked
+        isOnScreen.value =
+            (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isKeyguardLocked
         val sharedPreferences = getSharedPreferences("data_app_ghost_radar", Context.MODE_PRIVATE)
 
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-            if (key == "isScreenOn") {
-                Log.e("truongpa", "initListener: isScreenOn Change" )
-                if (isLockShow()) {
-                    startListening()
-                } else {
-                    shouldListen = false
-                    audioRecord?.stop()
-                    audioRecord?.release()
+        val listener =
+            SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                if (key == "isScreenOn") {
+                    Log.e("truongpa", "initListener: isScreenOn Change")
+                    if (isLockShow()) {
+                        startListening()
+                    } else {
+                        shouldListen = false
+                        audioRecord?.stop()
+                        audioRecord?.release()
+                    }
                 }
             }
-        }
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
     }
 
-    private fun isLockShow() : Boolean {
+    private fun isLockShow(): Boolean {
         val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
         return keyguardManager.isKeyguardLocked
     }
@@ -108,7 +107,7 @@ class ChargingService : Service(), SensorEventListener {
 
         if (shouldListen) return
 
-        Log.e("truongpa", "startListening: running" )
+        Log.e("truongpa", "startListening: running")
 
         audioRecord = AudioRecord(
             MediaRecorder.AudioSource.MIC,
@@ -118,6 +117,8 @@ class ChargingService : Service(), SensorEventListener {
             MIN_BUFFER_SIZE
         )
         shouldListen = true
+
+        val CLAP_THRESHOLD = tinhDoNhayClap()
 
         GlobalScope.launch(Dispatchers.IO) {
             audioRecord?.startRecording()
@@ -131,7 +132,7 @@ class ChargingService : Service(), SensorEventListener {
                         sendBroadcast(Intent("action_clap"))
                     }
                     lastPeak = maxAmplitude.toInt()
-                } catch (e : Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -185,6 +186,21 @@ class ChargingService : Service(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+
+    }
+
+
+    private fun tinhDoNhayClap(): Int {
+        val value = 20000
+        val sensitivity = SharePreferenceUtils.getSensitivity()
+        val lech = 50 - sensitivity
+
+        val ans = value + (value / 4) * lech / 50
+
+        return ans
+    }
+
+    fun tinhDoNhayTouch() {
 
     }
 

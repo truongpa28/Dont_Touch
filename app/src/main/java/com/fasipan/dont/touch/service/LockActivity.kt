@@ -1,7 +1,11 @@
 package com.fasipan.dont.touch.service
 
+import android.annotation.SuppressLint
 import android.app.KeyguardManager
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.PixelFormat
 import android.media.AudioManager
 import android.os.Build
@@ -27,12 +31,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+
 class LockActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCustomLockScreenBinding
 
     private var funCount: CountDownTimer? = null
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onCreate(savedInstanceState: Bundle?) {
         //region Create Screen
 
@@ -134,7 +140,23 @@ class LockActivity : AppCompatActivity() {
 
         countTime()
 
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(receiver, IntentFilter("action_finish"), RECEIVER_EXPORTED)
+        } else {
+            registerReceiver(receiver, IntentFilter("action_finish"))
+        }
 
+
+    }
+
+    val receiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent?) {
+            when (intent?.action) {
+                "action_finish" -> {
+                    finishView()
+                }
+            }
+        }
     }
 
     private fun countTime() {
@@ -187,6 +209,7 @@ class LockActivity : AppCompatActivity() {
         LockServiceUtils.stopFlash()
         turnOffVibration()
         funCount?.cancel()
+        unregisterReceiver(receiver)
     }
 
 
