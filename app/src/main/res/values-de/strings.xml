@@ -113,7 +113,7 @@
     <string name="set_don_t_touch_my_phone_wallpaper">Legen Sie das Hintergrundbild „Mein Telefon nicht berühren“ fest</string>
     <string name="overlay_permission_enable">Overlay-Berechtigung aktivieren</string>
     <string name="wallpaper">Hintergrund</string>
-    <string name="clap_to_find_home">Klatschen\num es zu finden</string>
+    <string name="clap_to_find_home">Klatschen\num es zu\nfinden</string>
     <string name="txt_content_quit_recording">Sie nehmen auf. Sind Sie sicher, dass Sie aufhören wollen?</string>
     <string name="apply">Anwenden</string>
     <string name="yes">Ja</string>

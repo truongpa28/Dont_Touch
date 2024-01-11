@@ -31,6 +31,8 @@ class DialogClapToFind(private val context: Context) {
     }
 
     fun show(actionDone: () -> Unit) {
+        binding.btnSave.isSelected = true
+        binding.btnCancel.isSelected = true
         binding.btnSave.setOnTouchScale({
             actionDone()
             hide()

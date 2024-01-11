@@ -49,6 +49,7 @@ class ClapToFindFragment : BaseFragment() {
     }
 
     private fun initView() {
+        binding.txtTitle.isSelected = true
         showViewUi()
     }
 

@@ -32,6 +32,8 @@ class DialogSaveRecord(private val context: Context) {
     }
 
     fun show(actionSave: (string : String) -> Unit) {
+        binding.btnSave.isSelected = true
+        binding.btnQuit.isSelected = true
         binding.txtContent.setText("")
         binding.btnSave.setOnTouchScale({
             actionSave(binding.txtContent.text.toString())

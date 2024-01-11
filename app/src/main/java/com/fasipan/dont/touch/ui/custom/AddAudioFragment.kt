@@ -96,6 +96,7 @@ class AddAudioFragment : BaseFragment() {
 
     private fun initView() {
         binding.txtRetry.isSelected = true
+        binding.txtSave.isSelected = true
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             binding.imgPauseRecord.hide()
         }
