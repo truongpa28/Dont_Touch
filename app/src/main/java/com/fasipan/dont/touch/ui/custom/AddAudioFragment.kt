@@ -1,16 +1,21 @@
 package com.fasipan.dont.touch.ui.custom
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,6 +24,7 @@ import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentAddAudioBinding
 import com.fasipan.dont.touch.db.LocalDataSource
 import com.fasipan.dont.touch.db.entity.AudioEntity
+import com.fasipan.dont.touch.ui.dialog.DialogAudioPermission
 import com.fasipan.dont.touch.ui.dialog.DialogQuitEditing
 import com.fasipan.dont.touch.ui.dialog.DialogQuitRecording
 import com.fasipan.dont.touch.ui.dialog.DialogSaveRecord
@@ -26,6 +32,7 @@ import com.fasipan.dont.touch.utils.DataUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.gone
 import com.fasipan.dont.touch.utils.ex.hide
+import com.fasipan.dont.touch.utils.ex.resetAvailableClick
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 import com.fasipan.dont.touch.utils.ex.show
 import com.fasipan.dont.touch.utils.ex.showToast
@@ -118,6 +125,7 @@ class AddAudioFragment : BaseFragment() {
         if (status == STATUS_PLAY || status == STATUS_PLAY_PAUSE) {
             dialogQuitEditing.show(actionQuit = {
                 findNavController().popBackStack()
+                resetAvailableClick()
             }, actionSave = {
                 dialogSaveRecord.show {
                     if (it.trim().isEmpty()) {
@@ -138,6 +146,7 @@ class AddAudioFragment : BaseFragment() {
                                 requireContext().showToast(getString(R.string.add_successfully))
                                 dialogSaveRecord.hide()
                                 findNavController().popBackStack()
+                                resetAvailableClick()
                             }
                         }
                     }
@@ -158,12 +167,15 @@ class AddAudioFragment : BaseFragment() {
                     }
                     dialogQuitRecording.show {
                         findNavController().popBackStack()
+                        resetAvailableClick()
                     }
                 } else {
                     findNavController().popBackStack()
+                    resetAvailableClick()
                 }
             } else {
                 findNavController().popBackStack()
+                resetAvailableClick()
             }
         }
 
@@ -254,6 +266,7 @@ class AddAudioFragment : BaseFragment() {
                             requireContext().showToast("Add successfully")
                             dialogSaveRecord.hide()
                             findNavController().popBackStack()
+                            resetAvailableClick()
                         }
 
                     }
@@ -273,7 +286,9 @@ class AddAudioFragment : BaseFragment() {
 
 
         binding.txtTapToRecord.setOnTouchScale({
-            startRecord()
+            checkAudioPermissions {
+                startRecord()
+            }
         }, 0.9f)
 
         binding.imgPauseRecord.setOnTouchScale({
@@ -411,6 +426,49 @@ class AddAudioFragment : BaseFragment() {
             override fun onFinish() {}
         }
         funCount?.start()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    private fun checkAudioPermissions(action: () -> Unit) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            action()
+        } else {
+            statusNon()
+            funCount?.cancel()
+            myAudioRecorder?.stop()
+
+            dialogAudioPermission.show {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", requireContext().packageName, null)
+                requestOpenSettingLauncher.launch(intent)
+            }
+        }
+    }
+
+    private val dialogAudioPermission by lazy {
+        DialogAudioPermission(requireContext())
+    }
+
+    private val requestOpenSettingLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            startRecord()
+        } else {
+            requireContext().showToast(getString(R.string.permission_denied))
+        }
     }
 
 

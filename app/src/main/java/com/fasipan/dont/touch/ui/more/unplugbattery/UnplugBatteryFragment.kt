@@ -24,7 +24,6 @@ import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.gone
 import com.fasipan.dont.touch.utils.ex.hasPermission
-import com.fasipan.dont.touch.utils.ex.hide
 import com.fasipan.dont.touch.utils.ex.isSdk33
 import com.fasipan.dont.touch.utils.ex.isSdkS
 import com.fasipan.dont.touch.utils.ex.show
@@ -82,14 +81,16 @@ class UnplugBatteryFragment : BaseFragment() {
             override fun onSwitchStateChange(isOn: Boolean) {
                 if (isOn) {
                     if (!Settings.canDrawOverlays(requireContext())) {
-                        dialogOverlayPermission.show {
+                        dialogOverlayPermission.show(actionGotoSetting = {
                             val intent = Intent(
                                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                                 Uri.parse("package:${requireContext().packageName}"),
                             )
                             startActivity(intent)
                             isGotoSetting = true
-                        }
+                        }, actionDismiss = {
+                            binding.swEnableUnplugPin.setSwitchState(SharePreferenceUtils.isEnableUnplugPin())
+                        })
                         actionGotoSetting = { checkNotification() }
                     } else {
                         checkNotification()
@@ -135,7 +136,8 @@ class UnplugBatteryFragment : BaseFragment() {
         ActivityResultContracts.RequestPermission()
     ) {
         if (it) {
-            val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val alarmManager =
+                requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
             if (isSdkS()) {
                 if (!alarmManager.canScheduleExactAlarms()) {
                     startServiceApp()
@@ -166,6 +168,7 @@ class UnplugBatteryFragment : BaseFragment() {
                 BatteryManager.BATTERY_PLUGGED_AC -> {
                     binding.llWaring.gone()
                 }
+
                 else -> {
                     binding.llWaring.show()
                 }

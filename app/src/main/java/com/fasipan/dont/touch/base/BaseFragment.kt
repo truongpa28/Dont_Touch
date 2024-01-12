@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.fasipan.dont.touch.service.ChargingService
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
+import com.fasipan.dont.touch.utils.ex.resetAvailableClick
 
 abstract class BaseFragment() : Fragment() {
 
@@ -23,6 +24,7 @@ abstract class BaseFragment() : Fragment() {
 
     open fun onBack() {
         findNavController().popBackStack()
+        resetAvailableClick()
     }
 
     fun startServiceApp() {

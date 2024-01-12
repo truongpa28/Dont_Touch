@@ -86,14 +86,14 @@ class ClapToFindFragment : BaseFragment() {
                 showViewUi()
             } else {
                 if (!Settings.canDrawOverlays(requireContext())) {
-                    dialogOverlayPermission.show {
+                    dialogOverlayPermission.show(actionGotoSetting = {
                         val intent = Intent(
                             Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                             Uri.parse("package:${requireContext().packageName}"),
                         )
                         startActivity(intent)
                         isGotoSetting = true
-                    }
+                    }, actionDismiss = {})
                     actionGotoSetting = { checkNotification() }
                 } else {
                     checkNotification()
@@ -134,7 +134,8 @@ class ClapToFindFragment : BaseFragment() {
         ActivityResultContracts.RequestPermission()
     ) {
         if (it) {
-            val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val alarmManager =
+                requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
             if (isSdkS()) {
                 if (!alarmManager.canScheduleExactAlarms()) {
                     actionService()

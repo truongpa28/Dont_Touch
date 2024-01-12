@@ -168,14 +168,14 @@ class HomeFragment : BaseFragment() {
 
         binding.txtTapToActive.setOnTouchScale({
             if (!Settings.canDrawOverlays(requireContext())) {
-                dialogOverlayPermission.show {
+                dialogOverlayPermission.show(actionGotoSetting =  {
                     val intent = Intent(
                         Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:${requireContext().packageName}"),
                     )
                     startActivity(intent)
                     isGotoSetting = true
-                }
+                }, actionDismiss = {})
                 actionGotoSetting = { checkNotification() }
             } else {
                 checkNotification()

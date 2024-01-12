@@ -76,14 +76,16 @@ class FullBatteryFragment : BaseFragment() {
             override fun onSwitchStateChange(isOn: Boolean) {
                 if (isOn) {
                     if (!Settings.canDrawOverlays(requireContext())) {
-                        dialogOverlayPermission.show {
+                        dialogOverlayPermission.show(  actionGotoSetting =  {
                             val intent = Intent(
                                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                                 Uri.parse("package:${requireContext().packageName}"),
                             )
                             startActivity(intent)
                             isGotoSetting = true
-                        }
+                        }, actionDismiss = {
+                            binding.swEnableFullPin.setSwitchState(SharePreferenceUtils.isEnableFullPin())
+                        })
                         actionGotoSetting = { checkNotification() }
                     } else {
                         checkNotification()

@@ -48,6 +48,10 @@ fun View.setOnSafeClick(onSafeClickListener: (View) -> Unit) {
     setOnClickListener(safeClick)
 }
 
+fun resetAvailableClick() {
+    isAvailableClick = true
+}
+
 var isAvailableClick = true
 fun handleAvailableClick(time: Long) {
     Handler(Looper.getMainLooper()).postDelayed({

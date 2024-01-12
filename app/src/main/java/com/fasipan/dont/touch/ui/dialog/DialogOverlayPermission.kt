@@ -30,9 +30,12 @@ class DialogOverlayPermission(private val context: Context) {
         dialog.dismiss()
     }
 
-    fun show(actionGotoSetting: () -> Unit) {
+    fun show(actionGotoSetting: () -> Unit, actionDismiss: (() -> Unit)?= null) {
         binding.btnGotoSetting.clickSafe {
             actionGotoSetting()
+        }
+        dialog.setOnDismissListener {
+            actionDismiss?.invoke()
         }
         if (!dialog.isShowing)
             dialog.show()

@@ -20,6 +20,7 @@ import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.loadGlide
+import com.fasipan.dont.touch.utils.ex.resetAvailableClick
 import com.fasipan.dont.touch.utils.ex.showOrGone
 
 
@@ -323,6 +324,7 @@ class EditAudioFragment : BaseFragment() {
                 SharePreferenceUtils.setAudioWaring(audio.sound)
             }
             findNavController().popBackStack()
+            resetAvailableClick()
         }
     }
 }
