@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.BatteryManager
 import android.os.Bundle
@@ -15,10 +16,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.custom.OnSwitchStateChangeListener
 import com.fasipan.dont.touch.databinding.FragmentUnplugBatteryBinding
+import com.fasipan.dont.touch.ui.dialog.DialogNotificationPermission
 import com.fasipan.dont.touch.ui.dialog.DialogOverlayPermission
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
@@ -38,6 +41,10 @@ class UnplugBatteryFragment : BaseFragment() {
         override fun onReceive(context: Context, intent: Intent) {
             updateBatteryData(intent)
         }
+    }
+
+    private val dialogNotificationPermission by lazy {
+        DialogNotificationPermission(requireContext())
     }
 
     override fun onCreateView(
@@ -89,7 +96,7 @@ class UnplugBatteryFragment : BaseFragment() {
                             startActivity(intent)
                             isGotoSetting = true
                         }, actionDismiss = {
-                            binding.swEnableUnplugPin.setSwitchState(SharePreferenceUtils.isEnableUnplugPin())
+                            initView()
                         })
                         actionGotoSetting = { checkNotification() }
                     } else {
@@ -97,6 +104,7 @@ class UnplugBatteryFragment : BaseFragment() {
                     }
                 } else {
                     SharePreferenceUtils.setEnableUnplugPin(false)
+                    initView()
                 }
             }
         })
@@ -124,34 +132,47 @@ class UnplugBatteryFragment : BaseFragment() {
 
     private fun checkNotification() {
         if (isSdk33() && !requireContext().hasPermission(Manifest.permission.POST_NOTIFICATIONS)) {
-            //requireContext().showToast(getString(R.string.you_must_grant_permission_to_post_notifications))
-            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-        } else {
-            startServiceApp()
-            SharePreferenceUtils.setEnableUnplugPin(true)
-        }
-    }
+            dialogNotificationPermission.show {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", requireContext().packageName, null)
+                requestNotificationLauncher.launch(intent)
+            }
 
-    private val requestNotificationPermission = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) {
-        if (it) {
-            val alarmManager =
-                requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (isSdkS()) {
-                if (!alarmManager.canScheduleExactAlarms()) {
-                    startServiceApp()
-                    SharePreferenceUtils.setEnableUnplugPin(true)
-                } else {
+            dialogNotificationPermission.onCancel {
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
                     SharePreferenceUtils.setEnableUnplugPin(false)
                     endServiceApp()
                     requireContext().showToast(getString(R.string.permission_denied))
+                    initView()
                 }
             }
+        } else {
+            startServiceApp()
+            SharePreferenceUtils.setEnableUnplugPin(true)
+            initView()
+        }
+    }
+
+    private val requestNotificationLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            startServiceApp()
+            SharePreferenceUtils.setEnableUnplugPin(true)
+            initView()
         } else {
             SharePreferenceUtils.setEnableUnplugPin(false)
             endServiceApp()
             requireContext().showToast(getString(R.string.permission_denied))
+            initView()
         }
     }
 

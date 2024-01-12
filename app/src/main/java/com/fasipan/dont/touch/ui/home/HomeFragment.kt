@@ -1,8 +1,6 @@
 package com.fasipan.dont.touch.ui.home
 
 import android.Manifest
-import android.app.AlarmManager
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -10,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,13 +26,13 @@ import com.fasipan.dont.touch.db.LocalDataSource
 import com.fasipan.dont.touch.ui.dialog.DialogActiveSuccessfully
 import com.fasipan.dont.touch.ui.dialog.DialogAudioPermission
 import com.fasipan.dont.touch.ui.dialog.DialogDeleteAudio
+import com.fasipan.dont.touch.ui.dialog.DialogNotificationPermission
 import com.fasipan.dont.touch.ui.dialog.DialogOverlayPermission
 import com.fasipan.dont.touch.utils.MediaPlayerUtils
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
 import com.fasipan.dont.touch.utils.ex.hasPermission
 import com.fasipan.dont.touch.utils.ex.isSdk33
-import com.fasipan.dont.touch.utils.ex.isSdkS
 import com.fasipan.dont.touch.utils.ex.scrollToTop
 import com.fasipan.dont.touch.utils.ex.setOnTouchScale
 import com.fasipan.dont.touch.utils.ex.showToast
@@ -53,6 +50,10 @@ class HomeFragment : BaseFragment() {
 
     private val dialogDeleteAudio by lazy {
         DialogDeleteAudio(requireContext())
+    }
+
+    private val dialogNotificationPermission by lazy {
+        DialogNotificationPermission(requireContext())
     }
 
     private val dialogActiveSuccessfully by lazy {
@@ -141,7 +142,7 @@ class HomeFragment : BaseFragment() {
                 item?.let {
                     findNavController().navigate(
                         R.id.action_homeFragment_to_editAudioFragment,
-                        bundleOf("pos" to position-1)
+                        bundleOf("pos" to position - 1)
                     )
                 }
             }
@@ -168,7 +169,7 @@ class HomeFragment : BaseFragment() {
 
         binding.txtTapToActive.setOnTouchScale({
             if (!Settings.canDrawOverlays(requireContext())) {
-                dialogOverlayPermission.show(actionGotoSetting =  {
+                dialogOverlayPermission.show(actionGotoSetting = {
                     val intent = Intent(
                         Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:${requireContext().packageName}"),
@@ -193,10 +194,35 @@ class HomeFragment : BaseFragment() {
 
     private fun checkNotification() {
         if (isSdk33() && !requireContext().hasPermission(Manifest.permission.POST_NOTIFICATIONS)) {
-            //requireContext().showToast(getString(R.string.you_must_grant_permission_to_post_notifications))
-            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+            dialogNotificationPermission.show {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", requireContext().packageName, null)
+                requestNotificationLauncher.launch(intent)
+            }
+
+            dialogNotificationPermission.onCancel {
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) requireContext().showToast(getString(R.string.permission_denied))
+            }
         } else {
             actionService()
+        }
+    }
+
+    private val requestNotificationLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            actionService()
+        } else {
+            requireContext().showToast(getString(R.string.permission_denied))
         }
     }
 
@@ -210,25 +236,6 @@ class HomeFragment : BaseFragment() {
             dialogActiveSuccessfully.show()
         }
         showChoose()
-    }
-
-    private val requestNotificationPermission = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) {
-        if (it) {
-            val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (isSdkS()) {
-                if (!alarmManager.canScheduleExactAlarms()) {
-                    actionService()
-                } else {
-                    actionService()
-                    requireContext().showToast(getString(R.string.permission_denied))
-                }
-            }
-        } else {
-            actionService()
-            requireContext().showToast(getString(R.string.permission_denied))
-        }
     }
 
     private fun showChoose() {

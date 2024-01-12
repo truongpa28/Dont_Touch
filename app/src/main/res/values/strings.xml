@@ -136,6 +136,8 @@
     <string name="add_successfully">Add successfully</string>
     <string name="vibrate">Vibrate</string>
     <string name="txt_content_dialog_audio_permission">You must allow Audio record permission to use this feature.</string>
+    <string name="notification_permission">Notification Permission</string>
+    <string name="txt_content_dialog_notification_permission">You must allow Notification permission to use this feature.</string>
 
 
 </resources>

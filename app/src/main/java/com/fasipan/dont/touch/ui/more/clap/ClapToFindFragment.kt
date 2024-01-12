@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -17,6 +18,7 @@ import com.fasipan.dont.touch.R
 import com.fasipan.dont.touch.base.BaseFragment
 import com.fasipan.dont.touch.databinding.FragmentClapToFindBinding
 import com.fasipan.dont.touch.ui.dialog.DialogClapToFind
+import com.fasipan.dont.touch.ui.dialog.DialogNotificationPermission
 import com.fasipan.dont.touch.ui.dialog.DialogOverlayPermission
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
 import com.fasipan.dont.touch.utils.ex.clickSafe
@@ -32,6 +34,10 @@ class ClapToFindFragment : BaseFragment() {
 
     private val dialogClapToFind by lazy {
         DialogClapToFind(requireContext())
+    }
+
+    private val dialogNotificationPermission by lazy {
+        DialogNotificationPermission(requireContext())
     }
 
     override fun onCreateView(
@@ -123,29 +129,34 @@ class ClapToFindFragment : BaseFragment() {
 
     private fun checkNotification() {
         if (isSdk33() && !requireContext().hasPermission(Manifest.permission.POST_NOTIFICATIONS)) {
-            //requireContext().showToast(getString(R.string.you_must_grant_permission_to_post_notifications))
-            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+            dialogNotificationPermission.show {
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.data = Uri.fromParts("package", requireContext().packageName, null)
+                requestNotificationLauncher.launch(intent)
+            }
+
+            dialogNotificationPermission.onCancel {
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) requireContext().showToast(getString(R.string.permission_denied))
+            }
         } else {
             actionService()
         }
     }
 
-    private val requestNotificationPermission = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
+    private val requestNotificationLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
     ) {
-        if (it) {
-            val alarmManager =
-                requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            if (isSdkS()) {
-                if (!alarmManager.canScheduleExactAlarms()) {
-                    actionService()
-                } else {
-                    actionService()
-                    requireContext().showToast(getString(R.string.permission_denied))
-                }
-            }
-        } else {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             actionService()
+        } else {
             requireContext().showToast(getString(R.string.permission_denied))
         }
     }
