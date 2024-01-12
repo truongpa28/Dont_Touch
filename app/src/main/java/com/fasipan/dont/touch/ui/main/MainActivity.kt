@@ -15,6 +15,8 @@ import com.fasipan.dont.touch.base.BaseActivity
 import com.fasipan.dont.touch.databinding.ActivityMainBinding
 import com.fasipan.dont.touch.service.ChargingService
 import com.fasipan.dont.touch.utils.SharePreferenceUtils
+import com.fasipan.dont.touch.utils.ex.hasPermission
+import com.fasipan.dont.touch.utils.ex.isSdk33
 
 class MainActivity : BaseActivity() {
 
@@ -43,11 +45,11 @@ class MainActivity : BaseActivity() {
             } catch (_: Exception) { }
         }
 
-        if (SharePreferenceUtils.isAppServiceEnable()
+        if ((SharePreferenceUtils.isAppServiceEnable()
             || SharePreferenceUtils.isEnableClapToFind()
             || SharePreferenceUtils.isEnableUnplugPin()
             || SharePreferenceUtils.isEnableFullPin()
-            ) {
+            )  && isHasNotification()) {
             startService(
                 Intent(
                     applicationContext,
@@ -55,6 +57,10 @@ class MainActivity : BaseActivity() {
                 )
             )
         }
+    }
+
+    private fun isHasNotification() : Boolean {
+        return !(isSdk33() && !hasPermission(Manifest.permission.POST_NOTIFICATIONS))
     }
 
     override fun onSupportNavigateUp(): Boolean {

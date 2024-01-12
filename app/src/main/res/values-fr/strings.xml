@@ -134,4 +134,6 @@
     <string name="title_dialog_overlay_permission">L\'animation de chargement nécessite l\'autorisation de s\'afficher sur d\'autres applications. Cette application ne collecte aucune information relative à votre téléphone.</string>
     <string name="wallpaper_has_been_set_successfully">Le fond d\'écran a été défini avec succès !</string>
     <string name="txt_content_unplug_pin">En activant cette option, votre téléphone commencera à sonner si quelqu\'un essaie de débrancher le téléphone.</string>
+    <string name="notification_permission">Autorisation de notification</string>
+    <string name="txt_content_dialog_notification_permission">Vous devez autoriser l\'autorisation de notification pour utiliser cette fonctionnalité.</string>
 </resources>

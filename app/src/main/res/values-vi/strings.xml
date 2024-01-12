@@ -134,4 +134,6 @@
     <string name="title_dialog_overlay_permission">Hoạt ảnh sạc cần có quyền để thu hút các ứng dụng khác. Ứng dụng này không thu thập bất kỳ thông tin nào liên quan đến điện thoại của bạn.</string>
     <string name="wallpaper_has_been_set_successfully">Hình nền đã được đặt thành công!</string>
     <string name="txt_content_unplug_pin">Bằng cách kích hoạt tính năng này, điện thoại của bạn sẽ bắt đầu đổ chuông nếu ai đó cố gắng rút phích cắm điện thoại.</string>
+    <string name="notification_permission">Quyền thông báo</string>
+    <string name="txt_content_dialog_notification_permission">Bạn phải cho phép Thông báo để sử dụng tính năng này.</string>
 </resources>

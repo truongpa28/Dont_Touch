@@ -134,4 +134,6 @@
     <string name="title_dialog_overlay_permission">Die Ladeanimation benötigt die Erlaubnis, über andere Apps gezeichnet zu werden. Diese Anwendung sammelt keine Informationen zu Ihrem Telefon.</string>
     <string name="wallpaper_has_been_set_successfully">Das Hintergrundbild wurde erfolgreich eingestellt!</string>
     <string name="txt_content_unplug_pin">Wenn Sie diese Option aktivieren, klingelt Ihr Telefon, wenn jemand versucht, das Telefon auszustecken.</string>
+    <string name="notification_permission">Benachrichtigungsberechtigung</string>
+    <string name="txt_content_dialog_notification_permission">Um diese Funktion nutzen zu können, müssen Sie die Benachrichtigungsberechtigung erteilen.</string>
 </resources>

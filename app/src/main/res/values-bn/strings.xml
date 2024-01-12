@@ -134,4 +134,6 @@
     <string name="title_dialog_overlay_permission">চার্জিং অ্যানিমেশন অন্যান্য অ্যাপের উপর আঁকার অনুমতি প্রয়োজন। এই অ্যাপ্লিকেশনটি আপনার ফোন সম্পর্কিত কোনো তথ্য সংগ্রহ করছে না।</string>
     <string name="wallpaper_has_been_set_successfully">ওয়ালপেপার সফলভাবে সেট করা হয়েছে!</string>
     <string name="txt_content_unplug_pin">এটি সক্ষম করার মাধ্যমে কেউ ফোন আনপ্লাগ করার চেষ্টা করলে আপনার ফোন বাজতে শুরু করবে।</string>
+    <string name="notification_permission">বিজ্ঞপ্তির অনুমতি</string>
+    <string name="txt_content_dialog_notification_permission">এই বৈশিষ্ট্যটি ব্যবহার করার জন্য আপনাকে অবশ্যই বিজ্ঞপ্তির অনুমতি দিতে হবে।</string>
 </resources>

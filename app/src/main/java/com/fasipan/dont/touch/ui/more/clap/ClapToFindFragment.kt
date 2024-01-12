@@ -61,7 +61,7 @@ class ClapToFindFragment : BaseFragment() {
 
     @SuppressLint("SetTextI18n")
     private fun showViewUi() {
-        if (SharePreferenceUtils.isEnableClapToFind()) {
+        if (SharePreferenceUtils.isEnableClapToFind() && isHasNotification()) {
             binding.imgStatus.setImageResource(R.drawable.frame_stop)
             binding.txtStatus.text = "Stop"
             binding.txtStatus.setTextColor(

@@ -134,4 +134,6 @@
     <string name="title_dialog_overlay_permission">Animasi pengisian daya memerlukan izin untuk memanfaatkan aplikasi lain. Aplikasi ini tidak mengumpulkan informasi apa pun yang terkait dengan ponsel Anda.</string>
     <string name="wallpaper_has_been_set_successfully">Wallpaper telah berhasil disetel!</string>
     <string name="txt_content_unplug_pin">Dengan mengaktifkan ini telepon Anda akan mulai berdering jika seseorang mencoba mencabut telepon.</string>
+    <string name="notification_permission">Izin Pemberitahuan</string>
+    <string name="txt_content_dialog_notification_permission">Anda harus memberikan izin Notifikasi untuk menggunakan fitur ini.</string>
 </resources>

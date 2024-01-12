@@ -239,7 +239,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun showChoose() {
-        if (SharePreferenceUtils.isAppServiceEnable()) {
+        if (SharePreferenceUtils.isAppServiceEnable() && isHasNotification()) {
             binding.bgBottom.setImageResource(R.drawable.bg_choose_home_2)
             binding.txtTapToActive.setBackgroundResource(R.drawable.bg_btn_tap_to_deactive)
             binding.txtTapToActive.text = getText(R.string.tap_to_deactive)
@@ -253,17 +253,17 @@ class HomeFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         showChoose()
-        if (SharePreferenceUtils.isEnableFullPin()) {
+        if (SharePreferenceUtils.isEnableFullPin() && isHasNotification()) {
             binding.llFullCharged.setBackgroundResource(R.drawable.bg_item_more_home)
         } else {
             binding.llFullCharged.background = null
         }
-        if (SharePreferenceUtils.isEnableUnplugPin()) {
+        if (SharePreferenceUtils.isEnableUnplugPin() && isHasNotification()) {
             binding.llUnplugCharged.setBackgroundResource(R.drawable.bg_item_more_home)
         } else {
             binding.llUnplugCharged.background = null
         }
-        if (SharePreferenceUtils.isEnableClapToFind()) {
+        if (SharePreferenceUtils.isEnableClapToFind() && isHasNotification()) {
             binding.llClapToFind.setBackgroundResource(R.drawable.bg_item_more_home)
         } else {
             binding.llClapToFind.background = null

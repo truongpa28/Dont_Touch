@@ -134,4 +134,6 @@
     <string name="title_dialog_overlay_permission">پویانمایی شارژ برای کشیدن روی سایر برنامه‌ها به مجوز نیاز دارد. این برنامه هیچ اطلاعاتی در رابطه با گوشی شما جمع آوری نمی کند.</string>
     <string name="wallpaper_has_been_set_successfully">تصویر زمینه با موفقیت تنظیم شد!</string>
     <string name="txt_content_unplug_pin">با فعال کردن این گزینه، اگر کسی بخواهد گوشی را از برق بکشد، تلفن شما شروع به زنگ زدن می کند.</string>
+    <string name="notification_permission">مجوز اطلاع رسانی</string>
+    <string name="txt_content_dialog_notification_permission">برای استفاده از این ویژگی باید به Notification اجازه دهید.</string>
 </resources>

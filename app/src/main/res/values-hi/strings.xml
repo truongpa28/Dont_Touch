@@ -134,4 +134,6 @@
     <string name="title_dialog_overlay_permission">एनीमेशन को चार्ज करने के लिए अन्य ऐप्स पर आकर्षित करने के लिए अनुमति की आवश्यकता होती है। यह एप्लिकेशन आपके फ़ोन से संबंधित कोई भी जानकारी एकत्रित नहीं कर रहा है.</string>
     <string name="wallpaper_has_been_set_successfully">वॉलपेपर सफलतापूर्वक सेट कर दिया गया है!</string>
     <string name="txt_content_unplug_pin">इसे इनेबल करने से अगर कोई फोन को अनप्लग करने की कोशिश करेगा तो आपका फोन बजने लगेगा।</string>
+    <string name="notification_permission">अधिसूचना अनुमति</string>
+    <string name="txt_content_dialog_notification_permission">इस सुविधा का उपयोग करने के लिए आपको अधिसूचना की अनुमति देनी होगी।</string>
 </resources>

@@ -73,7 +73,7 @@ class FullBatteryFragment : BaseFragment() {
 
     private fun initView() {
         binding.txtTitle.isSelected = true
-        binding.swEnableFullPin.setSwitchState(SharePreferenceUtils.isEnableFullPin())
+        binding.swEnableFullPin.setSwitchState(SharePreferenceUtils.isEnableFullPin() && isHasNotification())
     }
 
     private fun initListener() {
