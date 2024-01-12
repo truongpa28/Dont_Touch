@@ -63,6 +63,8 @@ class HomeFragment : BaseFragment() {
         DialogAudioPermission(requireContext())
     }
 
+    private var scrollY = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -86,14 +88,11 @@ class HomeFragment : BaseFragment() {
         binding.rcyAudio.adapter = adapter
         LocalDataSource.getAllAudio().observe(viewLifecycleOwner) {
             adapter.setDataListWithAction(it) {
-                if (isFirstOpen) {
-                    isFirstOpen = false
-                    Handler(Looper.myLooper()!!).postDelayed({
-                        binding.nestView.post {
-                            binding.nestView.scrollToTop()
-                        }
-                    }, 200L)
-                }
+                Handler(Looper.myLooper()!!).postDelayed({
+                    binding.nestView.post {
+                        binding.nestView.scrollToTop(scrollY)
+                    }
+                }, 200L)
             }
 
             val itemChoose = it[SharePreferenceUtils.getPositionAudioChoose()]
@@ -273,6 +272,7 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun onPause() {
+        scrollY = binding.nestView.scrollY
         super.onPause()
         MediaPlayerUtils.stopMediaPlayer()
     }

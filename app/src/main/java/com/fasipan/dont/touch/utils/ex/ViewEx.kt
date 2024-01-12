@@ -233,7 +233,7 @@ fun View.setOnTouchScale(action: () -> Unit, scale: Float, disView: Boolean = tr
                 if (isClick) {
                     if (isAvailableClick) {
                         isAvailableClick = false
-                        handleAvailableClick(300L)
+                        handleAvailableClick(200L)
                         action()
                     }
                 }
@@ -260,7 +260,7 @@ fun ScrollView.scrollToTop() {
     this.fullScroll(ScrollView.FOCUS_UP)
 }
 
-fun NestedScrollView.scrollToTop() {
+fun NestedScrollView.scrollToTop(y : Int = 0) {
     //fullScroll(ScrollView.FOCUS_UP)
-    smoothScrollTo(0, 0)
+    smoothScrollTo(0, y)
 }

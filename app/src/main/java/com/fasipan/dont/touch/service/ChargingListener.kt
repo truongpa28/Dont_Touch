@@ -31,6 +31,16 @@ class ChargingListener : BroadcastReceiver() {
             }
         }
 
+        if (SharePreferenceUtils.isEnableLightUpMode()) {
+            val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+            val wakeLock = powerManager.newWakeLock(
+                PowerManager.SCREEN_BRIGHT_WAKE_LOCK or
+                        PowerManager.ACQUIRE_CAUSES_WAKEUP, "TAG"
+            )
+            wakeLock.acquire(60000)
+            wakeLock.release()
+        }
+
         val intent = Intent(context, LockActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
