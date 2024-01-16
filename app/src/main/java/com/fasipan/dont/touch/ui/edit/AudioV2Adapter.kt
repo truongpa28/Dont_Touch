@@ -1,5 +1,6 @@
 package com.fasipan.dont.touch.ui.edit
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -21,12 +22,14 @@ class AudioV2Adapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioV2Binding>(
         return ItemAudioV2Binding.inflate(inflater, parent, false)
     }
 
+    private var posChoose = 0
+
     override fun bindData(binding: ItemAudioV2Binding, item: AudioEntity, position: Int) {
         val context = binding.root.context
 
         binding.imgAvatar.loadGlide(item.icon)
 
-        binding.viewChoose.showOrGone(position == SharePreferenceUtils.getPositionAudioChoose() - 1)
+        binding.viewChoose.showOrGone(position == posChoose)
 
         binding.txtName.text = if (item.isDefault) {
             try {
@@ -40,6 +43,12 @@ class AudioV2Adapter : BaseAdapterRecyclerView<AudioEntity, ItemAudioV2Binding>(
         binding.txtName.isSelected = true
 
         showNen(binding.viewBackground, position)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setChoose(position : Int) {
+        posChoose = position
+        notifyDataSetChanged()
     }
 
     private fun showNen(view: ImageView, position: Int) {

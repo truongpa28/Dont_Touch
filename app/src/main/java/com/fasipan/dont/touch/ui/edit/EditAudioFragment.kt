@@ -162,6 +162,7 @@ class EditAudioFragment : BaseFragment() {
         binding.rcyAudio.adapter = adapter
         LocalDataSource.getAllAudio().observe(viewLifecycleOwner) {
             audioEntity = it[positionChoose+1]
+            adapter.setChoose(positionChoose)
             adapter.setDataList(it.drop(1))
             binding.rcyAudio.scrollToPosition(positionChoose)
             showUiAudioChoose()
@@ -172,7 +173,8 @@ class EditAudioFragment : BaseFragment() {
 
     private fun showUiAudioChoose() {
 
-        binding.viewVien.showOrGone(SharePreferenceUtils.getPositionAudioChoose() == (positionChoose+1))
+        //binding.viewVien.showOrGone(SharePreferenceUtils.getPositionAudioChoose() == (positionChoose+1))
+        binding.viewVien.showOrGone(false)
 
         audioEntity?.let { item ->
             val nameAudio = if (item.isDefault) {
@@ -280,6 +282,7 @@ class EditAudioFragment : BaseFragment() {
         }
 
         adapter.setOnClickItem { item, position ->
+            adapter.setChoose(position)
             MediaPlayerUtils.stopMediaPlayer()
             binding.imgPlay.setImageResource(R.drawable.ic_play_edit_1)
             isPlayingAudio = false
